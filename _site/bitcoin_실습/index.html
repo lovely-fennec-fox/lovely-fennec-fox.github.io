@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>비트코인 코어실습 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">비트코인 코어실습</h1>
+          <div class="page-date"><time datetime="2019-09-05 00:00:00 +0900">2019, Sep 05</time></div>
+        </div>
+        <p><br /></p>
+
+<h1 id="비트코인-코어실습">비트코인 코어실습</h1>
+
+<h3 id="1-docker를-사용하여-블록체인-클라이언트-프로그램-다운">1. docker를 사용하여 블록체인 클라이언트 프로그램 다운</h3>
+
+<p><br /></p>
+
+<p>1) docker 이미지 받기</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span><span class="nb">sudo </span>docker pull bitcoin/bitcoin:0.17.01 
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>2) 컨테이너 가동/ 접속</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span><span class="nb">sudo </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> jes_bit <span class="nt">-p</span> 3000:3000  <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/bitcoin bitcoin/bitcoin:0.17.01 bash 
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h3 id="2-설치된-내용-확인">2. 설치된 내용 확인</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="mi">1</span><span class="o">.</span> <span class="n">bitcoind</span> <span class="o">(</span><span class="no">CLI</span><span class="o">)</span> <span class="o">:</span> <span class="err">일반</span> <span class="err">사용자</span> <span class="err">보다는</span> <span class="err">개발자에</span> <span class="err">더</span> <span class="err">유용한</span> <span class="err">프로그램</span><span class="o">,</span> <span class="n">RPC</span><span class="err">를</span> <span class="err">통해</span> <span class="err">원격</span> <span class="err">제어할</span> <span class="err">수</span> <span class="err">있는</span> <span class="n">full</span><span class="o">-</span><span class="n">node</span><span class="err">기능</span>
+
+<span class="mi">2</span><span class="o">.</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">(</span><span class="no">CLI</span><span class="o">)</span> <span class="o">:</span> <span class="err">실행</span> <span class="err">중인</span> <span class="n">bitcoind</span><span class="err">로</span> <span class="n">RPC</span><span class="err">명령어를</span> <span class="err">보낼</span> <span class="err">수</span> <span class="err">있는</span> <span class="err">프로그램</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>1) 비트코인 코어</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nc">Main</span> <span class="nc">Network</span> <span class="nf">Mode</span> <span class="o">(</span><span class="err">메인넷</span><span class="o">)</span> <span class="err">본</span> <span class="err">네트워크로</span> <span class="err">실제</span> <span class="err">비트코인</span> <span class="err">사용에</span> <span class="err">활용되는</span> <span class="err">네트워크</span>
+
+<span class="nc">Test</span> <span class="nc">Network</span> <span class="nf">Mode</span> <span class="o">(</span><span class="err">테스트넷</span><span class="o">)</span> <span class="err">테스트를</span> <span class="err">위한</span> <span class="err">네트워크로</span> <span class="err">메인넷과</span> <span class="err">유사하게</span> <span class="err">작동하나</span> <span class="err">비트코인에</span> <span class="err">화폐적</span> <span class="err">가치가</span> <span class="err">없음</span>
+
+<span class="nc">Regression</span> <span class="nc">Test</span> <span class="nc">Network</span> <span class="nf">Mode</span> <span class="o">(</span><span class="n">regtest</span><span class="o">)</span>
+ <span class="err">테스트용</span> <span class="err">사설</span> <span class="err">네트워크로</span> <span class="err">네트워크에</span> <span class="err">대한</span> <span class="err">모든</span> <span class="err">권한을</span> <span class="err">가질</span> <span class="err">수</span> <span class="err">있다</span>
+<span class="err">블록</span> <span class="err">생성</span> <span class="err">등의</span> <span class="err">행위를</span> <span class="err">임의로</span> <span class="err">실행</span> <span class="err">가능합니다</span><span class="o">.</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>2) regtest 모드의 특징</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="mi">1</span><span class="o">.</span> <span class="err">채굴</span> <span class="err">난이도를</span> <span class="mi">0</span><span class="err">으로</span> <span class="err">채굴이</span> <span class="err">가능합니다</span><span class="o">.</span>
+<span class="mi">2</span><span class="o">.</span> <span class="err">다른</span> <span class="err">네트워크</span><span class="o">(</span><span class="err">메인넷</span><span class="o">,</span> <span class="err">테스트넷</span> <span class="err">등</span><span class="o">)</span><span class="err">에</span> <span class="err">영향이</span> <span class="err">없습니다</span><span class="o">.</span>
+<span class="mi">3</span><span class="o">.</span> <span class="err">고유의</span> <span class="nc">Genesis</span> <span class="n">block</span><span class="err">을</span> <span class="err">가져</span> <span class="err">첫</span> <span class="err">블록부터</span> <span class="err">시작</span> <span class="err">가능합니다</span><span class="o">.</span>
+<span class="mi">4</span><span class="o">.</span> <span class="err">노드</span> <span class="err">생성</span> <span class="err">시</span><span class="o">,</span> <span class="err">다른</span> <span class="err">이용자와</span> <span class="err">연결할</span> <span class="err">필요가</span> <span class="err">없습니다</span><span class="o">.</span>
+<span class="mi">5</span><span class="o">.</span> <span class="err">원하는</span> <span class="err">때에</span> <span class="err">원하는</span> <span class="err">만큼</span> <span class="err">블록생성이</span> <span class="err">가능합니다</span><span class="o">.</span>
+<span class="mi">6</span><span class="o">.</span> <span class="err">많은</span> <span class="err">디스크</span> <span class="err">용량이</span> <span class="err">필요</span> <span class="err">없습니다</span><span class="o">.</span>
+<span class="mi">7</span><span class="o">.</span> <span class="err">메인넷의</span> <span class="err">경우</span> <span class="err">최소</span> <span class="mi">200</span><span class="n">GB</span><span class="err">용량이</span> <span class="err">필요하지만</span><span class="o">,</span> <span class="mi">8</span><span class="o">.</span> <span class="n">regtest</span><span class="err">네트워크의</span> <span class="err">경우</span> <span class="nc">Bitcoin</span> <span class="n">Core</span><span class="err">를</span> <span class="err">설치하기</span> <span class="err">위한</span> <span class="mi">17</span><span class="no">MB</span> <span class="o">+</span> <span class="mi">100</span><span class="err">블록당</span> <span class="mi">2</span><span class="no">MB</span> <span class="err">만</span> <span class="err">필요합니다</span><span class="o">.</span>
+<span class="mi">9</span><span class="o">.</span> <span class="err">많은</span> <span class="no">CPU</span> <span class="err">계산</span> <span class="err">능력이</span> <span class="err">필요</span> <span class="err">없습니다</span><span class="o">.</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h3 id="3-regtest-모드로-실행">3. regtest 모드로 실행</h3>
+
+<p>1) bitcoind 실행</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">$</span> <span class="n">bitcoind</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">server</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span> <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="o">-</span><span class="n">deprecatedrpc</span><span class="o">=</span><span class="n">accounts</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">bitcoind의 실행의 의미</code> : 하나의 full-node로 구성된 새로운 private blockchain network가 새롭게 시작되었다는 뜻</li>
+  <li><code class="highlighter-rouge">-rpcuwer</code>: user name</li>
+  <li><code class="highlighter-rouge">-rpcpassword</code>: user rpc password</li>
+  <li><code class="highlighter-rouge">-datadir</code> : 실행한 사설 테스트 네트워크의 정보를 저장할 경로를 지정하며, 블록, 피어, 지갑 등의 정보가 저장된다.
+    <ul>
+      <li>실행한 네트워크의 모든 정보는 지정한 공간에 저장되고, 첫 실행 후 다시 실행시킬 때 기존 경로가 아닌 새로운 경로로 지정하면 새로운 네트워크가 생성됩니다.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">-deprecatedrpc</code> :</li>
+</ul>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<p>2) bitcoin-cli 실행</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">$</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span> <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getnewaddress</span> <span class="n">acc1</span> 
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">rpcconnect</code>  / <code class="highlighter-rouge">rpcport</code>: bitcoind로 연결</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">getnewaddress</code>: 새로운 지갑생성</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>3) 옵션</p>
+
+<ul>
+  <li><code class="highlighter-rouge">listaccounts</code> : 지갑 확인</li>
+  <li><code class="highlighter-rouge">getblockcount</code>: 생성된 블록확인</li>
+  <li><code class="highlighter-rouge">generate</code>: 해당 네트워크의 블록을 하나 채굴하게 하는 RPC 명령을 전달한다.
+    <ul>
+      <li>100번째 블록까지는 막아놓다가 101번째 블록부터 50코인씩 채굴자에게 보상한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h3 id="4-비트코인-송금-실습">4. 비트코인 송금 실습</h3>
+
+<p>1) 두 개의 지갑 생성</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="mi">1060</span><span class="nl">e4b3d645:</span><span class="o">~</span><span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span> <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getnewaddress</span> <span class="n">acc1</span> 
+
+
+<span class="n">root</span><span class="err">@</span><span class="mi">1060</span><span class="nl">e4b3d645:</span><span class="o">~</span><span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getnewaddress</span> <span class="n">acc2</span> 
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>확인</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>   <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">0.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>2) 채굴자가 100개의 블록을 채굴함(막아놓음??)</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>   <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">generate</span> <span class="mi">100</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>3) 마스터가 50코인을 갖을 수 있도록 101번째 채굴</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>   <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">generate</span> <span class="mi">1</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>확인</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">""</span><span class="o">:</span> <span class="mf">50.00000000</span><span class="o">,</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">0.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>3) acc1의 지갑 주소 찾기</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getaccountaddress</span> <span class="n">acc1</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>4) acc1에게 10BTC보내기</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">sendtoaddress</span> <span class="mi">2</span><span class="nc">MuhxtdmKb19H6tJ4C2W38gNkxtgFujzYuw</span> <span class="mi">10</span>
+   
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>확인 _ acc1에게 아직 10코인이 도착하지 않았음을 볼 수 있다. (10코인과 수수료는 UTXO공장에서 가지고 있다고 생각하면 된다.)</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">""</span><span class="o">:</span> <span class="mf">39.99996260</span><span class="o">,</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">0.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>5) 마스트가 1블록을 채굴한 후, 지갑을 확인한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">generate</span>  <span class="mi">1</span>
+    
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>확인_ acc1에게 10코인이 전송되었고, 마스터는 또 하나의 블록을 채굴하였으므로 50코인을 더 받았음을 볼 수 있다.</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">""</span><span class="o">:</span> <span class="mf">89.99996260</span><span class="o">,</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">10.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Java" class="tag">| Java</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=비트코인 코어실습&url=http://localhost:4000/bitcoin_%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/bitcoin_%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/bitcoin_%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

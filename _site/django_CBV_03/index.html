@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CBV_ ListView - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">CBV_ ListView</h1>
+          <div class="page-date"><time datetime="2019-04-14 00:00:00 +0900">2019, Apr 14</time></div>
+        </div>
+        <h3 id="django-cbv_-generic_-listview-내용-정리">Django [CBV_ generic_ ListView] 내용 정리</h3>
+
+<p><br /></p>
+
+<h1 id="listview">ListView</h1>
+
+<ul>
+  <li>
+    <p>특정 한 DB table의 record 전체를 list로 표시할 때 활용한다.</p>
+  </li>
+  <li>
+    <p>리스트가 테이블의 모든 레코드인 경우에는 모델클래스만 지정하고,</p>
+
+    <p>레코드 중에서 목록을 지정하려면 <code class="highlighter-rouge">def get_queryset()</code> 을 사용한다.</p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<h3 id="공부방법">공부방법</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">class MultipleObjectMixin()</code> 을 중심으로 보자.</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="listview_-사용법">ListView_ 사용법</h1>
+
+<ul>
+  <li><strong>모델을 정의한다.</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [ models.py ] 
+</span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Publisher</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">city</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">state_province</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">country</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s">"-name"</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">publisher</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">publication_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>views.py에 Class 생성하고 ListView를 상속받는다.</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [ views.py ] 
+</span><span class="kn">from</span> <span class="nn">django.views.generic.list</span> <span class="kn">import</span> <span class="n">ListView</span>
+<span class="kn">from</span> <span class="nn">polls.models</span> <span class="kn">import</span> <span class="n">Book</span><span class="p">,</span> <span class="n">Publisher</span>
+
+<span class="k">class</span> <span class="nc">BookListView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+<span class="c1"># 모델명만 지정해주면 됨
+</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>   
+
+  
+	<span class="s">"""
+	ListView 디폴트 지정 속성
+	1) 컨텍스트 변수 : object_list
+	2) 템플릿 파일 : 모델명소문자_list.html
+	"""</span>  
+  
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>Urls.py를 작성한다.</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [ urls.py ]
+</span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">polls.views</span> <span class="kn">import</span> <span class="n">BookListView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">BookListView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>템플릿을 작성하자.</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># book_list.html
+</span>
+ 
+
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Book</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+  <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">object_list</span> <span class="o">%</span><span class="p">}</span>  <span class="o">&lt;</span><span class="err">!</span><span class="o">--</span><span class="n">context</span><span class="err">변수</span><span class="o">=</span><span class="n">object_list</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span> <span class="p">{{</span><span class="n">book</span><span class="o">.</span><span class="n">title</span><span class="p">}}</span> <span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+  <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ol>
+  <li><strong>설정을 꼭꼭꼭! 확인하자!</strong></li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [ settings.py ]
+</span><span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s">'test_django.urls'</span>
+
+<span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s">'BACKEND'</span><span class="p">:</span> <span class="s">'django.template.backends.django.DjangoTemplates'</span><span class="p">,</span>
+      <span class="c1"># DIRS에 다음을 꼭 넣어주자.
+</span>        <span class="s">'DIRS'</span><span class="p">:</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">'templates'</span><span class="p">)],</span>
+        <span class="s">'APP_DIRS'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'context_processors'</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s">'django.template.context_processors.debug'</span><span class="p">,</span>
+                <span class="s">'django.template.context_processors.request'</span><span class="p">,</span>
+                <span class="s">'django.contrib.auth.context_processors.auth'</span><span class="p">,</span>
+                <span class="s">'django.contrib.messages.context_processors.messages'</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">apple</span>
+<span class="err">│</span>  <span class="n">db</span><span class="o">.</span><span class="n">sqlite3</span>
+<span class="err">│</span>  <span class="n">manage</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>
+<span class="err">├─</span><span class="n">polls</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">admin</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">apps</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">forms</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">models</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">tests</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">urls</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">views</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="n">__init__</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>
+<span class="err">│</span>  <span class="err">├─</span><span class="n">migrations</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="err">│</span>  <span class="mi">0001</span><span class="n">_initial</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="o">|</span>  <span class="mi">0002</span><span class="n">_auto_20190101_1930</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>  <span class="err">└─</span>  <span class="n">__init__</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span>  <span class="err">│</span>
+<span class="err">│</span>  <span class="err">│</span>
+<span class="err">│</span>  <span class="err">└─</span><span class="n">templates</span>	      <span class="c1"># templates 폴더 밑에
+</span><span class="err">│</span>     <span class="err">├─</span><span class="n">polls</span>         <span class="c1"># app 이름으로 폴더를 만들어주고
+</span><span class="err">│</span>     <span class="err">└─</span>   <span class="n">book</span><span class="o">.</span><span class="n">html</span>  <span class="c1"># 그 아래 템플릿 만들기
+</span><span class="err">│</span>     
+<span class="err">│</span>
+<span class="err">└─</span><span class="n">Test_django</span>
+       <span class="n">settings</span><span class="o">.</span><span class="n">py</span>
+       <span class="n">urls</span><span class="o">.</span><span class="n">py</span>
+       <span class="n">wsgi</span><span class="o">.</span><span class="n">py</span>
+       <span class="n">__init__</span><span class="o">.</span><span class="n">py</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>사용가능한 설정 변수들</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">BookListView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span> 
+    
+    
+    <span class="c1"># 디폴트 템플릿명: &lt;app_label&gt;/&lt;model_name&gt;_list.html
+</span>    <span class="n">template_name</span> <span class="o">=</span> <span class="s">'polls/book.html'</span> 
+    <span class="c1"># 디폴트 컨텍스트 변수명 :  object_list
+</span>    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s">'books_list'</span> 
+    <span class="c1"># 디폴트 값 : None / 아래 설정은 list를 10개만 보여줌
+</span>    <span class="n">paginate_by</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="c1"># 디폴트 값 : 0
+</span>    <span class="n">paginate_orphans</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="c1"># 컨텍스트 오버라이딩
+</span>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+      <span class="k">return</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">'title'</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+    <span class="c1"># 컨텍스트 오버라이딩 / model 보다 더 우선함
+</span>    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+    <span class="c1"># 모델 값 없을 때, True : 빈화면, False : 404page
+</span>    <span class="n">allow_empty</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="c1"># 디폴트 값 : None
+</span>    <span class="n">ordering</span> <span class="o">=</span> <span class="s">'-title'</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>List templates  페이지 번호 만들기 예제</strong></p>
+  </li>
+  <li>
+    <p>django 제공 context</p>
+    <ul>
+      <li>object_list : The list of objects</li>
+      <li>is_paginated : A boolean representing whether the results are paginated</li>
+      <li>paginator</li>
+      <li>page_obj</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># 출처 : https://simpleisbetterthancomplex.com/tutorial/2016/08/03/how-to-paginate-with-django.html
+</span>
+
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">is_paginated</span> <span class="o">%</span><span class="p">}</span>
+  <span class="o">&lt;</span><span class="n">ul</span> <span class="n">class</span><span class="o">=</span><span class="s">"pagination"</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">page_obj</span><span class="o">.</span><span class="n">has_previous</span> <span class="o">%</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"?page={{ page_obj.previous_page_number }}"</span><span class="o">&gt;&amp;</span><span class="n">laquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="n">li</span> <span class="n">class</span><span class="o">=</span><span class="s">"disabled"</span><span class="o">&gt;&lt;</span><span class="n">span</span><span class="o">&gt;&amp;</span><span class="n">laquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">page_range</span> <span class="o">%</span><span class="p">}</span>
+      <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">page_obj</span><span class="o">.</span><span class="n">number</span> <span class="o">==</span> <span class="n">i</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">li</span> <span class="n">class</span><span class="o">=</span><span class="s">"active"</span><span class="o">&gt;&lt;</span><span class="n">span</span><span class="o">&gt;</span><span class="p">[[</span> <span class="n">i</span> <span class="p">]]</span> <span class="o">&lt;</span><span class="n">span</span> <span class="n">class</span><span class="o">=</span><span class="s">"sr-only"</span><span class="o">&gt;</span><span class="p">(</span><span class="n">current</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;&lt;/</span><span class="n">span</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+      <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"?page={{ i }}"</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">i</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+      <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">page_obj</span><span class="o">.</span><span class="n">has_next</span> <span class="o">%</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"?page={{ page_obj.next_page_number }}"</span><span class="o">&gt;&amp;</span><span class="n">raquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="n">li</span> <span class="n">class</span><span class="o">=</span><span class="s">"disabled"</span><span class="o">&gt;&lt;</span><span class="n">span</span><span class="o">&gt;&amp;</span><span class="n">raquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+  <span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="listview_-자세히-알아보자">ListView_ 자세히 알아보자</h1>
+
+<p><strong>Ancestors (MRO)</strong></p>
+
+<p>This view inherits methods and attributes from the following views:</p>
+
+<ul>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-multiple-object/#django.views.generic.list.MultipleObjectTemplateResponseMixin"><code class="highlighter-rouge">django.views.generic.list.MultipleObjectTemplateResponseMixin</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin"><code class="highlighter-rouge">django.views.generic.base.TemplateResponseMixin</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/#django.views.generic.list.BaseListView"><code class="highlighter-rouge">django.views.generic.list.BaseListView</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin"><code class="highlighter-rouge">django.views.generic.list.MultipleObjectMixin</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View"><code class="highlighter-rouge">django.views.generic.base.View</code></a></li>
+</ul>
+
+<p><strong>Method Flowchart</strong></p>
+
+<ol>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View.setup"><code class="highlighter-rouge">setup()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View.dispatch"><code class="highlighter-rouge">dispatch()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View.http_method_not_allowed"><code class="highlighter-rouge">http_method_not_allowed()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin.get_template_names"><code class="highlighter-rouge">get_template_names()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.get_queryset"><code class="highlighter-rouge">get_queryset()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.get_context_object_name"><code class="highlighter-rouge">get_context_object_name()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.get_context_data"><code class="highlighter-rouge">get_context_data()</code></a></li>
+  <li><code class="highlighter-rouge">get()</code></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin.render_to_response"><code class="highlighter-rouge">render_to_response()</code></a></li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">ListView</span><span class="p">(</span><span class="n">MultipleObjectTemplateResponseMixin</span><span class="p">,</span> <span class="n">BaseListView</span><span class="p">):</span>
+  
+<span class="s">"""
+ `self.model` or `self.queryset 로 된 목록을 렌더링한다.
+"""</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="1-multipleobjecttemplateresponsemixin">1. MultipleObjectTemplateResponseMixin</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">MultipleObjectTemplateResponseMixin</span><span class="p">(</span><span class="n">TemplateResponseMixin</span><span class="p">):</span>
+<span class="s">"""템플릿을 응답하기 위한 믹스"""</span>
+    <span class="n">template_name_suffix</span> <span class="o">=</span> <span class="s">'_list'</span>
+
+    <span class="k">def</span> <span class="nf">get_template_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="s">"""템플릿 이름을 반환"""</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_template_names</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">ImproperlyConfigured</span><span class="p">:</span>       
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object_list</span><span class="p">,</span> <span class="s">'model'</span><span class="p">):</span>
+            <span class="n">opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_list</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">"</span><span class="si">%</span><span class="s">s/</span><span class="si">%</span><span class="s">s</span><span class="si">%</span><span class="s">s.html"</span> <span class="o">%</span> <span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">app_label</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name_suffix</span><span class="p">))</span>
+<span class="c1"># 템플릿의 이름을 정의해 주지 않으면 앱이름/모델이름_list.html 로 
+# 템플릿 이름을 지정한다.
+</span>        <span class="k">elif</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s">"...에러"</span> <span class="o">%</span> <span class="p">{</span><span class="s">'cls'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,})</span>
+        <span class="k">return</span> <span class="n">names</span>
+
+</code></pre></div></div>
+
+<h1 id="1-1-templateresponsemixin">1-1 TemplateResponseMixin</h1>
+
+<ul>
+  <li>Base.py 에 정의 됨.</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="2-baselistview">2. BaseListView</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">BaseListView</span><span class="p">(</span><span class="n">MultipleObjectMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+<span class="s">"""개체 목록을 표시"""</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span>
+        <span class="n">allow_empty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_allow_empty</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_empty</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paginate_by</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object_list</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object_list</span><span class="p">,</span> <span class="s">'exists'</span><span class="p">):</span>
+                <span class="n">is_empty</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_list</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_empty</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_list</span>
+            <span class="k">if</span> <span class="n">is_empty</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">Http404</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">"..에러"</span><span class="p">)</span> <span class="o">%</span> <span class="p">{</span>
+                    <span class="s">'class_name'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,})</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_to_response</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h1 id="2-1-multipleobjectmixin">2-1 MultipleObjectMixin</h1>
+
+<ol>
+  <li><strong>allow_empty</strong> : 객체가 없는 경우 페이지를 표시 할지 여부를 지정하는 부울. False 면 404 page를 표시함.</li>
+  <li><strong>model</strong> : 데이터를 표시 할 모델</li>
+  <li><strong>queryset</strong> : QuerySet 객체를 표시, model 값보다 우선시 됨</li>
+  <li><strong>ordering</strong> : 문자열에 적용 할 정렬을 지정하는 문자열</li>
+  <li><strong>paginate_by</strong> : 페이지 당 표시 할 객체의 수를 지정하는 정수</li>
+  <li><strong>paginate_orphans</strong> : 마지막 페이지에 포함될 수있는 “오버플로”객체 수를 지정하는 정수</li>
+  <li><strong>page_kwarg</strong> : 페이지 매개 변수에 사용할 이름을 지정하는 문자열</li>
+  <li><strong>context_object_name</strong> : 컨텍스트에서 사용할 변수의 이름을 지정</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">MultipleObjectMixin</span><span class="p">(</span><span class="n">ContextMixin</span><span class="p">):</span>
+<span class="s">"""여러 객체를 조작하는 뷰의 mixin"""</span>
+    <span class="n">allow_empty</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">paginate_by</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">paginate_orphans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">paginator_class</span> <span class="o">=</span> <span class="n">Paginator</span>
+    <span class="n">page_kwarg</span> <span class="o">=</span> <span class="s">'page'</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">QuerySet</span><span class="p">):</span>
+                <span class="n">queryset</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_default_manager</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s">"..에러"</span> <span class="o">%</span> <span class="p">{</span>
+                    <span class="s">'cls'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">})</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ordering</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ordering</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ordering</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="n">ordering</span><span class="p">,)</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="o">*</span><span class="n">ordering</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">queryset</span>
+
+    <span class="k">def</span> <span class="nf">get_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ordering</span>
+
+    <span class="k">def</span> <span class="nf">paginate_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">page_size</span><span class="p">):</span>
+    <span class="s">"""페이지 매기기"""</span>
+        <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span>
+            <span class="n">queryset</span><span class="p">,</span> <span class="n">page_size</span><span class="p">,</span> <span class="n">orphans</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_paginate_orphans</span><span class="p">(),</span>
+            <span class="n">allow_empty_first_page</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_allow_empty</span><span class="p">())</span>
+        <span class="n">page_kwarg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">page_kwarg</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">page_kwarg</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">page_kwarg</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">1</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">page_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+        <span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">page</span> <span class="o">==</span> <span class="s">'last'</span><span class="p">:</span>
+                <span class="n">page_number</span> <span class="o">=</span> <span class="n">paginator</span><span class="o">.</span><span class="n">num_pages</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">Http404</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">"Page is not 'last'"</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="n">paginator</span><span class="o">.</span><span class="n">page</span><span class="p">(</span><span class="n">page_number</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">paginator</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">object_list</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">has_other_pages</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">InvalidPage</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Http404</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">'Invalid page (</span><span class="si">%(page_number)</span><span class="s">s): </span><span class="si">%(message)</span><span class="s">s'</span><span class="p">)</span> <span class="o">%</span> <span class="p">{</span><span class="s">'page_number'</span><span class="p">:</span> <span class="n">page_number</span><span class="p">,</span>
+                <span class="s">'message'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)})</span>
+
+    <span class="k">def</span> <span class="nf">get_paginate_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">paginate_by</span>
+
+    <span class="k">def</span> <span class="nf">get_paginator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">per_page</span><span class="p">,</span> <span class="n">orphans</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                      <span class="n">allow_empty_first_page</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">paginator_class</span><span class="p">(</span>
+            <span class="n">queryset</span><span class="p">,</span> <span class="n">per_page</span><span class="p">,</span> <span class="n">orphans</span><span class="o">=</span><span class="n">orphans</span><span class="p">,</span>
+            <span class="n">allow_empty_first_page</span><span class="o">=</span><span class="n">allow_empty_first_page</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_paginate_orphans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">paginate_orphans</span>
+
+    <span class="k">def</span> <span class="nf">get_allow_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_empty</span>
+
+    <span class="k">def</span> <span class="nf">get_context_object_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_object_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_object_name</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">object_list</span><span class="p">,</span> <span class="s">'model'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">'</span><span class="si">%</span><span class="s">s_list'</span> <span class="o">%</span>         <span class="n">object_list</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">object_list</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">queryset</span> <span class="o">=</span> <span class="n">object_list</span> <span class="k">if</span> <span class="n">object_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_list</span>
+        <span class="n">page_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paginate_by</span><span class="p">(</span><span class="n">queryset</span><span class="p">)</span>
+        <span class="n">context_object_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context_object_name</span><span class="p">(</span><span class="n">queryset</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">page_size</span><span class="p">:</span>
+            <span class="n">paginator</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">is_paginated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paginate_queryset</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">page_size</span><span class="p">)</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">'paginator'</span><span class="p">:</span> <span class="n">paginator</span><span class="p">,</span>
+                <span class="s">'page_obj'</span><span class="p">:</span> <span class="n">page</span><span class="p">,</span>
+                <span class="s">'is_paginated'</span><span class="p">:</span> <span class="n">is_paginated</span><span class="p">,</span>
+                <span class="s">'object_list'</span><span class="p">:</span> <span class="n">queryset</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">'paginator'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s">'page_obj'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="s">'is_paginated'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s">'object_list'</span><span class="p">:</span> <span class="n">queryset</span>
+            <span class="p">}</span>
+        <span class="k">if</span> <span class="n">context_object_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="n">context_object_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">queryset</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h1 id="2-2-contextmixin">2-2 ContextMixin</h1>
+
+<ul>
+  <li>Base.py 에 정의 됨.</li>
+</ul>
+
+<p><br /></p>
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=CBV_ ListView&url=http://localhost:4000/django_CBV_03/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/django_CBV_03/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/django_CBV_03/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Django_ 모델, 모델필드, 필드옵션 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Django_ 모델, 모델필드, 필드옵션</h1>
+          <div class="page-date"><time datetime="2019-04-12 00:00:00 +0900">2019, Apr 12</time></div>
+        </div>
+        <h3 id="django-models-내용-정리">Django [models] 내용 정리</h3>
+
+<p><br /></p>
+
+<p><strong>Django Model</strong></p>
+
+<ul>
+  <li>
+    <p>장고 내장 ORM</p>
+  </li>
+  <li>
+    <p>ORM의 역할 : SQL 을 직접 작성하지 않아도 장고 모델을 통해 데이터베이스로 접근한다.(조회/추가/수정/삭제)</p>
+
+    <p><br /></p>
+
+    <p><strong>장고 커스텀 모델정의</strong></p>
+  </li>
+  <li>위치: 앱 / models.py</li>
+  <li>Database 테이블 구조와 타입을 먼저 설계를 한 다음에 모델을 정의한다.</li>
+  <li>모델 클래스명은 단수형을 사용한다.(Persons 아니고,  Person)</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="modelspy_-사용법">models.py_ 사용법</h1>
+
+<ol>
+  <li>
+    <p>app 을 생성한 후, models.py 에 작성하기</p>
+  </li>
+  <li>
+    <p>Models.py 에 코드 작성 후, [<code class="highlighter-rouge">manage.py makemigrations</code>] 으로 테이블을 생성한 후  [<code class="highlighter-rouge">manage.py migrate</code>] 로 run 한다.</p>
+  </li>
+  <li>
+    <p>Admin.py 에 모델클래스 등록</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   
+<span class="c1"># 앱폴더/admin.py
+</span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Person</span>
+   
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span>
+   
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h1 id="모델을-만들어보자">모델을 만들어보자.</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># 앱폴더/models.py
+</span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>위의 코드는 아래의 database table 과 같다.</p>
+
+<pre><code class="language-sqlite">
+CREATE TABLE myapp_person (
+    "id" serial NOT NULL PRIMARY KEY,
+    "first_name" varchar(30) NOT NULL,
+    "last_name" varchar(30) NOT NULL
+);
+
+</code></pre>
+
+<h3 id="생성된-db테이블-명">생성된 DB테이블 명</h3>
+
+<ul>
+  <li>
+    <p>디폴트 값 : ‘앱이름_모델명’</p>
+
+    <p>ex&gt; blog 앱 / Person 모델</p>
+
+    <p>———&gt;  “blog_person”</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="model-field--option">Model field + Option</h1>
+
+<ul>
+  <li>Djanog all Fields =&gt; <a href="https://docs.djangoproject.com/en/2.1/ref/models/fields/#module-django.db.models.fields">Model field reference</a></li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="많이-사용하는-fields">많이 사용하는 Fields</h3>
+
+<ol>
+  <li>문자열 : CharField</li>
+  <li>날짜/시간 : DateTimeField</li>
+  <li>참/거짓 : BooleanField</li>
+  <li>숫자 : IntegerField</li>
+  <li>파일 : FileField, ImageField</li>
+  <li>이메일 : EmailField</li>
+  <li>URL : URLField</li>
+</ol>
+
+<h3 id="많이-사용하는-필드-공통-option">많이 사용하는 필드 공통 Option</h3>
+
+<ol>
+  <li>
+    <p>옵션명[디폴트 값] : 기능</p>
+  </li>
+  <li><code class="highlighter-rouge">blank</code> [False] : empty 허용여부(null과 다름, null은 DB의 값에 관련됨 blank는 유효성 검사시 빈 값을 허용해주는 것을 말함.)</li>
+  <li><code class="highlighter-rouge">null</code>  [False] : null 허용여부</li>
+  <li><code class="highlighter-rouge">default</code> [False] : 디폴트 값 지정</li>
+  <li><code class="highlighter-rouge">unique</code> [False] : 현재 테이블 내에서 유일성 여부</li>
+  <li><code class="highlighter-rouge">choices</code> : selectbox 소스로 사용 =&gt; <a href="https://docs.djangoproject.com/en/2.1/ref/models/fields/#django.db.models.Field.choices">사용법</a></li>
+  <li><code class="highlighter-rouge">validators</code> : validators를 수행할 함수를 다수 지정</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+   
+<span class="k">class</span> <span class="nc">Musician</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+   
+    <span class="c1"># unique
+</span>    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c1"># default
+</span>    <span class="n">instrument</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'-'</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Album</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># foreignkey 생성시, Musician을 인스턴스로 넣어야 함
+</span>    
+    <span class="c1"># on_delete: 부모db 삭제시 어떻게 할지 정해줌 
+</span>    <span class="c1"># related_name: Musician.albums.objects로 접근 가능하게 함
+</span>    <span class="n">artist</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Musician</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">'albums'</span><span class="p">)</span>
+    
+    <span class="c1"># null
+</span>    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    
+    <span class="c1"># auto_now_add: 해당 레코드 생성시 현재 시간 자동저장
+</span>    <span class="n">release_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="c1"># auto_now: 해당 레코드 갱신시 현재 시간 자동저장
+</span>    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> 
+    
+    <span class="c1"># IntegerField: 숫자
+</span>    <span class="n">num_stars</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>    
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="option-활용법">Option 활용법</h1>
+
+<h3 id="-choices--get_변수명_display--으로-접근">+ <code class="highlighter-rouge">choices</code> : <code class="highlighter-rouge">get_[변수명]_display() </code> 으로 접근</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">SHIRT_SIZES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s">'S'</span><span class="p">,</span> <span class="s">'Small'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">'M'</span><span class="p">,</span> <span class="s">'Medium'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">'L'</span><span class="p">,</span> <span class="s">'Large'</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">shirt_size</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">SHIRT_SIZES</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> p <span class="o">=</span> Person<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">"Fred Flintstone"</span>, <span class="nv">shirt_size</span><span class="o">=</span><span class="s2">"L"</span><span class="o">)</span>
+<span class="o">&gt;&gt;&gt;</span> p.save<span class="o">()</span>
+<span class="o">&gt;&gt;&gt;</span> p.shirt_size
+<span class="s1">'L'</span>
+<span class="o">&gt;&gt;&gt;</span> p.get_shirt_size_display<span class="o">()</span> 
+<span class="s1">'Large'</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="-primary_key--읽기만-가능해서-값을-변경한-다음-저장하면---이전-개체와-함께-새-개체가-만들어집니다">+ <code class="highlighter-rouge">Primary_key</code> : 읽기만 가능해서 값을 변경한 다음 저장하면   이전 개체와 함께 새 개체가 만들어집니다.</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Fruit</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> fruit <span class="o">=</span> Fruit.objects.create<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">'Apple'</span><span class="o">)</span>
+<span class="o">&gt;&gt;&gt;</span> fruit.name <span class="o">=</span> <span class="s1">'Pear'</span>
+<span class="o">&gt;&gt;&gt;</span> fruit.save<span class="o">()</span>
+<span class="o">&gt;&gt;&gt;</span> Fruit.objects.values_list<span class="o">(</span><span class="s1">'name'</span>, <span class="nv">flat</span><span class="o">=</span>True<span class="o">)</span>
+&lt;QuerySet <span class="o">[</span><span class="s1">'Apple'</span>, <span class="s1">'Pear'</span><span class="o">]&gt;</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="-default--객체도-default-값이-될-수-있음">+ <code class="highlighter-rouge">default</code> : 객체도 default 값이 될 수 있음</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">def</span> <span class="nf">contact_default</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">"email"</span><span class="p">:</span> <span class="s">"to1@example.com"</span><span class="p">}</span>
+
+<span class="n">contact_info</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span><span class="s">"ContactInfo"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">contact_default</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="class-meta-option">class Meta option</h1>
+
+<ul>
+  <li>Djanog meta option =&gt; <a href="https://docs.djangoproject.com/ko/2.1/ref/models/options/#model-meta-options">Model meta option</a></li>
+</ul>
+
+<p><br /></p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">abstract</code> : 공통된 필드가 많이 있는 모델 클래스들이 있을 때 물리적으로 존재하지 않는 가상의 클래스가 된다</p>
+
+    <p>참고사이트 =&gt; <a href="https://dgkim5360.tistory.com/entry/django-model-inheritance">개발새발로그</a></p>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+<span class="k">class</span> <span class="nc">Vehicle</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+ 
+  <span class="c1"># 다음의 옵션이 있으면, Vehicle은 물리적으로 생성되지 않음
+</span>  <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+    <span class="n">abstract</span> <span class="o">=</span> <span class="bp">True</span>
+    
+<span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span> 
+  <span class="nb">type</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">app_label</code> : app_name 을 지정해주는 이유는 django가 기본적으로 model을 생성할 때 class가 존재하는 바로 위의 파일을 앱으로 판단하여 거기에 모델을 생성하기에 모델이 앱의 외부에 정의 된 경우에는 앱의 이름을 넣어주어야 함.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">db_table</code> : 모델에서 사용할 데이터베이스의 테이블 이름</p>
+
+    <p>디폴트 값 -&gt; “app label(사용 된 이름)_모델의 클래스 이름”</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ordering</code> : 정렬</p>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Ox</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">horn_length</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+      <span class="c1"># horn_length를 기준으로 오름차순으로 정렬/ '-'를 사용하면 내림차순  
+</span>        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s">"horn_length"</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<ol>
+  <li><code class="highlighter-rouge">proxy</code> : 서브 클래스 모델로 처리됨</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyPerson</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">proxy</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># ...
+</span>        <span class="k">pass</span>
+
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">MyPerson</code> 클래스는 부모 클래스인 <code class="highlighter-rouge">Person</code> 처럼 동일한 데이타베이스 테이블에 작동 됩니다. 또한 특별히, 어느 새로운 <code class="highlighter-rouge">Person</code> 의 인스턴스는 [<code class="highlighter-rouge">](https://docs.djangoproject.com/ko/2.1/topics/db/models/#id1)MyPerson</code>을 통해 접근 가능하고 기타 여러가지 기능이 가능하게 됩니다</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s">"foobar"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">MyPerson</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s">"foobar"</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">MyPerson</span><span class="p">:</span> <span class="n">foobar</span><span class="o">&gt;</span>
+
+</code></pre></div></div>
+
+<ol>
+  <li><code class="highlighter-rouge">unique_together</code> : 고유값으로 묶여야하는 값</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">"driver"</span><span class="p">,</span> <span class="s">"restaurant"</span><span class="p">),)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Django" class="tag">| Django</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Django_ 모델, 모델필드, 필드옵션&url=http://localhost:4000/django_model_01/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/django_model_01/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/django_model_01/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

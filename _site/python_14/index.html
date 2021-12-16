@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Python_ Unicode and UTF-8 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Python_ Unicode and UTF-8</h1>
+          <div class="page-date"><time datetime="2019-04-02 00:00:00 +0900">2019, Apr 02</time></div>
+        </div>
+        <h3 id="모두를-위한-파이썬-웹-스크래핑-내용-정리">모두를 위한 파이썬 [웹 스크래핑] 내용 정리</h3>
+
+<p><br /></p>
+
+<h1 id="ascii">ASCII</h1>
+
+<p>1970년대 상호운용이 필요해지고, 그러면서 문자 집합의 표준을 정합니다.</p>
+
+<p>문제는 표준을 서구 문명에 대해서만 정했고, 그러다보니 다른 문자들이 빠지게 되었습니다.</p>
+
+<p><img src="/assets/img_studed/0402_unicode_01.png" alt="0402_unicode_01" /></p>
+
+<p>여기의 표를 보면 여러 문자들이 있는데, 공백도 있고 출력되지 않는 문자도 있고 또, 출력되는 문자도 있네요.</p>
+
+<p>이렇게 총 128개 문자가 있네요.</p>
+
+<p>ASCII는 결국 대응표인데 소문자 a는 정수 97에 대응되고,16진법으로는 0x61이 되죠.</p>
+
+<p>8진법으로 바꾸면 141이 되고요. 그렇지만 2진법에서는 8자리 수죠.</p>
+
+<p>그래서 총 8bit가 되고 이게 1byte 입니다. 굉장히 효율적이죠.</p>
+
+<p>예를 들어 디스크 드라이브를 구매할 때 몇 MB나 몇 GB이던지 그만큼 문자가 저장될 수 있다는 이야기 입니다.</p>
+
+<p>하지만, 더 복잡한 문자에서는 다른 방법이 필요하죠.</p>
+
+<h3 id="--ord--문자와-숫자를-ascii-문자에-대응되는-숫자로-바꿔줌">- ord() : 문자와 숫자를 ASCII 문자에 대응되는 숫자로 바꿔줌</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s">'H'</span><span class="p">))</span>
+<span class="mi">72</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s">'e'</span><span class="p">))</span>
+<span class="mi">101</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">))</span>
+<span class="mi">10</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="unicode">Unicode</h1>
+
+<p>시대가 지나가면서 사용하는 문자가 많아지면서 ASCII가 한계에 부딪히게 됩니다.</p>
+
+<p><strong><a href="https://unicode.org/charts/About.html">Unicode Code Charts</a></strong></p>
+
+<p>그래서 굉장히 복잡하고 무거운 유니코드까지 발전하게 됩니다.</p>
+
+<p>유니코드는 몇 십억개의 문자를 포함하고, 새로운 문자를 위해 몇 십억 개를 더 저장할 여력이 있습니다.</p>
+
+<p>유니코드에는 빈 공간이 많기 때문에 다양한 문자를 포함하고 자리를 주는 것이 가능하죠.</p>
+
+<p>공간이 정말 많아서, 어떤 문자를 원하더라도 저장될 수 있습니다.</p>
+
+<p><br />문제는 유니코드를 네트워크로 전송 할 때 용량이 과도하게 크다는 겁니다.</p>
+
+<p>그래서 어떤 방법을 쓰냐하면, 바로 이걸 압축하는 겁니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'''
+
+* UTF-32 : 길이 고정됨 4bytes
+* UTF-16 : 길이 고정됨 2bytes
+* UTF-8 : 1 ~ 4 bytes
+		- ASCII를 포함하며, 호환
+		- ASCII를 자동으로 감지 가능
+
+'''</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>UTF-32는 한 문자에 8byte를 사용하지 않고 4byte를 할당하는데 이렇게 한다고 해도</p>
+
+    <p>ASCII에 비하면 용량이 4배나 더 큽니다.</p>
+  </li>
+  <li>
+    <p>UTF-16 : UTF-32의 부분이며 몇몇 나라에서 쓰이고 있음.</p>
+  </li>
+</ul>
+
+<p>그렇지만 인터넷을 통해 데이터를 전송하거나 컴퓨터에서 파일을 작성할 때는 UTF-8이 가장 실용적입니다.</p>
+
+<ul>
+  <li>
+    <p>UTF-8 : 동적으로 길이를 1 ~ 4 byte까지 변경 가능합니다.</p>
+
+    <p>1byte는 ASCII 코드와 완벽하게 같습니다. 그리고 UTF-32가 나타낼  수  있는 것을 다 나타낼 수 있으면서도</p>
+
+    <p>용량이 낮은 압축된 버전이기 때문입니다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="파이썬의-문자열">파이썬의 문자열</h1>
+
+<p>파이썬은 문자열을 나타내는데 두 가지 방법을 사용합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">Python</span> <span class="mf">2.7.10</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">b</span><span class="s">'abc'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">'str'</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="s">'이광춘'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">'str'</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="s">u'이광춘'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">'unicode'</span><span class="o">&gt;</span>
+
+</code></pre></div></div>
+
+<p>Python2 에서는 일반적 문자열은 byte 문자열로(ASCII), 유니코드로 변경 할 때는 다른 종류의 객체를 사용해야 했습니다.</p>
+
+<p><strong><a href="https://libsora.so/posts/python-hangul/">Python2 에서 한글 인코딩하기</a></strong></p>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">Python</span> <span class="mf">3.5.1</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">b</span><span class="s">'abc'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">bytes</span><span class="s">'&gt;</span><span class="err">
+</span><span class="s">&gt;&gt;&gt; x = '</span><span class="err">이광춘</span><span class="s">'</span><span class="err">
+</span><span class="s">&gt;&gt;&gt; type(x)</span><span class="err">
+</span><span class="s">&lt;class '</span><span class="nb">str</span><span class="s">'&gt;</span><span class="err">
+</span><span class="s">&gt;&gt;&gt; x = u'</span><span class="err">이광춘</span><span class="s">'</span><span class="err">
+</span><span class="s">&gt;&gt;&gt; type(x)</span><span class="err">
+</span><span class="s">&lt;class '</span><span class="nb">str</span><span class="s">'&gt;</span><span class="err">
+
+</span></code></pre></div></div>
+
+<p>Python3 이후부터는 문자열을 유니코드와 같게 만든 것입니다.</p>
+
+<p>내부에서 문자열을 사용하는 경우 문자열은 유니코드 형식으로 다루어지게 됩니다.</p>
+
+<p><br /></p>
+
+<p>그래서 프로그램 내부에서 파일을 읽거나 작업하는데는 따로 인코딩 형식을 지정하지 않아도 거의 문제가 없습니다.</p>
+
+<p>하지만, 소켓 또는 외부와 통신 할 때는 어떤 데이터를 다루고 있는지 잘 알아야겠죠.</p>
+
+<p>좋은 소식은 95% 는 UTF-8 을 사용하기 때문에 굉장히 편합니다. 하지만 데이터의 종류는 알아야합니다.</p>
+
+<p><br /><strong>그래서 네트워크를 통해 데이터를 받은 경우 반드시 올바른 방식으로 데이터를 해석하거나</strong></p>
+
+<p><strong>디코딩해주어야 함을 명심해야 합니다.</strong></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>문자열 » Byte</p>
+
+    <ul>
+      <li>
+        <p>네트워크 소켓 등 외부 자원과 통신하는 경우, 문자열이 아니라 Byte 형식을 사용해야 합니다.</p>
+
+        <p>따라서 python3 에서는 문자열을 Byte로 인코딩하는 것이 필요합니다.</p>
+      </li>
+    </ul>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+  
+<span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s">"strict"</span><span class="p">)</span>
+  
+<span class="s">'''
+문자열의 바이트열 객체로 인코딩된 버전을 돌려줍니다. 기본 인코딩은 'utf-8' 입니다. errors 는 다른 오류 처리 방식을 설정하기 위해 제공될 수 있습니다. errors 의 기본값은 'strict' 인데, 인코딩 오류가 있으면 UnicodeError 를 일으키라는 뜻입니다. 다른 가능한 값은 'ignore', 'replace', 'xmlcharrefreplace', 'backslashreplace' 와 codecs.register_error() 를 통해 등록된 다른 이름들입니다. Error Handlers를 보세요. 가능한 인코딩의 목록을 보려면 Standard Encodings 섹션을 참조하십시오.
+  
+'''</span>
+  
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Byte » 문자열</p>
+
+    <ul>
+      <li>
+        <p>외부에서 데이터를 가져오는 경우 해당 문자셋에 대하여 디코딩을 해야 python3에서</p>
+
+        <p>정상적인 문자열로 사용할 수 있습니다.</p>
+      </li>
+    </ul>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+<span class="nb">bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s">"strict"</span><span class="p">)</span>
+<span class="nb">bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s">"strict"</span><span class="p">)</span>
+<span class="s">'''
+주어진 바이트열로부터 디코딩된 문자열을 돌려줍니다. 기본 인코딩은 'utf-8' 입니다. errors 는 다른 오류 처리 방식을 설정하기 위해 제공될 수 있습니다. errors 의 기본값은 'strict' 인데, 인코딩 오류가 있으면 UnicodeError 를 일으키라는 뜻입니다. 다른 가능한 값은 'ignore', 'replace' 와 codecs.register_error() 를 통해 등록된 다른 이름들입니다. Error Handlers를 보세요. 가능한 인코딩의 목록을 보려면 Standard Encodings 섹션을 참조하십시오.
+'''</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p><img src="/assets/img_studed/0402_unicode_02.png" alt="0402_unicode_02" /></p>
+
+<p>다시정리하면, unicode 문자열을 네트워크로 내보려면 UTF-8로 인코딩해야하고</p>
+
+<p>네트워크에서 정보를 받아오면 그것을 읽고 활용하기위해 unicode 문자열로 디코딩합니다.</p>
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#모두를_위한_파이썬" class="tag">| 모두를_위한_파이썬</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Python_ Unicode and UTF-8&url=http://localhost:4000/python_14/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/python_14/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/python_14/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

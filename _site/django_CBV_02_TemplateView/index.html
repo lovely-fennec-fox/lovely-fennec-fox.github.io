@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CBV_ TemplateView - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">CBV_ TemplateView</h1>
+          <div class="page-date"><time datetime="2019-04-13 00:00:00 +0900">2019, Apr 13</time></div>
+        </div>
+        <h3 id="django-cbv_-generic_-templateview-내용-정리">Django [CBV_ generic_ TemplateView] 내용 정리</h3>
+
+<p><br /></p>
+
+<h3 id="공부방법">공부방법</h3>
+
+<ul>
+  <li>view 는 기능이 너무 많으니 as_view , dispatch 만 먼저 확인하기</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="templateview_-사용법">TemplateView_ 사용법</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [ views.py ] 
+</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+
+<span class="k">class</span> <span class="nc">AboutView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s">"about.html"</span>
+    
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [ urls.py ] 
+</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">some_app.views</span> <span class="kn">import</span> <span class="n">AboutView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'about/'</span><span class="p">,</span> <span class="n">AboutView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>class django.views.generic.base.<code class="highlighter-rouge">TemplateView</code></p>
+
+<p>URL로 캡춰 된 파라미터를 포함한 문맥을 사용해, 지정된 템플릿을 렌더링합니다.</p>
+
+<p>코드를 작성해보자.</p>
+
+<p><br /></p>
+
+<ol>
+  <li>템플릿 작성</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+
+<span class="n">Welcome</span><span class="p">,</span> <span class="n">my</span> <span class="n">homepage</span><span class="err">!</span>
+
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ol>
+  <li>
+    <p>views.py에 Class 생성하고 TemplateView를 상속받는다.</p>
+
+    <p>보통 클래스 뷰의 이름은 대문자로 시작하고 끝에 View가 붙는다 (IndexView, DetailView, ResultsView 등)</p>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.views.generic.base</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+
+<span class="k">class</span> <span class="nc">HomePageView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+
+<span class="c1"># a template_name를 정의하지 않으면 예외 발생  
+</span>    <span class="n">template_name</span> <span class="o">=</span> <span class="s">"test.html"</span> 
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ol>
+  <li>urls.py 를 작성한다.</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>    
+<span class="kn">from</span> <span class="nn">polls.views</span> <span class="kn">import</span> <span class="n">HomePageView</span>   <span class="c1"># 앱 이름
+</span>
+ 
+<span class="c1"># .as_view() 를 통해서 generic view를 적용할 수 있다.
+</span><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'homepage'</span><span class="p">,</span> <span class="n">HomePageView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>  
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ol>
+  <li>사용가능한 설정 변수들</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">HomePageView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+
+  <span class="c1"># 템플릿 이름
+</span>  <span class="n">template_name</span> <span class="o">=</span> <span class="s">"test.html"</span> 
+
+  <span class="c1"># context 추가
+</span>  <span class="n">extra_context</span> <span class="o">=</span> <span class="p">{</span><span class="s">'title'</span><span class="p">:</span> <span class="s">'hello'</span><span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="templateview_-자세히-알아보자">TemplateView_ 자세히 알아보자</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">TemplateView</span><span class="p">(</span><span class="n">TemplateResponseMixin</span><span class="p">,</span> <span class="n">ContextMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+    <span class="s">"""
+    Render a template. Pass keyword arguments from the URLconf to the context.
+    """</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_to_response</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">get함수</code> 활용법 : context 추가할 때 사용함</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+  <span class="n">template_name</span> <span class="o">=</span> <span class="s">'test.html'</span>
+
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    
+    <span class="c1"># 주소에서 정보 받아올 때
+</span>    <span class="n">context</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span>
+    
+    <span class="c1"># context 지정
+</span>    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s">'test'</span><span class="p">:</span><span class="s">'abcd'</span><span class="p">}</span>
+    
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_to_response</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><strong>Ancestors</strong> <strong>(MRO)</strong></p>
+
+<p>이 뷰는 다음 뷰에서 메서드와 특성을 상속받습니다.</p>
+
+<ul>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-simple/#django.views.generic.base.TemplateResponseMixin"><code class="highlighter-rouge">django.views.generic.base.TemplateResponseMixin</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-simple/#django.views.generic.base.ContextMixin"><code class="highlighter-rouge">django.views.generic.base.ContextMixin</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View"><code class="highlighter-rouge">django.views.generic.base.View</code></a></li>
+</ul>
+
+<p><strong>메소드 흐름도</strong></p>
+
+<ol>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View.setup"><code class="highlighter-rouge">setup()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View.dispatch"><code class="highlighter-rouge">dispatch()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/base/#django.views.generic.base.View.http_method_not_allowed"><code class="highlighter-rouge">http_method_not_allowed()</code></a></li>
+  <li><a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/mixins-simple/#django.views.generic.base.ContextMixin.get_context_data"><code class="highlighter-rouge">get_context_data()</code></a></li>
+</ol>
+
+<p><br /></p>
+
+<h1 id="1-templateresponsemixin">1. TemplateResponseMixin</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">TemplateResponseMixin</span><span class="p">:</span>
+<span class="s">""" 템플릿을 렌더링 하는데 사용한다."""</span>
+    
+<span class="c1"># 문자열로 정의 된대로 사용할 템플릿의 전체 이름
+</span>    <span class="n">template_name</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="c1"># Default는 Django가 모든 구성된 엔진에서 템플릿을 검색하도록 지시  
+</span>    <span class="n">template_engine</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="c1"># render_to_response메소드에 의해 리턴 될 응답 클래스 
+</span>    <span class="n">response_class</span> <span class="o">=</span> <span class="n">TemplateResponse</span>
+<span class="c1"># 응답에 사용할 컨텐트 유형
+</span>    <span class="n">content_type</span> <span class="o">=</span> <span class="bp">None</span>
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="2-contextmixin">2. ContextMixin</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">ContextMixin</span><span class="p">:</span>
+<span class="s">"""
+get_context_data()의 리턴 값과 기본 값과 혼합.
+"""</span>
+<span class="c1"># 컨텍스트에 포함 할 dict / ex&gt; {'title': 'Custom Title'}
+</span>    <span class="n">extra_context</span> <span class="o">=</span> <span class="bp">None</span>
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="3-view">3. View</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">View</span><span class="p">:</span>
+<span class="s">"""모든 views의 상위 클래스"""</span>
+  <span class="n">http_method_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'get'</span><span class="p">,</span> <span class="s">'post'</span><span class="p">,</span> <span class="s">'put'</span><span class="p">,</span> <span class="s">'patch'</span><span class="p">,</span> <span class="s">'delete'</span><span class="p">,</span> <span class="s">'head'</span><span class="p">,</span> <span class="s">'options'</span><span class="p">,</span> <span class="s">'trace'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>              
+
+    <span class="o">@</span><span class="n">classonlymethod</span>
+    <span class="k">def</span> <span class="nf">as_view</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">initkwargs</span><span class="p">):</span>
+<span class="s">"""요청 응답 프로세스의 기본 진입점."""</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">initkwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">http_method_names</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">"..에러"</span><span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">"..에러"</span><span class="o">%</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+
+
+<span class="c1"># request 인수를 받아들이고 HTTP 응답을 반환하는 메서드                
+</span>    <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_method_names</span><span class="p">:</span>
+            <span class="n">handler</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_method_not_allowed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_method_not_allowed</span>
+        <span class="k">return</span> <span class="n">handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Django" class="tag">| Django</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=CBV_ TemplateView&url=http://localhost:4000/django_CBV_02_TemplateView/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/django_CBV_02_TemplateView/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/django_CBV_02_TemplateView/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Network_ Transport layer_06 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Network_ Transport layer_06</h1>
+          <div class="page-date"><time datetime="2019-05-18 00:00:00 +0900">2019, May 18</time></div>
+        </div>
+        <p><br /></p>
+
+<p><code class="highlighter-rouge">[ 한양대학교 이석복 교수님 공개강의 내용정리 ]</code></p>
+
+<p>수업자료 = <a href="http://kocw.xcache.kinxcdn.com/KOCW/document/2015/hanyang/leesukbok0326/8.pdf"> Connection-oriented transport : TCP_04 </a></p>
+
+<p><br /></p>
+
+<h1 id="-tcp-cognition-control">** TCP cognition control</h1>
+
+<ul>
+  <li>네트워크에서 혼잡을 막기위해 TCP는 클라이언트와 서버간에 ACK가 오는 속도나 유실의 유무로 각자가 보내는 데이터량을 조절한다.</li>
+</ul>
+
+<h3 id="1-control을-위한-주요-3-단계">1) control을 위한 주요 3 단계</h3>
+
+<ol>
+  <li>Slow Start</li>
+  <li>Additive increase</li>
+  <li>Multiplicative decrease (한 번 막혔을 때는 한꺼번에 data가 빠져야 통신이 원활해지기 때문에 조금씩 줄여가지 않고 반으로 팍 줄인 후 데이터량을 늘려나간다. )</li>
+</ol>
+
+<p>처음에 data를 보낼 때 한꺼번에 많이 보내지 말고 천천히 보내면서 ACK의 상황을 파악한다. 천천히 보내다가 잘 보내지면 제곱수로 보낸다.</p>
+
+<p>그러다가 threshold 지점을 만나면 증가시키는 폭을 줄여서 증가시킨다.</p>
+
+<p>증가시키다가 Packet loss가 나면 window size를 반으로 줄여서 보내면서 조금씩 증가시킨다. 이때, threshold는  ===&gt; <a href="https://stackoverflow.com/questions/30818925/tcp-congestion-control-fast-recovery-in-graph"> Slow-start-and-Congestion-window그래프 </a></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>MSS (Maximum segment size) : TCP상에서의 전송할 수 있는 사용자 데이타의 최대크기(최대 500byte)</p>
+  </li>
+  <li>
+    <p>위의 data를 한꺼번에 보낼 수 있는 양은 결국 window size를 말하는데,</p>
+
+    <p>Slow start로 시작할 경우 window size는 1MSS 가 된다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="1-tcp-series-2-reno">1. TCP series 2 Reno</h1>
+
+<ul>
+  <li>패킷 유실을 탐지하는 2가지
+    <ol>
+      <li>Time out</li>
+      <li>3 duplicated ACK</li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>3 duplicated ACK 의 상황은 어느 하나의 패킷이 도착하지 않을 때 발생할 확률이 높고, Time out은 모든 패킷이 도착을 안했을 때 발생할 확률이 높다. 둘의 상황이 다르기 때문에 대처도 다르게 해야한다는 관점에서 나온 것이다.</p>
+
+<p><br /></p>
+
+<p>만약 3 duplicated ACK 로 인한 패킷 유실탐지였다면 threshold 지점부터 조금씩 많아지고, Time out 으로 인한 패킷 유실탐지였다면 slow start부터 시작하게한다.</p>
+
+<p><br /></p>
+
+<p>[질문] 제일 처음의 threshold는 어떻게 잡나요?</p>
+
+<p>—&gt; 구현하는 사람의 마음대로이다.</p>
+
+<p><br /></p>
+
+<p>수업자료 = <a href="http://kocw.xcache.kinxcdn.com/KOCW/document/2015/hanyang/leesukbok0326/9.pdf"> Network layer_01 </a></p>
+
+<p><br /></p>
+
+<h1 id="network-layer">Network layer</h1>
+
+<p><br /></p>
+
+<h3 id="1-라우터와-forwarding의-상호작용">1) 라우터와 forwarding의 상호작용</h3>
+
+<ul>
+  <li>라우팅 : 패킷이 움직일 정보가 저장된 테이블(forwarding table)을 만들어 주는 일</li>
+  <li>forwarding : 목적지의 주소와 output link 번호를 가진 테이블을 가지고 길을 찾아서 내보내주는 일</li>
+</ul>
+
+<p><br /></p>
+
+<p>전 세계의 라우터가 너무 많은데 forwarding table은 어떻게 만들어지는 것일까?</p>
+
+<p>이 테이블을 만드는 것이 라우터 알고리즘이다.</p>
+
+<p><br /></p>
+
+<p>그럼 forwarding table은 모든 도착지의 정보를 다 가지고 있을까?</p>
+
+<p>아니다. 전 세계의 인터페이스는 너무 많다. 그래서 우체국이 사용하는 방법을 사용한다. 주소의 범위로 관리되어있다.</p>
+
+<p>목적지의 주소와 가장 구체적으로 맞아 떨어지는 링크로 보내준다.</p>
+
+<p>이것을 `longest prefix matching’ 라고 부른다.</p>
+
+<p><br /></p>
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Network" class="tag">| Network</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Network_ Transport layer_06&url=http://localhost:4000/network_08/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/network_08/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/network_08/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

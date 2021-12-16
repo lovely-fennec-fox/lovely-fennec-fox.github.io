@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Python_ HTTP를 이용해 서버에 요청보내기 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Python_ HTTP를 이용해 서버에 요청보내기</h1>
+          <div class="page-date"><time datetime="2019-04-01 00:00:00 +0900">2019, Apr 01</time></div>
+        </div>
+        <h3 id="모두를-위한-파이썬-웹-스크래핑-내용-정리">모두를 위한 파이썬 [웹 스크래핑] 내용 정리</h3>
+
+<p><br /></p>
+
+<p><img src="/assets/img_studed/0401_http_06.png" alt="0401_http_06" /></p>
+
+<p><br /></p>
+
+<h1 id="http--hypertext-transfer-protocol">HTTP : HyperText Transfer Protocol</h1>
+
+<ul>
+  <li>인터넷, 어플리케이션 레이어에서 가장 많이 사용되는 프로토콜</li>
+  <li>웹을 위해 개발 : HTML, 이미지, 문서 등을 가져옴</li>
+  <li>문서 외에 다양한 데이터에도 확장하여 사용가능
+    <ul>
+      <li>RSS, 웹 서비스 등</li>
+    </ul>
+  </li>
+  <li>기본컨셉 : 연결 - 문서요청 - 문서 수신 - 연결종료</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="protocol">protocol</h1>
+
+<p>메일이나 파일전송, 원격로그인 등등 다른 프로토콜이 많고 각기 다른 어플리케이션 프로토콜입니다.</p>
+
+<p>각 프로토콜은 그 하위 계층에서 소켓을 사용하고 그 위에는 Hypertext 웹페이지를 위한 도로를 구축합니다</p>
+
+<p>다른 것들도 비슷하게 작동하고요</p>
+
+<p><br /></p>
+
+<p>전화를 예로 든다면 프로토콜은 먼저 얘기하는 사람이에요.</p>
+
+<p>어떤 말을 할 것 같아요? 보통 답변이 없으면 “들려?” 하고 물어보죠?</p>
+
+<p><br /></p>
+
+<p>우리가 해야 할 일은 양쪽이 받아들일 수 있도록 사이에서 어떤 규칙을 만드는 겁니다.</p>
+
+<p>“자 우리 이렇게 얘기하면 다들 괜찮을거야” 하는거죠.</p>
+
+<p>도로에서 어느 쪽으로 운전할 지 정하는 것 처럼 규칙을 정하는거죠.</p>
+
+<p>차들의 방향이 뒤죽박죽이면 엄청난 혼란이 찾아오겠죠.</p>
+
+<p><br /></p>
+
+<p>일반적인 URL을 보면 “http://www.dr-chuck.com/page1.htm” 에서</p>
+
+<ul>
+  <li>
+    <p>http:// [프로토콜]</p>
+  </li>
+  <li>www.dr-chuck.com [호스트]</li>
+  <li>/page1.htm  [문서]</li>
+</ul>
+
+<p>1980년대에 개발되었고, 지금도 굉장히 멋지게 쓰이고 있지만</p>
+
+<p>1990년이 오히려 혁명적이었죠. 이 URL에 프로토콜을 암호화하여 포함하기 시작했기 때문입니다.</p>
+
+<p>대상하는 호스트와 문서까지 포함해서 말이죠. 이것은 매우 혁신적인 아이디어입니다.</p>
+
+<p>왜냐하면 FTP, Telnet, SMTP 어떤 것이든 프로그램을 정하고</p>
+
+<p>바로 호스트로 이동해서 정해진 방법으로 통신하면 되니까요. 그 정해진 방법이 HTTP 입니다.</p>
+
+<p><br /></p>
+
+<h1 id="http">HTTP</h1>
+
+<p>HTTP는 1989 ~ 90년에 CERN에서 개발한 굉장히 간단한 프로토콜인데</p>
+
+<p>지금 모두가 알고 애용할 만큼 성장했죠.</p>
+
+<p>단순히 문서를 검색하는 것 이외에도 많은 곳에서 쓰이는데</p>
+
+<p>그건 다음 장에서 알아보도록 하죠</p>
+
+<p><br /></p>
+
+<p>자, 그럼 링크가 있는 페이즈를 클릭하면 어떤 일이 일어나나 보겠습니다.</p>
+
+<p>다른 화려한 기능이 많지만 일단 이건 기본적인 겁니다.</p>
+
+<p><br /></p>
+
+<p><img src="/assets/img_studed/0401_http_07.png" alt="0401_http_07" /></p>
+
+<p>웹페이지를 보고있다고 상상해봅시다. 사이트 안에 하이퍼링크가 있네요.</p>
+
+<p>하이퍼링크는 이 페이지에서 클릭하면 다른 페이지로 간다는 하나의 표시입니다.</p>
+
+<ul>
+  <li>브라우져에서 Dr-Chuck.com 웹서버를 통해 80번 포트로 연결해서 요청을 보냅니다.</li>
+</ul>
+
+<p>이런 요청은 표준을 엄격하게 지키는데 표준은 나중에 다루도록 하겠습니다.</p>
+
+<ul>
+  <li>
+    <p>요청을 받은 웹 서버가 파일을 읽거나, 코드를 실행하거나, 어떤 작업을 수행하여</p>
+
+    <p>요청에 대한 답을 만들어 전송합니다.</p>
+  </li>
+</ul>
+
+<p><img src="/assets/img_studed/0401_http_08.png" alt="0401_http_08" /></p>
+
+<p>이 경우에는 그 답변이 HTML로 된 웹페이지이죠.</p>
+
+<ul>
+  <li>
+    <p>브라우저는 응답 정보를 받아서 HTML, CSS, 자바스크립트 등에 정해진 규칙대로 렌더링해서</p>
+
+    <p>웹 페이지를 만들어 내는 거죠.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="internet-standards">Internet Standards</h1>
+
+<p>위의 요청과 응답은 인터넷 표준을 따르는데,</p>
+
+<p>60년대부터 현재까지 국제 인터넷 표준화 기구인 IETF에 의해 관리되고 있죠.</p>
+
+<p>이들이 만드는 문서를 RFC라고 하는데 Request For Comments의 약어입니다.</p>
+
+<p>버전별 문서를 읽어보면 HTTP가 어떻게 작동하는지 더 잘 알 수 있을 것입니다.</p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#모두를_위한_파이썬" class="tag">| 모두를_위한_파이썬</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Python_ HTTP를 이용해 서버에 요청보내기&url=http://localhost:4000/python_13/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/python_13/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/python_13/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

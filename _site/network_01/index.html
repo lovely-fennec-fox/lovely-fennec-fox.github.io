@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Network_ basic_01 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Network_ basic_01</h1>
+          <div class="page-date"><time datetime="2019-05-10 00:00:00 +0900">2019, May 10</time></div>
+        </div>
+        <p><code class="highlighter-rouge">[ 한양대학교 이석복 교수님 공개강의 내용정리 ]</code></p>
+
+<h3 id="1-network-edge-applications-and-hosts">1. Network edge: applications and hosts</h3>
+
+<ul>
+  <li>End systems(hosts) :</li>
+  <li>Client / server model</li>
+  <li>Peer-peer model</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-connection-oriented-serviece">2. connection-oriented serviece</h3>
+
+<ul>
+  <li>
+    <p>TCP service</p>
+
+    <ol>
+      <li>순서를 지켜서 data를 변화시켜줌</li>
+      <li>흐름을 제어(받아들이는 기기에 맞게 흐름을 제어해줌(ex&gt; 슈퍼컴퓨터 —&gt; 286컴퓨터)</li>
+      <li>Data가 혼잡하지 않게 컨트롤 해준다. (Ex&gt; 슈퍼컴퓨터 —&gt; 슈퍼컴퓨터로 가는 도중 연결선이 얇을 때)</li>
+    </ol>
+  </li>
+  <li>
+    <p>UDP service</p>
+
+    <ol>
+      <li>No flow control :  흐름을 컨트롤 해주지 않음. 내가 데이터를 보낼 때 ‘‘아무 상관 없다 난 그냥 보내련다’’ 하면 이 서비스를 사용하면 됨</li>
+    </ol>
+  </li>
+  <li>
+    <h4 id="udp-를-굳이-사용하는-이유"><code class="highlighter-rouge">UDP 를 굳이 사용하는 이유</code></h4>
+
+    <p>음성data 등 신뢰성이 필요없어서 조금은 유실되어도 괜찮은 data에 사용함</p>
+
+    <p>TCP의 단점 : TCP는 해주는 일이 많은 만큼 네트워킹 리소스가 많음</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="3-protocol-이란">3. protocol 이란?</h3>
+
+<ul>
+  <li>서로 다른 객체이기 때문에 어떤 방식으로 얘기할 것인지를 정해놓은 것</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="4-network-core">4. Network Core</h3>
+
+<ul>
+  <li>
+    <p>Circuit switching / packet-switching</p>
+  </li>
+  <li>
+    <p>인터넷에서는 packet-switching 방식을 사용한다.</p>
+  </li>
+  <li>
+    <p>circuit-switcing</p>
+
+    <p>출발지에서 목적지까지 가는 길을 만들어 놓고 사용함(예전 유선전화망)</p>
+  </li>
+  <li>
+    <p>Packet-switching</p>
+
+    <p>때마다 올바른 방향으로 정보를 보내주는 방식</p>
+  </li>
+  <li>
+    <h4 id="왜-packet-switching-방식을-선택하였나"><code class="highlighter-rouge">왜 packet-switching 방식을 선택하였나?</code></h4>
+
+    <ol>
+      <li>
+        <p>1Mbps link = 1Mb/s link (1초에 1MB의 data를 보낼 수 있는 케이블)</p>
+      </li>
+      <li>
+        <p>참고) <code class="highlighter-rouge">bandwidth(대역폭)</code> : 주어진 시간 내에 얼마나 많은 정보가 데이터 연결을 통과 할 수 있는지를 나타냅니다.</p>
+      </li>
+      <li>
+        <p>각각의 유저들이 100kb/s 의 속도로 data를 내보낸다고 가정하자</p>
+      </li>
+      <li>
+        <p>Circuit-swithcing을 사용하면 10명의 유저만 사용을 지원해줄 수있다.</p>
+      </li>
+      <li>
+        <p>Packet-swithcing은 몇 명이든지 제약이 없음.</p>
+
+        <p><code class="highlighter-rouge">만약 10명이상이 더 몰리면 어떻게 되는가?</code></p>
+
+        <p>실제로 우리가 데이터를 사용할 때는 클릭을 계속 누르지 않는 한, 단시간의 네트워크만 사용하고 중간에 네트워크를 사용하지 않는 시간이 더 많다. <code class="highlighter-rouge">사람의 각자의 리듬이 있으므로 동시에 10명이 몰리는 경우는 많지 않다. 그렇지만 문제는 생길 수 있다.</code> 아래의 내용에서 자세히 설명하겠다.</p>
+      </li>
+    </ol>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p>패킷 지연의 4가지 소스</p>
+
+    <ol>
+      <li>
+        <p>Nodal processing / queueing / Transmission delay / Propagation delay</p>
+
+        <p>1) 라우터에 패킷이 들어오면,  <code class="highlighter-rouge">패킷을 검사 하는데 이때 걸리는 시간</code>이 <strong>‘processing delay’</strong> 라고 한다.</p>
+
+        <p><br /></p>
+
+        <p>2) 체크 후, 라우터가 패킷을 내보내는데</p>
+
+        <p>만약, <code class="highlighter-rouge">라우터에서 들어오는 정보의 크기가 내보내는 크기보다 클 때</code></p>
+
+        <p>라우터는 정보를 buffer or Queue 라고 불리우는 곳에 저장해놓고 조금씩 조금씩 내보낸다. data들이 나가기 위해 줄을 서서 기다리기 때문에 <strong>‘queueing delay’</strong> 가 생긴다.</p>
+
+        <p><br /></p>
+
+        <p>3) 패킷은 비트의 집합이다. 한 개의 패킷이 라인을 통해 나가게 될 때, 비트가 하나씩 순서대로 나가는데 <code class="highlighter-rouge">만약 100bit 였다면 첫 번째 비트부터 100번째 비트까지 다 나가는데 걸리는 시간</code>을 <strong>‘Transmission’</strong> 이라고 한다.</p>
+
+        <p>이는 bandwidth에 관련이 있는데,</p>
+
+        <p>대야의 물을 패킷이라고 할 때, bnadwidth가 크면 물을 내보내는 호수가 넓다는 것을 의미해서 많은 물을 한 번에 보낼 수 있고, bandwidth가 작으면 물을 내보내는 호수가 좁다는 것을 의미해서 물을 졸졸졸 보낼 수 밖에 없다.</p>
+
+        <p>그러므로 <code class="highlighter-rouge">bandwidth가 크면 Transmission delay가 적다.</code></p>
+
+        <p><br /></p>
+
+        <p>4) 마지막 비트가 링크에 올라와서 다음 라우터까자 도착하는데 걸리는 시간을 <code class="highlighter-rouge">propagation delay</code> 라고 한다. 이것은 단순히 전자기파가 움직이는 속도, 곧 빛의 속도이므로 연결된 라인의 길이가 길수록 propagation delay는 더 발생한다.</p>
+
+        <p><br /></p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>원활한 통신을 위해서는 위의 4개의 delay를 줄여한다.</p>
+
+    <p>Propagation delay는 빛의 속도를 바꿀 수는 없으므로  나머지 3개의 delay를 줄이는 방법을 생각해보자.</p>
+
+    <p><br /></p>
+
+    <p>1) processing delay를 줄이려면?</p>
+
+    <p>—&gt; 좋은 라우터를 사용한다. (ex&gt; 고속도로에서 직접결제 말고 하이패스사용하게 바꾸기)</p>
+
+    <p>2) transmission delay를 줄이려면?</p>
+
+    <p>—&gt; 케이블 공사를 해서 bandwidth를 늘린다. (ex&gt; 차선 늘리기)</p>
+
+    <p>3) queueing delay를 줄이려면?</p>
+
+    <p>—&gt; 이 부분이 제일 머리가 아픈데, 이 부분은 사람들이 인터넷을 많이 사용하면 기다리는 패킷이 많아져서 delay가 길어지고, 사람들이 인터넷을 적게 사용하면 기다리는 패킷이 적어져서 delay가 적다. 그래서 이 부분도 건들이기가 어렵다. (ex&gt; 추석에는 아무리 위의 두개를 해도 차가 막힌다…)</p>
+
+    <p>—&gt; <code class="highlighter-rouge">만약 데이터가 너무 많이 밀려서 queue에 저장용량을 넘어가면</code> 어떻게 될까?</p>
+
+    <p>저장공간이 없으므로 데이터를 버리게된다. 그래서 <code class="highlighter-rouge">패킷 유실</code>이 일어나게 된다.</p>
+
+    <p><br /></p>
+  </li>
+</ul>
+
+<h1 id="5-그럼-여기서-궁금한-점--tcp는-reliable-방식이라고-했는데-패킷-유실이-되면-어떻게-data를-지켜주는-것일까">5. 그럼 여기서 궁금한 점 : TCP는 reliable 방식이라고 했는데, 패킷 유실이 되면 어떻게 data를 지켜주는 것일까?</h1>
+
+<ul>
+  <li>결국에는 <code class="highlighter-rouge">방법이 없다</code>. 그러므로 data를 재전송 해야한다.</li>
+  <li>그럼 <code class="highlighter-rouge">누가 재전송</code>을 할 것인가?
+    <ol>
+      <li>패킷 유실이 일어날때 직전 라우터가 재전송을 해주는 방식</li>
+      <li><code class="highlighter-rouge">처음부터 재전송</code>해주는 방식</li>
+    </ol>
+  </li>
+  <li>인터넷 디자이너는 두 번째 방식을 선택해서 클라이언트와 서버의 TCP 프로토콜로 data가 제대로 들어오는지 확인한다. 라우터가 재전송을 해주면 인터넷이 너무 느려질 수 있으므로 단순히 패킷을 빨리보내는 역할만을 하게 한다.</li>
+</ul>
+
+<p><br /></p>
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Network" class="tag">| Network</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Network_ basic_01&url=http://localhost:4000/network_01/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/network_01/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/network_01/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

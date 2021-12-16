@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>project2_ Customizing User Model 01.user model custom - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">project2_ Customizing User Model 01.user model custom</h1>
+          <div class="page-date"><time datetime="2019-05-05 00:00:00 +0900">2019, May 05</time></div>
+        </div>
+        <h3 id="django_projects2--user-model-custom--과정-내용-정리">Django_Projects2 [ User model custom ] 과정 내용 정리</h3>
+
+<p><br /></p>
+
+<h1 id="원하는-user-model">원하는 User model</h1>
+
+<p>1) 로그인시 ID와 password 받음</p>
+
+<p>2) 회원의 ID를 Email로 받기</p>
+
+<p>3) 회원에게 받을 정보 : nickname, email, password</p>
+
+<h1 id="1-customizing-user-model">1. Customizing User Model</h1>
+
+<p>1)  username을 삭제하고, email을 기본 field로 지정한 User model</p>
+
+<ul>
+  <li>참고
+    <ul>
+      <li>django 공식문서 =&gt; <a href="https://docs.djangoproject.com/en/2.2/topics/auth/customizing/#a-full-example">Customizing authentication in Django</a></li>
+      <li><a href="https://testdriven.io/blog/django-custom-user-model/">testdriven.io</a></li>
+      <li>초보몽키의 개발공부로그 <a href="https://wayhome25.github.io/django/2017/05/18/django-auth/">사용자 인증</a></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">MyUserManager</span><span class="p">(</span><span class="n">BaseUserManager</span><span class="p">):</span>
+    <span class="n">use_in_migrations</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">_create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">email</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'The given username must be set'</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">using</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span>
+
+    <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">):</span>
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'is_staff'</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'is_superuser'</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_user</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">create_superuser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">):</span>
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'is_staff'</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'is_superuser'</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">extra_fields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'is_staff'</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'Superuser must have is_staff=True.'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extra_fields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'is_superuser'</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'Superuser must have is_superuser=True.'</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_user</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyUser</span><span class="p">(</span><span class="n">AbstractBaseUser</span><span class="p">,</span> <span class="n">PermissionsMixin</span><span class="p">):</span>
+    <span class="n">nickname_validator</span> <span class="o">=</span> <span class="n">UnicodeUsernameValidator</span><span class="p">()</span>
+
+    <span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="s">'email address'</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span>
+        <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">nickname</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">nickname_validator</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s">'admin'</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span>
+            <span class="s">'unique'</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s">"A user with that username already exists."</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">date_joined</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">'date joined'</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">is_staff</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s">'staff status'</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">'Designates whether the user can log into this admin site.'</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">is_active</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s">'active'</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+            <span class="s">'Designates whether this user should be treated as active. '</span>
+            <span class="s">'Unselect this instead of deleting accounts.'</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">MyUserManager</span><span class="p">()</span>
+
+    <span class="n">USERNAME_FIELD</span> <span class="o">=</span> <span class="s">'email'</span>
+    <span class="n">REQUIRED_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'nickname'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">email</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">normalize_email</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nickname</span>
+
+    <span class="k">def</span> <span class="nf">get_short_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nickname</span>
+
+    <span class="k">def</span> <span class="nf">email_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">from_email</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">from_email</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">email</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>2) 참고사항</p>
+
+<ul>
+  <li>Setting.py 에 AUTH_USER_MODEL 지정해주기</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">AUTH_USER_MODEL</span> <span class="o">=</span> <span class="s">'user.MyUser'</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>foreignkey 설정하기</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># models.Foreignkey 사용하기
+# 직접 모델을 입력하면 안되고, settings.AUTH_USER_MODEL을 사용해야 함
+</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+    <span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="2-user-model-변수--메소드">2. User Model 변수 + 메소드</h1>
+
+<h3 id="1-abstractbaseuser-상속-받은-후--설정가능한-변수들">1) <code class="highlighter-rouge">AbstractBaseUser</code> 상속 받은 후 , 설정가능한 변수들</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">USERNAME_FIELD</code> : 고유식별자로 사용될 Field 이름(unique=True 꼭 정의되어 있어야 함)</li>
+  <li><code class="highlighter-rouge">EMAIL_FIELD</code> : 메일 필드 이름</li>
+  <li><code class="highlighter-rouge">REQUIRED_FIEDLD</code> : 사용자를 생성할 때 표시되는 필드 이름 목록(USERNAME_FIELD,  password 는 기본으로 설정되어 있어서 넣지 않음 )</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">class</span> <span class="nc">MyUser</span><span class="p">(</span><span class="n">AbstractBaseUser</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">date_of_birth</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="o">...</span>
+    <span class="n">REQUIRED_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'date_of_birth'</span><span class="p">,</span> <span class="s">'height'</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">is_active</code> : 사용자가 활성으로 간주되는지 여부를 나타냄</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="o">...</span>
+  <span class="n">is_active</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+  <span class="o">...</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">get_full_name()</code> , <code class="highlighter-rouge">get_short_name()</code> : name의 옵션으로 한국어는 firstname과 lastname이 따로 없으므로 잘 사용하지 않음.</p>
+
+    <p>하지만, 개발할 때 다른 사람이 이 기능을 사용 할 수도 있으므로 메소드 자체를 지우는 것 보다는 return 값을 변경해준다.</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="o">...</span> 
+    <span class="k">def</span> <span class="nf">get_full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nickname</span>
+
+    <span class="k">def</span> <span class="nf">get_short_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nickname</span>
+      
+  <span class="o">...</span>          
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-abstractbaseuser의-하위-클래스">2) <code class="highlighter-rouge">AbstractBaseUser</code>의 하위 클래스</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">clean()</code> : USERNAME_FIELD의 필드값을 유니코드로 정규화 함</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">get_username()</code> : USERNAME_FIELD의 필드값을 돌려줍니다.</p>
+  </li>
+  <li><code class="highlighter-rouge">get_email_field_name()</code> : EMAIL_FIELD의 메일필드의 이름값을 돌려줌 (default : ‘email’ )</li>
+  <li><code class="highlighter-rouge">is_authenticated</code> : 로그인여부</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'''
+is_authenticated 이용하여 로그인이 되어 있는지 확인 가능하다 
+'''</span>
+<span class="c1"># 현재 로그인한 사용자를 나타냄
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
+<span class="o">&lt;</span><span class="n">SimpleLazyObject</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">admin</span><span class="o">@</span><span class="n">admin</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;&gt;</span>
+    
+    
+<span class="c1"># 로그인한 모든 사용자의 is_authenticated의 값은 True    
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span>
+<span class="bp">True</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">is_anonymous</code> : 로그아웃 여부</li>
+  <li><code class="highlighter-rouge">set_password()</code> : 패스워드를 해싱처리함</li>
+  <li><code class="highlighter-rouge">check_password()</code> : 지정된 패스워드가 올바른 패스워드인지 확인함</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="2-user-manager-model-변수--메소드">2. User Manager Model 변수 + 메소드</h1>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">create_user(*username_field,*password=None,**other_fields)</code> : user를 생성해줌</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">create_superuser(*username_field,*password=None,**other_fields)</code> : superuser를 생성해줌</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="3-사용자의-상태-및-권한">3. 사용자의 상태 및 권한</h1>
+
+<p>1) <code class="highlighter-rouge">CustomUser</code> 의 변수</p>
+
+<ul>
+  <li><code class="highlighter-rouge">is_staff</code> : 사용자에게 관리자 사이트에 대한 액세스 권한이 허용된 경우 True를 반환</li>
+  <li>
+    <p><code class="highlighter-rouge">is_active</code> : 사용자 계정이 현재 활성 상태인 경우 True를 반환(사용자가 가입하면 활성화 되어있음)</p>
+  </li>
+  <li><code class="highlighter-rouge">has_perm(perm, obj=None)</code> : 사용자에게 명명된 사용 권한이 있는 경우 True를 반환</li>
+  <li><code class="highlighter-rouge">has_module_perm(app_label)</code> : 사용자에게 지정된 앱의 모델에 액세스할 수 있는 권한이 있는 경우 True를 반환</li>
+</ul>
+
+<p>2) <code class="highlighter-rouge">PermissionsMixin</code> 의 변수</p>
+
+<ul>
+  <li><code class="highlighter-rouge">is_superuser</code> : 사용자가 모든 권한을 갖도록 지정함</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    <span class="n">is_superuser</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s">'superuser status'</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+            <span class="s">'Designates that this user has all permissions without '</span>
+            <span class="s">'explicitly assigning them.'</span>
+        <span class="p">),</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="4-settingpy의-변수들">4. Setting.py의 변수들</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [setting.py]
+</span>
+
+<span class="p">[</span> <span class="err">변수</span> <span class="p">]</span>  <span class="o">=</span> <span class="s">'Default 값'</span>
+
+<span class="c1"># 사용자를 나타내는 데 사용할 모델 
+</span><span class="n">AUTH_USER_MODEL</span> <span class="o">=</span> <span class="s">'auth.User'</span>
+      
+<span class="c1"># 로그인 후 리디렉션되는 URL
+</span><span class="n">LOGIN_URL</span> <span class="o">=</span> <span class="s">'/accounts/login/'</span>
+
+<span class="c1"># 로그아웃 후 리디렉션되는 URL
+</span><span class="n">LOGOUT_REDIRECT_URL</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c1"># loginview에서 GET 매개 변수를 얻지 못했을 때, 리디렉션되는 URL
+</span><span class="n">LOGIN_REDIRECT_URL</span> <span class="o">=</span> <span class="s">'/accounts/profile/'</span>
+
+<span class="c1"># LogoutView에 next_page 속성이 없는 경우 로그아웃 후 요청이 리디렉션되는 URL
+</span><span class="n">LOGOUT_REDIRECT_URL</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c1"># 암호 재설정 링크가 유효한 최소 기간
+</span><span class="n">PASSWORD_RESET_TIMEOUT_DAYS</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Django가 암호를 저장하는 방법
+</span><span class="n">PASSWORD_HASHERS</span> <span class="o">=</span>
+<span class="p">[</span>
+    <span class="s">'django.contrib.auth.hashers.PBKDF2PasswordHasher'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth.hashers.Argon2PasswordHasher'</span><span class="p">,</span>
+    <span class="s">'django.contrib.auth.hashers.BCryptSHA256PasswordHasher'</span><span class="p">,</span>
+<span class="p">]</span>      
+
+<span class="c1"># 사용자 암호의 강도를 확인하는 데 사용되는 검증자 목록
+</span><span class="n">AUTH_PASSWORD_VALIDATORS</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="5-create-_user-create-_superuser">5. Create _user, Create _superuser</h1>
+
+<ul>
+  <li>
+    <p>###<code class="highlighter-rouge">create _user</code></p>
+
+    <p>1) <code class="highlighter-rouge">모델 폼을 이용</code>해 가입페이지로 user 정보를 받아서 생성</p>
+
+    <p>2) <code class="highlighter-rouge">create_user</code> 의 함수를 호출하여 정보를 입력하여 생성</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+<span class="c1"># user모델에 정의함
+</span>  <span class="n">objects</span> <span class="o">=</span> <span class="n">MyUserManager</span><span class="p">()</span>
+  
+</code></pre></div>    </div>
+
+    <p>MyUserManager에 정의해놓은 create_user로 사용자를 생성할 수 있다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <h3 id="create_superuser"><code class="highlighter-rouge">create_superuser</code></h3>
+
+    <p>1) create_user를 통해서 생성할 수도 있으나, 편하게</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+<span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">createsuperuser</span> 
+  
+</code></pre></div>    </div>
+
+    <p>의 명령어로 생성할 수 있다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="6-암호변경하기">6. 암호변경하기</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'john'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s">'new password'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Projects" class="tag">| Projects</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=project2_ Customizing User Model 01.user model custom&url=http://localhost:4000/project02_01_UserModel/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/project02_01_UserModel/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/project02_01_UserModel/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

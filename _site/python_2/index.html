@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Python_ 언어로써 파이썬 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Python_ 언어로써 파이썬</h1>
+          <div class="page-date"><time datetime="2019-03-26 00:00:00 +0900">2019, Mar 26</time></div>
+        </div>
+        <h3 id="모두를-위한-파이썬-모두를-위한-프로그래밍--내용-정리">모두를 위한 파이썬 [모두를 위한 프로그래밍]  내용 정리</h3>
+
+<p><br /></p>
+
+<p>파이썬의 언어를 대화하는 것이라고 생각하고,</p>
+
+<p>기초용어부터 배우고, 문장을 쓰는 방법을 배운 후</p>
+
+<p>문장으로 문단을 만드는 방법을 알아봅시다.</p>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h1 id="예약어-">예약어 <기초언어></기초언어></h1>
+
+<p>지정한 의미로만 쓰이는 단어입니다.</p>
+
+<p>지정한 의미가 아닌 다른 의미로는 쓸 수 없습니다.</p>
+
+<p>일종의 약속과 같습니다.</p>
+
+<p>ex&gt; 컴퓨터가 대화를 알아듣는 방식은</p>
+
+<p>​	개에게 “밖으로 산책 나갈까?” 라고 말했을 때,</p>
+
+<p>​	개가 “~블라블라~ 산책! ~블라블라~” 으로 알아듣는 것과 같다.</p>
+
+<p>​	개가 알고 있는 한 단어를 알아들음.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">False</span> <span class="k">class</span> <span class="nc">return</span> <span class="ow">is</span> <span class="k">finally</span> <span class="bp">None</span> <span class="k">if</span> <span class="k">for</span> <span class="k">lambda</span> <span class="k">continue</span> <span class="bp">True</span> <span class="k">def</span> <span class="nf">from</span> <span class="k">while</span> <span class="k">nonlocal</span>
+<span class="ow">and</span> <span class="k">del</span> <span class="k">global</span> <span class="ow">not</span> <span class="k">with</span>
+<span class="k">as</span> <span class="k">elif</span> <span class="k">try</span> <span class="ow">or</span> <span class="k">yield</span> <span class="k">assert</span> <span class="k">else</span> <span class="kn">import</span> <span class="nn">pass</span> <span class="k">break</span> <span class="k">except</span> <span class="ow">in</span> <span class="k">raise</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h1 id="문장">문장</h1>
+
+<p>문장은 컴퓨터가 다음으로 원하는 것이 있기 때문에 순서가 있습니다.</p>
+
+<p>변수를 지정하면 파이썬이 그 변수의 이름을 기억합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>x = 2 라는 말은 x 에 2가 있다는 선언문 입니다.</p>
+
+<p>아래의 두 문장도 각각이 의미를 가지는 문장입니다.</p>
+
+<p>print는 함수이자, 예약어 입니다.</p>
+
+<p>위 문장에는 Variable(변수), Operator(연산자), Constant(상수), Reserved Word(함수) 가 모두 포함되어 있습니다.</p>
+
+<p><br /></p>
+
+<ol>
+  <li>Variable : 메모리를 할당하고 이름을 지어 무언가를 그곳에 넣을 수 있습니다.</li>
+  <li>Constant: 항상 똑같은 값을 저장하고 있는 곳</li>
+</ol>
+
+<p><br /></p>
+
+<h1 id="문단">문단</h1>
+
+<p>파일에 프로그램을 짜면 파이썬이 코드를 순서대로 읽습니다.</p>
+
+<p>파일 이름은 .py 로 지정합니다.</p>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h1 id="program-step-or-program-flow">Program Step or Program Flow</h1>
+
+<p>프로그래밍에는 몇 가지 기본적인 패턴들이 있습니다.</p>
+
+<ol>
+  <li>순차문 : 순서대로 진행함</li>
+  <li>조건문 : 어느 부분을 건너 뛰고 진행함 (예약어 if 를 사용함 )</li>
+  <li>반복문 : 계속 반복함(while)</li>
+</ol>
+
+<p><br /></p>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#모두를_위한_파이썬" class="tag">| 모두를_위한_파이썬</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Python_ 언어로써 파이썬&url=http://localhost:4000/python_2/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/python_2/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/python_2/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

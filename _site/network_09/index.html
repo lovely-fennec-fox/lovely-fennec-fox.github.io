@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Network_ network layer_01 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Network_ network layer_01</h1>
+          <div class="page-date"><time datetime="2019-05-19 00:00:00 +0900">2019, May 19</time></div>
+        </div>
+        <p><br /></p>
+
+<p><code class="highlighter-rouge">[ 한양대학교 이석복 교수님 공개강의 내용정리 ]</code></p>
+
+<p>수업자료 = <a href="http://kocw.xcache.kinxcdn.com/KOCW/document/2015/hanyang/leesukbok0326/10.pdf"> Network_IP layer </a></p>
+
+<p><br /></p>
+
+<h1 id="ip--internet-protocol">IP : Internet protocol</h1>
+
+<h3 id="1-datagram-format">1) Datagram format</h3>
+
+<ul>
+  <li>중요한 필드
+    <ol>
+      <li>Source IP address</li>
+      <li>Destination IP address</li>
+      <li>length</li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Version number</p>
+  </li>
+  <li>
+    <p>checksum</p>
+  </li>
+  <li>
+    <p>Time to live(TTL)</p>
+
+    <p>만약 sender가 20이라고 적어서 보냈다면, 라우터를 거칠 때마다 각 라우터들이 -1씩 해서 업데이트를 시킨다. 그래서 최종 ‘0’이 되었을 때, 이 패킷은 버려지게 된다.</p>
+
+    <p><code class="highlighter-rouge">이 필드가 필요한 이유는?</code></p>
+
+    <p>혹시나 계속 루프를 돌 수도 있으므로 한정시간을 정해서 쓸데없이 네트워크안에 머물지 않도록 함</p>
+  </li>
+  <li>
+    <p>Upper layer</p>
+
+    <p>사용한 protocol이 TCP인지, UDP인지 알려주기 위해서 사용됨</p>
+  </li>
+  <li>
+    <p>Identifier, flgs, fragment offset -&gt; 담에 얘기합시다.</p>
+  </li>
+</ul>
+
+<p>위의 헤더들을 총 합하면 20byte가 나온다. TCP의 헤더의 필드들도 총 합하면 20byte가 나온다. 즉, 인터넷의 모든 패킷은 거의 TCP패킷인데 헤더만 40byte가 되니 기본적으로 메세지의 용량에 40byte가 덧붙여서 전달되는 것이다.</p>
+
+<p><br /></p>
+
+<h1 id="-ip-address">** IP address</h1>
+
+<p>원래는 32bit의 숫자이나, 사람이 읽기 편하게 8bit씩 끊어서 10진수로 바꾸놓은게 우리가 흔히 말하는 IP주소이다.</p>
+
+<p><br /></p>
+
+<p>IP = host를 지칭하는 번호, 조금 자세히 얘기하면</p>
+
+<p>IP = host가 들어있는 네트워크의 인터페이스(렌카드 등)를 지칭한다고 보면된다.</p>
+
+<ul>
+  <li>
+    <p>네트워크 <code class="highlighter-rouge">인터페이스(렌카드)를 많이</code>가지는 것의 대표적인 예는 무엇일까?</p>
+
+    <p>—&gt; <code class="highlighter-rouge">라우터</code>(IP가 여러개)</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="1-ip주소는-어떻게-할당되는-것일까">1) IP주소는 어떻게 할당되는 것일까?</h3>
+
+<ul>
+  <li>
+    <p>마음가는대로 아무렇게나 배정해도 상관은 없다. 하지만, 그러면 방향에 따라 숫자가 배정된 것이 아니기에 라우터의 forwarding table이 많은 데이터를 가지고 있어야 하는 상황이 된다.</p>
+  </li>
+  <li>
+    <p>위와 같은 상황을 만들지 않기위해 규칙을 만들었다.</p>
+
+    <ol>
+      <li>앞 부분은 네트워크 ID (prefixes ID, 서브넷 ID 라고도 함)</li>
+      <li>뒷 부분은 네트워크 안에 호스트를 지칭하는 호스트 ID</li>
+    </ol>
+  </li>
+  <li>
+    <p>IP주소에서 네트워크 주소와 호스트 주소를 구분해주기 위해서 서브넷 마스크를 사용하는데, 네트워크 주소에는 ‘1’을 호스트 주소에는 ‘0’ 으로 나타낸다.</p>
+
+    <p>IP주소는 항상 서브넷 마스크와 함께 한다.</p>
+  </li>
+  <li>
+    <p>prefix가 같은 IP끼리 모아놓게 되니까, 라우터는 한결 가벼워진다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-과거의-ip주소">2) 과거의 IP주소</h3>
+
+<p>옛날에는 서브넷 마스크가 따로 있지 않아서, prefix를 클래스 느낌으로 배정했다</p>
+
+<p>class A 는 prefix가 8(맨 처음이 ‘0’이어야해서 2^7의 기관이)이고(2^24개의 호스트를 가짐),</p>
+
+<p>class B는 prefix가 16(2^16개의 기관이)이고(2^16개의 호스트를 가짐),</p>
+
+<p>class C는 prefix가 24(2^24개의 기관이)이다.(2^8개의 호스트를 가짐)</p>
+
+<p>Class A는 너무 많고, class C는 너무 적어서 생기는 문제점들 때문에 클래스로 나누는 것이 비효율적이라고 느끼고, 90년대 중반에 유연한 prefix를 사용하기위해 위의 방법으로 바뀌게된다.</p>
+
+<p><br /></p>
+
+<p>예전에는 IP가 부족하면, prefix를 여러개 놓아서 연결을 해야했으나</p>
+
+<p>지금은 서브넷 마스크로 prefix를 하나로 만들어 놓으니 라우터의 forwarding table이 한결 가벼워짐</p>
+
+<p><br /></p>
+
+<h3 id="3-longest-match-rule">3) Longest Match Rule</h3>
+
+<ul>
+  <li>
+    <p>라우터가 IP패킷을 라우팅할 때 forwarding table에서 해당 항목을 찾는 규칙</p>
+
+    <p>—&gt; 라우팅 테이블에 있는 수많은 목적지 IP주소 중 일치하는 부분이 가장 긴 곳으로 라우팅 하는 규칙이다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="-subnets">** Subnets</h1>
+
+<ul>
+  <li>라우터는 각각의 서브넷의 교집합이 되어서 라우터를 통해서 다른 서브넷으로 옮겨가게 된다.</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="nat--network-address-translation">**NAT : network address translation</h1>
+
+<ul>
+  <li>라우터를 공인IP로 지정하고 그 밑에 다른 기기들을 사설 IP로 지정해서 외부와 통신할 때는 라우터의 IP로 사용하여 IP부족 현상을 없애는 기술</li>
+  <li><code class="highlighter-rouge">사설IP와 port number</code>를 <code class="highlighter-rouge">공인IP와 port number로 변경</code>하여 외부로 보내고, 정보를 기록해 놓았다가 패킷이 다시 돌아올 때, 처음 패킷을 요청했던 곳으로 보내줌</li>
+</ul>
+
+<p><br /></p>
+
+<p>[문제점] 라우터가 나갈 때, IP헤더를 수정한다. 그리고 TCP의 port number도 바꿔주어야 한다.</p>
+
+<ol>
+  <li>
+    <p>라우터는 네트워크 계층까지 밖에 없는데, transport계층까지 변경을 시킴</p>
+  </li>
+  <li>
+    <p>또, transport계층에서 프로세스를 찾는 용도로 port number를 사용해야하는데 라우터에서 host를 찾는 용도로 port number를 사용하고 있음</p>
+
+    <p>그래서 사설IP에서는 port number를 사용하기가 어려움</p>
+  </li>
+</ol>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Network" class="tag">| Network</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Network_ network layer_01&url=http://localhost:4000/network_09/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/network_09/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/network_09/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

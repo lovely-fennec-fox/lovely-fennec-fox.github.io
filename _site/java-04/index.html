@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Java 객체지향 핵심원리 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Java 객체지향 핵심원리</h1>
+          <div class="page-date"><time datetime="2019-08-20 00:00:00 +0900">2019, Aug 20</time></div>
+        </div>
+        <p><br /></p>
+
+<p><br /></p>
+
+<h1 id="java-객체지향-핵심원리">Java 객체지향 핵심원리</h1>
+
+<p><br /></p>
+
+<h3 id="객체지향-핵심개념--oop_-object-oriented-programming-">객체지향 핵심개념 [ OOP_ Object Oriented Programming ]</h3>
+
+<ul>
+  <li>절차지향 프로그램에서의 함수</li>
+  <li>자주 사용되는 특정한 코드를 하니의 모듈(묶음)로 묶어 놓은 것</li>
+  <li>프로그래머가 사용하고 싶을 때마다 호출하여 코드가 실행되게 함</li>
+  <li>문제점 : 데이터와 함수 간에 유기적인 관계성을 갖지 못함</li>
+  <li>객체지향 프로그램
+    <ul>
+      <li>함수가 등장하는데, 함수보다 더 모듈하기 위해 변수와 메서드가 생성되게 만듦</li>
+      <li>높은 유지보수성 유지가 가능해지고, 객체와 객체 간 자유로운 데이터 이동이 가능해짐</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="객체-클래스-인스턴스">객체, 클래스, 인스턴스</h3>
+
+<ol>
+  <li>객체
+    <ul>
+      <li>현실 세계에 존재하는 유, 무형의 모든 것</li>
+      <li>자바 객체
+        <ul>
+          <li>정적인 요소 : 변수 (ex&gt; 자동차의 이름, 속도, 색깔)</li>
+          <li>동적인 요소 : 메서드 (ex&gt; 시동켠다(), 가속한다(), 감속한다() )</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>클래스
+    <ul>
+      <li>현실 세계의 객체 » 프로그램에서 이용할 수 있는 객체로 보여주는 것</li>
+    </ul>
+  </li>
+  <li>인스턴스
+    <ul>
+      <li>컴퓨터 메모리에 존재하는 객체</li>
+      <li>ex&gt; Car class로 다양한 Car 인스턴스를 생성 할 수 있다.</li>
+      <li>코드내에서 객체라고 지칭 함</li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h3 id="상속과-다형성">상속과 다형성</h3>
+
+<ol>
+  <li>상속
+    <ul>
+      <li>속성과 메서드가 약간 다른 객체를 필요로 할 때, 기존의 클래스를 이용해 변수와 메서드만 추가해서 정의 한 것을 상속이라고 한다.</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 부모.java</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Car</span> <span class="o">{</span>
+  	<span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+  	<span class="kt">int</span> <span class="n">currentGear</span><span class="o">;</span>
+  
+  	<span class="kt">void</span> <span class="nf">changeGear</span><span class="o">(</span><span class="kt">int</span> <span class="n">gear</span><span class="o">)</span> <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"기어를"</span> <span class="o">+</span> <span class="n">gear</span> <span class="o">+</span><span class="s">"단으로 변경한다."</span><span class="o">);</span>
+    <span class="o">}</span>
+  
+  	<span class="nc">String</span> <span class="nf">getCurrentState</span><span class="o">()</span> <span class="o">{</span>
+     	<span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"의 현재기어 : "</span> <span class="o">+</span> <span class="n">currentGear</span><span class="o">;</span> 
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 자녀.java</span>
+<span class="c1">// extends Car 상속 관계 예약어 </span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Taxi</span> <span class="kd">extends</span> <span class="nc">Car</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">fare</span><span class="o">;</span>
+  	<span class="kt">boolean</span> <span class="n">passengerYn</span><span class="o">;</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// CarTest.java</span>
+<span class="c1">// 상속한 클래스 사용하기</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CarTest</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+      	<span class="c1">// Taxi 객체 생성</span>
+      	<span class="nc">Taxi</span> <span class="n">myTexi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Taxi</span><span class="o">();</span>
+      
+      	<span class="c1">// 초기 값 설정</span>
+      	<span class="n">myTexi</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="s">"대현운수"</span><span class="o">;</span>
+        <span class="n">myTexi</span><span class="o">.</span><span class="na">currentGear</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="n">myTexi</span><span class="o">.</span><span class="na">fare</span> <span class="o">=</span> <span class="mi">3400</span><span class="o">;</span>
+        <span class="n">myTexi</span><span class="o">.</span><span class="na">passengerYn</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">myTexi</span><span class="o">.</span><span class="na">getCurrentState</span><span class="o">());</span>
+    <span class="o">}</span>  
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ol>
+  <li>다형성 (Polymorphism)
+    <ul>
+      <li>하나의 인터페이스를 이용해 서로 다른 구현을 제공함</li>
+      <li>다형성은 메서드 오버로딩(Overloading)과 메서드 오버라이딩(Overriding)을 통해 지원된다.
+        <ul>
+          <li><code class="highlighter-rouge">메서드 오버로딩(Overloading)</code>
+            <ul>
+              <li>한 클래스 안에 같은 이름의 메서드를 여러 개 정의하면서, 그 인자의 개수나 유형을 다르게 해 놓은 형태</li>
+            </ul>
+          </li>
+          <li><code class="highlighter-rouge">메서드 오버라이딩(Overriding)</code>
+            <ul>
+              <li>상속 관계에 있는 하위 클래스가 상위 클래스가 가지고 있는 메서드를 재정의하는 것</li>
+              <li>재정의된 메서드가 선언된 형태는 상위 클래스에서 선언된 것과 같다</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<ol>
+  <li>추상화 (Abstraction)
+    <ul>
+      <li>구채적인 사실들을 일반화시켜 기술하는 것</li>
+      <li>현실 세계에 존재하는 다양한 객체들의 공통된 특성을 모아 일반화해 놓는 것
+        <ul>
+          <li>클래스를 정의하는데 중요한 역할을 함</li>
+          <li>ex&gt; 비행기, 자동차, 열차, 배 등은 ‘운송수단’ 으로 추상화 할 수 있다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<ol>
+  <li>캡슐화 (Encapsulation)
+    <ul>
+      <li>변수와 메서드를 하나의 추상화된 클래스로 묶는 과정을 의미함</li>
+      <li>변수와 메서드를 하나로 묶어 독립적으로 동작하지 않도록 함</li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<ol>
+  <li>정보은닉 (Information Hiding)
+    <ul>
+      <li>객체지향 언어에서는 캡슐화된 변수나 메서드를 선택적으로 공개하거나 숨길 수 있다.</li>
+      <li>Private_ 숨겨야 하는 정보, Public_ 공개하는 정보</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Car</span> <span class="o">{</span>
+ 
+  <span class="c1">// 변수선언</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span> <span class="c1">// 공개할 변수</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">currentSpeed</span><span class="o">;</span> <span class="c1">// 은닉할 변수</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="n">currentGear</span><span class="o">;</span>
+  
+  
+  <span class="c1">// 메서드 선언</span>
+  <span class="c1">// 공개할 메서드</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startEngine</span><span class="o">()</span> <span class="o">{</span>
+    	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"의 시동을 켠다."</span><span class="o">);</span>
+      <span class="n">currentSpeed</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="c1">// 반환되는 데이터가 없는 경우 void로 선언한다.</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">changeGear</span><span class="o">(</span><span class="kt">int</span> <span class="n">gear</span><span class="o">)</span> <span class="o">{</span>
+    	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">gear</span> <span class="o">+</span> <span class="s">"단으로 변경한다."</span><span class="o">);</span>
+    	<span class="n">currentGear</span> <span class="o">=</span> <span class="n">gear</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="c1">// 은닉할 메서드</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getCurrentSpeed</span><span class="o">()</span> <span class="o">{</span>
+  		<span class="n">currentSpeed</span> <span class="o">=</span> <span class="n">currentSpeed</span> <span class="o">+</span> <span class="o">(</span><span class="n">currentGear</span> <span class="o">*</span> <span class="mi">10</span><span class="o">);</span>
+    	<span class="k">return</span> <span class="n">currentSpeed</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopEngine</span><span class="o">()</span> <span class="o">{</span>
+    	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"의 시동을 끈다."</span><span class="o">)</span>
+      <span class="n">currentSpeed</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    	<span class="n">currentGear</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="o">}</span>
+  
+  <span class="c1">// 반환되는 데이터 타입이 String이므로 String으로 선언</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCurrentState</span><span class="o">()</span> <span class="o">{</span>
+    	<span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"의 현재 속도 : "</span> <span class="o">+</span> <span class="n">getCurrentSpeed</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ol>
+  <li>메시지 (Message)
+    <ul>
+      <li>객체 간에 서로 통신하는 방법</li>
+      <li>객체 간에 메시지를 주고 받기 때문에 여러 객체는 동일한 프로세스를 가질 필요 없음</li>
+      <li>서로 메시지를 주고 받는데 객체가 존재하는 위치는 제약이 되지 않는다.</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Driver.java</span>
+<span class="c1">// 객체들 사이에 메시지를 전달하는 과정</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Driver</span> <span class="o">{</span>
+  	<span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+  
+  	<span class="kt">void</span> <span class="nf">driving</span><span class="o">()</span> <span class="o">{</span>
+      	<span class="nc">Car</span> <span class="n">myCar</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Car</span><span class="o">();</span>
+      	<span class="n">myCar</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="s">"Red"</span><span class="o">;</span>
+      	<span class="n">myCar</span><span class="o">.</span><span class="na">currentGear</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      	<span class="n">myCar</span><span class="o">.</span><span class="na">currentSpead</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      
+      	<span class="n">myCar</span><span class="o">.</span><span class="na">startEngine</span><span class="o">();</span>
+      	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">myCar</span><span class="o">.</span><span class="na">getCurrentState</span><span class="o">());</span>
+      	<span class="n">myCar</span><span class="o">.</span><span class="na">changeGear</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+      	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">myCar</span><span class="o">.</span><span class="na">getCurrentState</span><span class="o">());</span>
+      	<span class="n">myCar</span><span class="o">.</span><span class="na">stopEngine</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">myCar</span><span class="o">.</span><span class="na">getCurrentState</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// CarTest.java</span>
+<span class="c1">// 메세지 전달 메소드 사용하여 메세지 전달</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CarTest</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+      	<span class="nc">Driver</span> <span class="nc">Kim</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Driver</span><span class="o">();</span>
+      	<span class="n">kim</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="sc">'A'</span>
+          
+        <span class="n">kim</span><span class="o">.</span><span class="na">driving</span><span class="o">();</span>   
+    <span class="o">}</span>  
+<span class="o">}</span>
+
+
+<span class="c1">// 결과</span>
+
+<span class="c1">// Red의 시동을 켠다.</span>
+<span class="c1">// Red의 현재 속도 : 1</span>
+<span class="c1">// 2단으로 변경한다.</span>
+<span class="c1">// Red의 현재 속도 : 2</span>
+<span class="c1">// Red의 시동을 끈다.</span>
+<span class="c1">// Red의현재 속도 : 0</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h2 id="클래스의-구조">클래스의 구조</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+		<span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span> <span class="c1">// 멤버 변수</span>
+  	<span class="kd">private</span> <span class="kt">int</span> <span class="n">number</span><span class="o">;</span>
+  	<span class="kd">private</span> <span class="nc">String</span> <span class="n">dept</span><span class="o">;</span>
+  
+  	<span class="c1">// 생성자_ Employee 클래스로부터 객체를 생성할 때 사용함</span>
+  	<span class="kd">public</span> <span class="nf">Empolyee</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">number</span><span class="o">,</span> <span class="nc">String</span> <span class="n">dept</span><span class="o">)</span> <span class="o">{</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">number</span> <span class="o">=</span> <span class="n">number</span><span class="o">;</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">dept</span> <span class="o">=</span> <span class="n">dept</span><span class="o">;</span>
+    <span class="o">}</span>
+  
+  	<span class="c1">// 메서드</span>
+  	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+      	<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+  
+  	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+  
+  	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getNumber</span><span class="o">()</span> <span class="o">{</span>
+      	<span class="k">return</span> <span class="n">number</span><span class="o">;</span>
+    <span class="o">}</span>
+  
+  	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setNumber</span><span class="o">()</span> <span class="o">{</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">number</span> <span class="o">=</span> <span class="n">number</span><span class="o">;</span>
+    <span class="o">}</span>
+  
+  	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getDept</span><span class="o">()</span> <span class="o">{</span>
+      	<span class="k">return</span> <span class="n">dept</span><span class="o">;</span>
+    <span class="o">}</span>
+  
+  	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDept</span><span class="o">(</span><span class="nc">String</span> <span class="n">dept</span><span class="o">)</span> <span class="o">{</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">dept</span> <span class="o">=</span> <span class="n">dept</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="클래스-modifier">클래스 Modifier</h3>
+
+<ul>
+  <li>접근 권한 예약어
+    <ul>
+      <li>public, protected, private, default</li>
+    </ul>
+  </li>
+  <li>활용 방법 예약어
+    <ul>
+      <li>final, abstract, static, transient, volatile, synchronized, native</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge"> 클래스에서 사용되는 Modifier</code>
+    <ol>
+      <li>public : 모든 클래스에 접근이 가능한 클래스임을 의미한다.</li>
+      <li>final : 자식 클래스를 가질 수 없는 클래스임을 의미한다.</li>
+      <li>abstract : 객체 생성이 불가능한 추상클래스를 의미</li>
+    </ol>
+  </li>
+</ul>
+
+<p>[ 참고 ] : 접근 권한과 관련된 Modifier를 지정하지 않으면, 같은 패키지 내의 클래스에서만 접근 가능하다.</p>
+
+<p>[ 참고 ] : 서로 다른 패키지의 클래스에 접근하기 위해서는 public으로 지정해야 한다.</p>
+
+<p><br /></p>
+
+<h3 id="클래스-구현">클래스 구현</h3>
+
+<ul>
+  <li>멤버 변수들은 대부분의 경우 <code class="highlighter-rouge">private로 선언</code> 해서 외부에서는 숨겨진 형태로 만듦</li>
+  <li><code class="highlighter-rouge">public으로 지정</code> 한 메서드를 통해 접근하도록 클래스를 구현한다.
+    <ul>
+      <li>Getter메서드, Setter메서드를 자동으로 생성해서 사용한다.</li>
+      <li>[ 이클립스 ] <code class="highlighter-rouge">private 변수선언</code> –&gt; <code class="highlighter-rouge">&lt;Alt&gt; + &lt;shift&gt; + &lt;s&gt;</code> –&gt; <code class="highlighter-rouge">Generate Getters and Setters</code> 클릭</li>
+    </ul>
+  </li>
+  <li>[ 이클립스 ] 소스코드를 만든 후  <code class="highlighter-rouge">&lt;Alt&gt; + &lt;shift&gt; + &lt;s&gt;</code>  –&gt; <code class="highlighter-rouge">Generate toString()</code> 클릭하면 생성된 객체 값을 문자열로 보여줄 수 있는 메서드를 만들어 줌 / 객체를 호출하면 toString() 함수를 호출하지 않아도 이와 같이 출력해준다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="자바의-modifier">자바의 Modifier</h3>
+
+<ol>
+  <li><code class="highlighter-rouge">static 예약어</code>
+    <ul>
+      <li>Static 예약어가 붙지않으면 : <code class="highlighter-rouge">인스턴스 변수</code>
+        <ul>
+          <li>생성된 인스턴스마다 그 안에 클래스의 인스턴스 변수들이 포함된다.</li>
+          <li>일반적인 멤버 변수를 인스턴스 변수라고 부른다.</li>
+        </ul>
+      </li>
+      <li>Static 예약어가 붙으면 : <code class="highlighter-rouge">클래스 변수</code>
+        <ul>
+          <li>클래스로부터 생성된 인스턴스에 포함되지 않는 변수</li>
+          <li>많은 인스턴스를 생성하더라도 <code class="highlighter-rouge">메모리에 하나의 변수만 존재</code>한다.</li>
+          <li>객체를 생성하지 않고도 접근할 수 있는 변수</li>
+        </ul>
+      </li>
+      <li>클래스 변수가 필요한 이유는?
+        <ul>
+          <li>모든 인스턴스가 동일한 값을 가지게 될 때, 메모리 낭비를 줄일 수 있다.</li>
+          <li>객체가 생성될 때 메모리 영역을 할당하지 않고, 클래스가 로딩되는 과정에서 메모리에 한 번만 할당되는 멤버이다.</li>
+        </ul>
+      </li>
+      <li>메소드에도 static 예약어를 붙여 클래스 메서드 생성가능</li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">final 예약어</code></p>
+
+    <ul>
+      <li>
+        <p>final이 붙은 변수는 단 한 번만 초기화가 가능하고, 초기화 이후에는 값을 변경 할 수 없는 상수이다.</p>
+      </li>
+      <li>
+        <p>final이 사용되는 경우는?</p>
+
+        <ul>
+          <li>
+            <p>클래스 변수의 값을 변경 할 수 있도록 허용하면, static 예약어의 의미가 상실될 경우가 있으므로</p>
+
+            <p>Final 예약어를 결합하여 사용함으로써 초기화된 값을 변경 할 수 없게 한다.</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>사용 예제</p>
+      </li>
+    </ul>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   
+<span class="c1">// 일반적으로 모두 대문자로 선언하고, 단어 사이에 '_'를 이용하여 선언한다.</span>
+<span class="kd">final</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">COMPNY_NAME</span> <span class="o">=</span> <span class="s">"S"</span>
+   
+</code></pre></div>    </div>
+
+    <ul>
+      <li>메서드 앞에 붙으면 : <code class="highlighter-rouge">메서드 오버라이딩 금지</code> 를 의미한다.</li>
+      <li>클래스 앞에 붙으면 : <code class="highlighter-rouge">상속 금지</code> 를 의미한다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">abstract 예약어</code></p>
+
+    <ul>
+      <li>
+        <p>클래스와 메서드를 선언할 때 사용하는 Modifier이다.</p>
+      </li>
+      <li>
+        <p>abstract를 사용한 클래스와 메서드를 <code class="highlighter-rouge">추상클래스 / 추상메서드</code> 라고 한다.</p>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">추상메서드</code></p>
+
+        <ul>
+          <li>메서드의 구체적인 행위를 표현하는 블록부분을 생략한다.</li>
+        </ul>
+
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     
+<span class="c1">// {} 행위 부분 생략됨</span>
+<span class="kd">abstract</span> <span class="n">returnType</span> <span class="nf">name</span><span class="o">([</span><span class="n">argType</span> <span class="n">argName</span><span class="o">,</span> <span class="o">..]);</span>
+     
+</code></pre></div>        </div>
+
+        <ul>
+          <li>추상 메서드를 포함하고 있는 클래스는 추상 클래스로 선언되어야 한다.</li>
+        </ul>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">추상클래스</code></p>
+      </li>
+    </ul>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   
+<span class="c1">// 추상클래스 구조</span>
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractClass</span> <span class="o">{</span>
+  	<span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="n">method</span> <span class="nf">A</span><span class="o">()</span> <span class="o">{</span> <span class="o">..</span> <span class="o">}</span>
+<span class="o">}</span> 
+   
+</code></pre></div>    </div>
+
+    <ul>
+      <li>
+        <p>추상클래스가 필요한 이유</p>
+
+        <ul>
+          <li>
+            <p>부모에서 상속받은 자식클래스의 내용이 아무 것도 없을 때, 추상클래스가 되는데</p>
+
+            <p>다른 곳에서 자식클래스를 끌어다 쓸 수 없으니 부모를 추상클래스로 정의하고 자식을 일반클래스로 정의함</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h3 id="생성자">생성자</h3>
+
+<ul>
+  <li>자동생성기능
+    <ul>
+      <li>[ 이클립스 ] <code class="highlighter-rouge">변수선언</code> –&gt;  <code class="highlighter-rouge">&lt;Alt&gt; + &lt;shift&gt; + &lt;s&gt;</code> –&gt; <code class="highlighter-rouge">Generate Constructor using Fields</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="메서드-overloading">메서드 Overloading</h3>
+
+<ul>
+  <li>한 클래스 내에서 동일한 이름의 메서드라도 매개변수의 개수와 타입만 다르면 다른 메서드로 인식하는 것을 의미</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+  	<span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+  	<span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+  
+  	<span class="kt">void</span> <span class="nf">setEmployee</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">age</span><span class="o">){</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+  	<span class="kt">void</span> <span class="nf">setEmployee</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">){</span>
+      	<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+  	<span class="kt">void</span> <span class="nf">setEmployee</span><span class="o">()</span> <span class="o">{</span>
+      	<span class="n">name</span> <span class="o">=</span> <span class="s">"No Name"</span><span class="o">;</span>
+      	<span class="n">age</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Java" class="tag">| Java</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Java 객체지향 핵심원리&url=http://localhost:4000/java-04/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/java-04/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/java-04/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

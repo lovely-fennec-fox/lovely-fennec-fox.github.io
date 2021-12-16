@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Python_ Dictionaries - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Python_ Dictionaries</h1>
+          <div class="page-date"><time datetime="2019-03-31 00:00:00 +0900">2019, Mar 31</time></div>
+        </div>
+        <h3 id="모두를-위한-파이썬-자료구조-내용-정리">모두를 위한 파이썬 [자료구조] 내용 정리</h3>
+
+<p><br /></p>
+
+<ul>
+  <li>파이썬의 Dictionaries 는 마치 데이터베이스와 같습니다.</li>
+  <li>Collection 의 한 종류입니다.</li>
+  <li>리스트는 순서를 가지는 자료구조, 딕션어리는 키를 가지고 자료를 찾을 수 있게 하는 자료구조입니다.</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="dictionaries">Dictionaries</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># dic 생성
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">purse</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">purse</span><span class="p">[</span><span class="s">'money'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">purse</span><span class="p">[</span><span class="s">'candy'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">purse</span><span class="p">[</span><span class="s">'tissues'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">75</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">purse</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'money'</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s">'tissues'</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span> <span class="s">'candy'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+
+
+<span class="c1"># key로 value값 불러오기
+</span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">purse</span><span class="p">[</span><span class="s">'candy'</span><span class="p">])</span>
+<span class="mi">3</span>
+
+
+<span class="c1"># value값 변경하기
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">purse</span><span class="p">[</span><span class="s">'candy'</span><span class="p">]</span> <span class="o">=</span> <span class="n">purse</span><span class="p">[</span><span class="s">'candy'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">purse</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'money'</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s">'tissues'</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span> <span class="s">'candy'</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="list-와-dict-비교">list 와 dict 비교</h1>
+
+<p><br /></p>
+
+<ul>
+  <li>list</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Key</th>
+      <th style="text-align: center">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">21</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">183</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">'21'</span><span class="p">,</span> <span class="s">'183'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">li</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="mi">183</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Dict</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Key</th>
+      <th style="text-align: center">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">‘money’</td>
+      <td style="text-align: center">12</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">‘candy’</td>
+      <td style="text-align: center">183</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s">'money'</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s">'candy'</span><span class="p">:</span> <span class="mi">183</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s">'candy'</span><span class="p">])</span>
+<span class="mi">183</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="dictionary_-get-사용하기">Dictionary_ get() 사용하기</h1>
+
+<p><img src="/assets/img_studed/0331_dic_01.png" alt="0331_dic_01" /></p>
+
+<p>“위 이미지에서 가장 많이 나온 이름은?” 이라고 물었을 때,</p>
+
+<p>우리는 쭉 훓어본 후, “zhen” 이라는 이름이 제일 많이 나왔다고 알 수 있을 것이다.</p>
+
+<p>하지만, 만약 앞에서부터 차근차근 세어서 알아내어야 한다고 가정하면</p>
+
+<p>이름이 나올 때 마다 다음과 같은 표를 만들어 낼 것입니다.</p>
+
+<p><img src="/assets/img_studed/0331_dic_02.png" alt="0331_dic_02" /></p>
+
+<p>위와 같은 과정을 루프를 돌린다고 생각해보자면, 루프가 끝나기 전까지는 어떤 이름이 가장 많이 나오는지 알 수가 없습니다.</p>
+
+<p>루프가 다 돈 후, 빈도수가 가장 높은 것을 찾아서 답을 찾아냅니다.</p>
+
+<p><br /></p>
+
+<p>이 방법을 다음과 같이 나타내어 봅시다.</p>
+
+<p><img src="/assets/img_studed/0331_dic_03.png" alt="0331_dic_03" /></p>
+
+<p><br /></p>
+
+<p>글자가 적을 때는 눈으로 찾아 낼 수 있었겠지만, 단어의 수가 10만개가 넘어간다면</p>
+
+<p>python을 찾고 싶어 질 것입니다.</p>
+
+<p>python에서 할 아이디어는 이렇습니다.</p>
+
+<ul>
+  <li>새로운 단어가 나오면 dict() 에 key를 추가하고 value 값을 1로 합니다.</li>
+  <li>기존에 있는 단어가 나오면 기존 값인 1에 1을 더해서 value값을 2로 만들어 줍니다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">counts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'csev'</span><span class="p">,</span> <span class="s">'cwen'</span><span class="p">,</span> <span class="s">'csev'</span><span class="p">,</span> <span class="s">'zqian'</span><span class="p">,</span> <span class="s">'cwen'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="p">:</span>
+      <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+        <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+      <span class="k">else</span> <span class="p">:</span>
+        <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> 
+    
+
+<span class="p">{</span><span class="s">'csev'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'zqian'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'cwen'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>    
+
+</code></pre></div></div>
+
+<p>위와 같은 코드로 만들 수 있습니다.</p>
+
+<p>“get()” 함수를 사용하여 위의 코드를 줄여봅시다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">counts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'csev'</span><span class="p">,</span> <span class="s">'cwen'</span><span class="p">,</span> <span class="s">'csev'</span><span class="p">,</span> <span class="s">'zqian'</span><span class="p">,</span> <span class="s">'cwen'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="p">:</span>
+  		<span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+		<span class="k">print</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s">'csev'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'zqian'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'cwen'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>  
+
+</code></pre></div></div>
+
+<p>python을 이용하여 빈도수를 세는 경우는 아주 많습니다.</p>
+
+<p>위 코드는 많이 이용되어, 관용적인 표현으로 사용되니 외워두면 도움이 될 것입니다.</p>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#모두를_위한_파이썬" class="tag">| 모두를_위한_파이썬</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Python_ Dictionaries&url=http://localhost:4000/python_8/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/python_8/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/python_8/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+title: My personal blog
+email: love.pink.edacb1@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+permalink: ':title/'
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://lovely-fennec-fox.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Author settings
+author: Darae # add your name
+author-pic: image.jpg
+about-author: Hello
+
+# Contact links
+email: love.pink.edacb1@gmail.com # Add your Email address
+phone: # Add your Phone number
+website: # Add your website, do not add http://
+linkedin: # Add your Linkedin handle
+github: lovely-fennec-fox # Add your Github handle
+twitter: # Add your Twitter handle
+facebook: # Add your Facebook handle
+instagram: darae.im # Add your Instagram handle
+pinterest: # Add your Pinterest handle
+
+# Newsletter
+mailchimp: # Add your MailChimp form identifier.
+
+# Disqus
+discus_identifier: fennec-fox # Add your discus identifier
+
+# Tracker
+analytics: UA-149834681-1 # Google Analytics
+
+# Paginate
+paginate: 30
+paginate_path: /page:num/
+
+# Build settings
+markdown: kramdown
+
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+
+include: [_pages]
+exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock", "package-lock.json", "assets/css/sass/"]

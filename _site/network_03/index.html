@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Network_ Transport layer - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Network_ Transport layer</h1>
+          <div class="page-date"><time datetime="2019-05-12 00:00:00 +0900">2019, May 12</time></div>
+        </div>
+        <p><br /></p>
+
+<p><code class="highlighter-rouge">[ 한양대학교 이석복 교수님 공개강의 내용정리 ]</code></p>
+
+<p>수업자료 = <a href="http://kocw.xcache.kinxcdn.com/KOCW/document/2015/hanyang/leesukbok0326/3.pdf"> Network_application_layer_01 </a></p>
+
+<p><br /></p>
+
+<h1 id="1-what-is-a-soket">1. What is a soket?</h1>
+
+<p>OS의 api라고 생각하면 됩니다.</p>
+
+<p>우리가 프로그래밍을 할 때, ‘printf’ 명령어를 사용하면 문자열이 보여지듯이</p>
+
+<p>OS에서 프로세스와 프로세스끼리 통신을 하려고 사용하는 것이 Soket이다.</p>
+
+<p>통신 프로세스는 OS의 기능을 사용하기에 OS안에서 구현된 것만 사용가능하다.</p>
+
+<p>OS 의 현재 transport layer가 TCP와 UDP밖에 없어서 이 두 프로토콜을 사용할 수 밖에 없다.</p>
+
+<p>그래서 Soket의 타입도 두개로만 나뉜다.</p>
+
+<p>1) TCP 프로토콜을 이용한 Soket : SOCK_STREAM (소켓 스트림)</p>
+
+<p>2) UDP 프로토콜을 이용한 Soket : SOCK_DGRAM (소켓 데이터그램)</p>
+
+<p><br /></p>
+
+<h1 id="2-간단하게-만들어본-soket-sever">2. 간단하게 만들어본 Soket sever</h1>
+
+<ul>
+  <li>python으로 만들어보았고, client는 웹브라우저이다.</li>
+  <li>웹브라우저에 <code class="highlighter-rouge">http://127.0.0.1:7777</code> 를 입력하면 서버에 접속가능</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="c1"># 소켓생성
+# AF_INET = IP4v에 사용, AF_INET6 = IP6v에 사용
+# SOCK_STREAM = TCP통신에 사용, SOCK_DGRAM  = UTP통신에 사용
+</span><span class="n">severSock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="c1"># 사용할 IP와 포트를 만든다 
+</span><span class="n">severSock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="s">'127.0.0.1'</span><span class="p">,</span> <span class="mi">7777</span><span class="p">))</span>
+<span class="c1"># 클라이언트가 들어오길 기다린다.
+</span><span class="n">severSock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'connect waiting....'</span><span class="p">)</span>
+
+<span class="c1"># listen으로 접속시도를 알아챘다면, 요청을 받아서 접속을 시작한다.
+# accept()는 소켓과 주소정보로 구성된 튜플을 리턴한다.
+</span><span class="n">connectionSock</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">severSock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'connected by :'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+
+    <span class="c1"># recv() = 소켓으로부터 데이터를 읽을 때 사용함
+</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">connectionSock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+    <span class="c1"># web browser가 읽을 수 있도록 마크업언어로 작성함
+</span>    <span class="n">sendData</span> <span class="o">=</span> <span class="s">"""HTTP/1.1 200 OK
+
+            &lt;html&gt;&lt;body&gt;&lt;h1&gt;hello!!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"""</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+
+    <span class="c1"># sendall() = 소켓으로 정보를 보낼 때 사용함
+</span>    <span class="n">connectionSock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">sendData</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'recive_data:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+
+    
+    <span class="c1"># 일부로 한 번만 사용후 연결을 끊었으나, while문을 사용하면 계속 열어둘 수도 있음
+</span><span class="k">finally</span><span class="p">:</span>
+    <span class="n">connectionSock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">severSock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h1 id="3-tcp-layer">3. TCP layer</h1>
+
+<p>App 계층에서 TCP로 전송할 때, 데이터 앞에 붙이는 헤더를 TCP 헤더라고 하고 이 TCP헤더가 붙은 데이터를 세그먼트(segment)라고 한다.</p>
+
+<p>OSI 7 layer 를 좀 더 자세히 살펴보면 =&gt; <a href="http://www.jidum.com/jidums/view.do?jidumId=1022"><strong>OSI 7 Layer</strong>의 구조 및 설명</a></p>
+
+<p><br /></p>
+
+<p>App 계층에 다양한 포트가 있고, 그 안에서 다양한 메세지가 Transport계층으로 내려온다. 그때, transport 계층에서는 어디에서 내려오든 하나의 segment를 만들어서 쭉 내려주어야 한다.</p>
+
+<p>App에서 내려오는 Data가 멀티로 들어와서 세그먼트 하나로 만들어주므로 이를 <code class="highlighter-rouge">Multiplexing</code> 이라 명명하고, 거꾸로 transport 계층에서 App계층으로 올려보내 줄 때 세그먼트를 많은 포트 중의 하나로 보내주어야 하므로 <code class="highlighter-rouge">Demultiplaxing</code> 이라고 한다.</p>
+
+<p><br /></p>
+
+<h3 id="1-transport-헤더">1) Transport 헤더</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">source port</code> : 데이터를 생성한 애플리케이션에서 사용하는 포트번호</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">destination port</code> : 목적지 애플리케이션이 사용하는 포트 번호</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-udp를-사용할-경우">2) UDP를 사용할 경우</h3>
+
+<ul>
+  <li>Destination IP와 Destination port 만을 가지고 세그먼트가 demultiplaxing을 하게 된다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="3-tcp를-사용할-경우">3) TCP를 사용할 경우</h3>
+
+<ul>
+  <li>Source IP / Source port 와 Destination IP / Destination port 를 사용하여 세그먼트가 demultiplaxing을 하게된다. 4개 중에 하나라도 다르면, 다른 소켓으로 올라간다</li>
+  <li>곧, TCP는 각각의 User 별로 소켓을 생성하므로 자원을 많이 소모하게 된다.</li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="참고-그럼-브로드캐스트로-정보를-보낼-때는-socket이-어떻게-생성되는가">참고] 그럼 브로드캐스트로 정보를 보낼 때는 socket이 어떻게 생성되는가?</h4>
+
+<p>: 만약 카톡에서 4명이 함께 채팅방에서 대화를 한다고 할 때, 소켓하나에 브로드캐스트로 정보를 보내는 것처럼 보이지만, 안으로 들어가보면 각각의 소켓이 하나하나 다 만들어져서 통신되고 있는 것이다.</p>
+
+<p><br /></p>
+
+<h1 id="4-connectionless-transport-udp">4. Connectionless transport: UDP</h1>
+
+<h3 id="-udp의-segment-header-"><strong>[ UDP의 segment header ]</strong></h3>
+
+<p>UDP의 필더는 4개만 있다. 다행이다… <a href="http://telescript.denayer.wenk.be/~hcr/cn/idoceo/udp_header.html"> UDP header 보기 </a></p>
+
+<h3 id="1-source-port-16bit--destination-port-16bit">1) source port [16bit] / destination port [16bit]</h3>
+
+<p>2의 16승이므로 포트번호는 0부터 65535까지 쓸 수 있다.</p>
+
+<h3 id="2-checksum">2) checksum</h3>
+
+<p>Message 에러체크</p>
+
+<p><br /> 위와 같이 UDP가 기능이 없는 것 같지만 꼭 필요한 2가지는 해준다.</p>
+
+<ol>
+  <li>Multiplaxting / Demultiplaxing</li>
+  <li>에러체크(UDP를 통해서 갔을 때, data에 에러는 없다.)</li>
+</ol>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Network" class="tag">| Network</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Network_ Transport layer&url=http://localhost:4000/network_03/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/network_03/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/network_03/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

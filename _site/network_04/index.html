@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Network_ Transport layer_02 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Network_ Transport layer_02</h1>
+          <div class="page-date"><time datetime="2019-05-13 00:00:00 +0900">2019, May 13</time></div>
+        </div>
+        <p><br /></p>
+
+<p><code class="highlighter-rouge">[ 한양대학교 이석복 교수님 공개강의 내용정리 ]</code></p>
+
+<p>수업자료 =  <a href="http://kocw.xcache.kinxcdn.com/KOCW/document/2015/hanyang/leesukbok0326/4.pdf"> 신뢰성 있는 데이터 전송원리 </a></p>
+
+<p><br /></p>
+
+<h1 id="1-principles-of-reliable-data-transfer">1. principles of reliable data transfer</h1>
+
+<h3 id="unreliable-cannel-이-되면-무슨일이-일어나나">unreliable cannel 이 되면 무슨일이 일어나나?</h3>
+
+<ul>
+  <li>Message error</li>
+  <li>Message loss</li>
+</ul>
+
+<p>신뢰성 있는 데이터를 전송하기 위해서 점진적으로 발전시켜온 내용들을 확인해보자.</p>
+
+<p><br /></p>
+
+<h1 id="2-message-error-의-해결법">2. Message error 의 해결법</h1>
+
+<h3 id="1-rdtreliable-data-transfer-proticol">1) RDT(Reliable data transfer proticol)</h3>
+
+<p>Unreliable 상태일 때 reliable로 바꾸기위해, 문제가 되는 상황들을 해결해보자.</p>
+
+<ul>
+  <li>
+    <p>상대방이 에러없이 메세지를 받게하려면?</p>
+
+    <ol>
+      <li>
+        <p>받는 사람에게 내가 보낸 메세지가 오류가 났는지 확인하게 한다</p>
+
+        <p>==&gt; <code class="highlighter-rouge">checksum bits</code> 를 추가해준다.</p>
+      </li>
+      <li>
+        <p>받는 사람이 메세지를 받은 후 잘 받았는지, 에러가 있는지 확인한다.</p>
+
+        <p>==&gt; Feedback 해준다. <code class="highlighter-rouge">ACKs</code> or <code class="highlighter-rouge">NAKs</code></p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>만약에 feedback에 에러가 생긴다면?</p>
+
+    <ol>
+      <li>feedback에도 <code class="highlighter-rouge">checksum bits</code> 를 추가해준다.</li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>새 메세지인지, 아니면 다시 보내준 메세지인지 받는 입장에서 메세지를 구분하는 방법은?
+    <ol>
+      <li>패킷에다가 번호를 붙여준다. = <code class="highlighter-rouge">sequence number</code></li>
+      <li>만약 재전송된 값이 이미 있는 값이면 data를 버린다.</li>
+    </ol>
+  </li>
+  <li>Sequence number의 숫자가 커지면 어떻게하나?
+    <ol>
+      <li>숫자를 길게 늘리지말고 2개로 고정시킨다. 단순하게 보내고 받기 때문에 0 과 1로만 구분한다.</li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>다시 정리하면,</p>
+
+<ul>
+  <li>
+    <p>Sender :</p>
+
+    <ol>
+      <li>패킷에 0 or 1의 숫자를 붙여서 보낸다.</li>
+      <li>패킷을 보낸 후,  receiver의 답을 확인한다. (ACK or NAK)</li>
+      <li>receiver의 답이 NAK였을 때, 메세지를 재전송한다.</li>
+      <li>receiver의 답이 ACK였는데 오류된 상태로 왔다면, 메세지를 재전송한다.</li>
+    </ol>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p>Receiver :</p>
+
+    <ol>
+      <li>
+        <p>패킷의 번호로 새메세지인지, 중복된 메세지인지 확인한다.</p>
+      </li>
+      <li>
+        <p>server에게 받은 메세지의 feedback을 보낸다.</p>
+
+        <p>중복메세지를 받아서 메세지를 그냥 삭제했더라도 server에게 ACK의 답을 보낸다.</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-nak를-없앤-rdt">2) NAK를 없앤 RDT</h3>
+
+<p>Sender가 Receiver에게 패킷을 보내고 Receiver가 ACK는 보내주는데,</p>
+
+<p><code class="highlighter-rouge">ACK를 보낼 때 마지막에 받은 패킷번호를 같이 넣어서 보냄</code></p>
+
+<p>즉, 순서대로 생각해보면</p>
+
+<ol>
+  <li>PKT(0) 보냄  ————&gt;   PKT(0) 오류없이 받음</li>
+  <li>ACK(0) 받음  &lt;————  ACK(0) 을 보냄</li>
+  <li>PKT(1) 보냄  ———//—&gt;   PKT(1) 오류생긴 뒤 받음</li>
+  <li>ACK(0) 받음  &lt;————  ACK(0) 을 보냄</li>
+  <li>PKT(1)을 보냈는데, ACK(0)을 받으니 아, 내가보낸 패킷에 오류가 있구나- 라고 생각하고 PKT(1) 을 재전송한다.</li>
+</ol>
+
+<p><br /></p>
+
+<h1 id="3-message-loss의-해결법">3. Message loss의 해결법</h1>
+
+<p>Sender가 메세지를 보낸 후 Receiver가 받기 전에 메세지가 유실되면, Receiver는 메세지를 받지 못했기 때문에 ACK를 보내줄 수 없다. Sender는 패킷을 보냈으니 일단 기다린다.</p>
+
+<p><br /></p>
+
+<h3 id="1-timer-필요">1) Timer 필요</h3>
+
+<p>마냥 기다려도 닶이 없으면 sender는 재전송을 한다.</p>
+
+<p>즉, 패킷을 보낼 때부터 시간을 측정해서 일정시간이 되도 답이 오지 않으면 패킷을 재전송한다.</p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>그럼 시간을 얼마로 맞춰놓아야 하는가?</p>
+
+    <ol>
+      <li>
+        <p>시간을 짧게 잡으면 loss가 되었을 때, 응답은 빠르게 받을 수 있으나 네트워크가 중복 데이터들로 복잡해질 것이고</p>
+
+        <p>시간을 길게 잡으면 네트워크는 복잡해지지 않지만, 메세지가 loss되었을 때 응답을 느리게 받는다.</p>
+
+        <p>적정한 시간은 TCP 할 때 얘기하자-</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>그런데, 위와 같은 방법으로 하나씩 데이터를 보내고 받는 것보다 한꺼번에 데이터를 보내고 그것에 대한 응답도 한꺼번에 받는 것이 더 유용하므로</p>
+
+<p>TCP를 Pipline 형태로 사용한다.</p>
+
+<p>이 부분을 다음시간에 알아보자!</p>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Network" class="tag">| Network</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Network_ Transport layer_02&url=http://localhost:4000/network_04/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/network_04/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/network_04/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

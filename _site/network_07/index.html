@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Network_ Transport layer_05 - My personal blog</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/">Darae</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/assets/img/) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Network_ Transport layer_05</h1>
+          <div class="page-date"><time datetime="2019-05-17 00:00:00 +0900">2019, May 17</time></div>
+        </div>
+        <p><br /></p>
+
+<p><code class="highlighter-rouge">[ 한양대학교 이석복 교수님 공개강의 내용정리 ]</code></p>
+
+<p>수업자료 = <a href="http://kocw.xcache.kinxcdn.com/KOCW/document/2015/hanyang/leesukbok0326/7.pdf"> Connection-oriented transport : TCP_02 </a></p>
+
+<p><br /></p>
+
+<h1 id="3-flow-control">3. flow control</h1>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">Receiver 가 받을 수 있을만큼의 데이터를 보내도록 흐름을 컨트롤</code> 해주는 것</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Receiver는 sender에게 남은 공간이 얼마나 있는지 계속 보내줌</code></p>
+  </li>
+  <li>
+    <p>만약 receiver의 공간이 ‘0’이라면, sender에게 ‘0’이라고 보내주면 sender는 data를 보내는 것을 멈추는데, 언제까지 기다려야 하는지 모르기때문에</p>
+
+    <p>sender는 주기적으로 receiver에게 segment를 보내는데, 데이터를 넣지 않고 보냄. receiver가 receiver buffer가 자리가 생겼다고 보내주면 data를 보냄</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>[질문] flow control은 속도를 조절하는 걸까요? 양을 조절하는 걸까요?</p>
+
+<p>—&gt; 보내는 data의 양은 속도에 비례하기때문에 같은 개념으로 보아야한다.</p>
+
+<p><br /></p>
+
+<h1 id="4-connection-management">4. connection management</h1>
+
+<h3 id="1-tree-way-handshake">1) Tree way handshake</h3>
+
+<ol>
+  <li>
+    <p>클라이언트에서 데이터를 넣지 않은 세그먼트를 서버에 보낸다.</p>
+
+    <p>이 때, <code class="highlighter-rouge">SYN의 값을 '1'로 바꾸어서 보낸다.</code> (다른 값에서는 모두 ‘0’)</p>
+
+    <p>결국 SYN은 너와 TCP연결을 하고 싶다라는 의미이다.</p>
+
+    <p>그리고 <code class="highlighter-rouge">세그먼트의 sequence number를 같이 보낸다.</code></p>
+  </li>
+  <li>
+    <p>서버는 답으로 ACK=’1’, SYN =’1’로 보내고 Seq # 를 새로 재정의해서 보낸다. 그리고 ACKnumber 로 클라이언트의 seq # 에 + 1을 해서 보낸다.</p>
+  </li>
+  <li>
+    <p>마지막으로 클라이언트는 서버로 부터 받은 세그먼트에 대한 ACK를 보내준다. 이 때, 서버의 seq # 에 + 1을 해서 보낸다. 이 이후의 SYNACK는 0이된다. (HTTP request를 데이터에 포함시킴)</p>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<p>위의 <code class="highlighter-rouge">세 과정이 끝나면 send buffer와 receive buffer가 생성</code>되어 <code class="highlighter-rouge">각각에 들어올 seq #를 가지고 있게 된다.</code></p>
+
+<p><br /></p>
+
+<p>[질문] 2 way handshake를 하면 안되고, 3 way를 하는 이유는?</p>
+
+<ul>
+  <li>서버가 보낸 값도 클라이언트가 잘 받았다는 것을 확인하기 위해서</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-closing-a-connection">2) closing a connection</h3>
+
+<ul>
+  <li>
+    <p>클라이언트가 서버에게 <code class="highlighter-rouge">FIN값을 보내면</code>, 서버가 <code class="highlighter-rouge">ACK값을 돌려주고</code></p>
+
+    <p>서버도 FIN값을 클라언트에게 전달한다. 마지막으로 클라이언트가 ACK로  답을 주면 통신이 끝난다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>[질문] 클라이언트가 마지막 ACK 후, ‘Timed wait’을 가진 뒤 통신을 닫는 이유는 무엇일까?</p>
+
+<ul>
+  <li>ACK를 보낸 후에도, 클라이언트가 가지고 있는 send buffer 값과 receive buffer 값을 한동안은 가지고 있게 하기위해서 이다.</li>
+  <li>만약에 마지막 ACK가 유실되면, 서버는 닫지 않고 기다리면서 FIN을 계속 보내는 상황이 벌어지기 때문에 클라이언트는 한 동안은 통신을 닫지 않고 기다린다.</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="-principles-of-congestion-control">** principles of congestion control</h1>
+
+<ul>
+  <li>
+    <p>클라이언트와 서버사이에 네트워크는 주인이 없고 public 이다.</p>
+  </li>
+  <li>
+    <p>공용 리소스에 많은 컴퓨터가 붙는 모양인데, 각자가 원하는 것은 보내는 양은 많고 처리속도는 빠르길 바란다. TCP의 구조상 중간에서 유실이 되면 재전송을 하는 구조이기 때문에, 네트워크가 막혀버리면 계속 재전송을 하면서 데이터를 보내주고 그만큼 네트워크가 더 막혀버리는 현상이 생기게 된다. 이 문제를 어떻게 해결하면 좋을까?</p>
+  </li>
+  <li>
+    <p>그래서 <code class="highlighter-rouge">TCP가 해야할 일 중의 하나가 네트워크가 막히지 않게 하는 일</code>도 해야한다. 곧, 각자 자신의 데이터가 유실되지 않고 잘 처리되게 하기위해서 각자가 보내는 데이터 양을 줄여야 한다.</p>
+  </li>
+  <li>
+    <p>그럼 <code class="highlighter-rouge">네트워크의 상황은 어떻게 알 수 있을까?</code></p>
+
+    <ol>
+      <li>
+        <p>네트워크에서 라우터들이 나에게 정보를 주는 방법</p>
+
+        <p>—&gt; 현재는 라우터가 바빠서 그런 일을 해주지 않음</p>
+      </li>
+      <li>
+        <p>클라이언트와 서버가 네트워크 안에 있는 상황을 유추해서 네트워크 상황이 나쁜 것 같으면 data의 양을 줄이고, 네트워크 상황이 좋은 것 같으면 data의 양을 늘린다.</p>
+
+        <p>—&gt; 세그먼트를 보냈을 때, ACK가 늦게오거나 유실된다면 중간에 뭔가가 문제가 생긴것으로 보고 data의 양을 조절함. 곧, <code class="highlighter-rouge">TCP의 ACK의 상태를 보고 유추해서 네트워크의 상황을 판단</code>한다.</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/tags#Network" class="tag">| Network</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=Network_ Transport layer_05&url=http://localhost:4000/network_07/" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/network_07/" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/network_07/" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/assets/img/image.jpg" alt="Darae" class="author-img">
+  <div class="author-desc">
+    <h2>Darae</h2>
+    <p>Hello</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:love.pink.edacb1@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/artemsheludko_" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/react_-09_ErrorBoundary/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ ErrorBoundary</span></a>
+      
+    
+      
+        <a href="/react_-08_Context-API/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ Context API를 사용한 전역 값 관리</span></a>
+      
+    
+      
+        <a href="/react_-07_useReducer/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useReducer Hook</span></a>
+      
+    
+      
+        <a href="/react_-06_useEffect,-useMemo,userCallback/" class="recent-item" style="background: url(/assets/img/post-8.jpg) center no-repeat; background-size: cover;"><span>React_ useEffect Hook</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//fennec-fox.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2019 &copy; Darae</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-149834681-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
