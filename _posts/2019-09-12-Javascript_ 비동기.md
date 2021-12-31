@@ -3,7 +3,7 @@ layout: post
 title:  "Javascript_ 비동기"
 author: fennec-fox
 tags: Javascript
-category:  blog
+category:  javascript
 ---
 
 <br>

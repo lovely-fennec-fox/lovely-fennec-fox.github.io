@@ -4,7 +4,7 @@ title:  "project1_ smartstore project"
 author: fennec-fox
 tags: Projects
 subtitle: "project"
-category:  blog
+category:  project
 
 
 ---

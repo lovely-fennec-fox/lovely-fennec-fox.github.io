@@ -4,7 +4,7 @@ title:  "project2_ Customizing User Model 03.SignUpForm, ChangeUserPassword"
 author: fennec-fox
 tags: Projects
 subtitle: "Django / SingUp구현하기, user 정보 수정하기 "
-category:  blog
+category:  project
 
 
 ---

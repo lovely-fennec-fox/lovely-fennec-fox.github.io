@@ -5,7 +5,7 @@ title:  "CBV_ TemplateView"
 author: fennec-fox
 tags: Django
 subtitle: "Django / CBV_ generic_ TemplateView"
-category:  blog
+category:  django
 
 ---
 

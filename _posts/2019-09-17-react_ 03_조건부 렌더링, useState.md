@@ -4,7 +4,7 @@ title:  "React_ 조건부 렌더링"
 author: fennec-fox
 tags: React
 img: post-8.jpg
-category:  blog
+category:  react
 ---
 
 <br>

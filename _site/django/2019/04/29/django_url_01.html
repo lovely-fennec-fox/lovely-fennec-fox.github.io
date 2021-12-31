@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Django_ url기본사용법, include(), path converter, 예제 | 2019 집순이네</title>
+<meta name="generator" content="Jekyll v4.2.1">
+<meta property="og:title" content="Django_ url기본사용법, include(), path converter, 예제">
+<meta name="author" content="fennec-fox">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Django [Ask django 강의 + django.urls 함수] 내용 정리">
+<meta property="og:description" content="Django [Ask django 강의 + django.urls 함수] 내용 정리">
+<link rel="canonical" href="http://localhost:4000/django/2019/04/29/django_url_01.html">
+<meta property="og:url" content="http://localhost:4000/django/2019/04/29/django_url_01.html">
+<meta property="og:site_name" content="2019 집순이네">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-04-29T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Django_ url기본사용법, include(), path converter, 예제">
+<script type="application/ld+json">
+{"url":"http://localhost:4000/django/2019/04/29/django_url_01.html","author":{"@type":"Person","name":"fennec-fox"},"headline":"Django_ url기본사용법, include(), path converter, 예제","dateModified":"2019-04-29T00:00:00+09:00","datePublished":"2019-04-29T00:00:00+09:00","description":"Django [Ask django 강의 + django.urls 함수] 내용 정리","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/django/2019/04/29/django_url_01.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="2019 집순이네">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="2019 집순이네" src="" onerror="this.style.display='none'">
+  2019 집순이네
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/about.html">ABOUT</a>
+
+
+
+
+<span class="page-link">
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: '',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  (function() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Django_ url기본사용법, include(), path converter, 예제</h1>
+  <h2 class="post-subtitle">Ask django / url 함수</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2019-04-29T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Apr 29, 2019
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/tags.html#Django">#Django</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h3 id="django-ask-django-강의--djangourls-함수-내용-정리">Django [Ask django 강의 + django.urls 함수] 내용 정리</h3>
+
+<p><br></p>
+
+<h1 id="url-기본사용법">URL 기본사용법</h1>
+
+<ol>
+  <li>프로젝트/settings.py에서 최상위 URLConf 모듈을 지정</li>
+</ol>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">URLconf</code> 는 장고에서 URL과 일치하는 뷰를 찾기 위한 패턴들의 집합</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [settings.py]
+</span>
+<span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s">'project_name.urls'</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<ol>
+  <li>HTTP 요청이 들어올 때마다, 등록된 URLpatterns 상의 매핑리스트를 처음부터 순차적으로 훝으며 URL 매칭을 시도</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># django 2.0에서 새롭게 추가됨
+# path는 url을 간편히 작성할 수 있게 도와줌
+# re_path는 url패턴 만들때 복잡한 정규표현식이 필요하면 사용함
+</span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">re_path</span>
+<span class="kn">from</span> <span class="nn">app_name</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'articles/2003/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">special_case_2003</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'articles/&lt;int:year&gt;/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">year_archive</span><span class="p">),</span>
+    <span class="n">re_path</span><span class="p">(</span><span class="sa">r</span><span class="s">'^(?P&lt;id&gt;\d+)/$'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">item_detail</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'item_detail'</span><span class="p">),</span> 
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<ol>
+  <li>매칭되는 url이 없으면, 404 page not found 를 발생함</li>
+</ol>
+
+<h1 id="include">include()</h1>
+
+<ol>
+  <li>App 이 많은 경우,</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># main/urls.py
+</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">main</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">path</span><span class="p">(</span><span class="s">'app_1'</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">'app_1.urls'</span><span class="p">)),</span>
+  <span class="n">path</span><span class="p">(</span><span class="s">'app_2'</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">'app_2.urls'</span><span class="p">)),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># app_1/urls.py
+</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app_1</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">path</span><span class="p">(</span><span class="s">'about'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">about</span><span class="p">),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># app_2/urls.py
+</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app_2</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">path</span><span class="p">(</span><span class="s">'about'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">about</span><span class="p">),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<h4 id="url--httpapp_1about---app_1의-about실행">URL : <code class="language-plaintext highlighter-rouge">http://app_1/about</code>  =&gt; app_1의 about실행</h4>
+
+<h4 id="url--httpapp_2about---app_2의-about실행">URL : <code class="language-plaintext highlighter-rouge">http://app_2/about</code>  =&gt; app_2의 about실행</h4>
+
+<p><br></p>
+
+<ol>
+  <li>단일패턴 접두어가 반복적으로 사용될 때,</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app_name</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'&lt;page_slug&gt;-&lt;page_id&gt;/history/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">history</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'&lt;page_slug&gt;-&lt;page_id&gt;/edit/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">edit</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'&lt;page_slug&gt;-&lt;page_id&gt;/discuss/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">discuss</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'&lt;page_slug&gt;-&lt;page_id&gt;/permissions/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">permissions</span><span class="p">),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>다음과 같이 묶어줄 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'&lt;page_slug&gt;-&lt;page_id&gt;/'</span><span class="p">,</span> <span class="n">include</span><span class="p">([</span>
+        <span class="n">path</span><span class="p">(</span><span class="s">'history/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">history</span><span class="p">),</span>
+        <span class="n">path</span><span class="p">(</span><span class="s">'edit/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">edit</span><span class="p">),</span>
+        <span class="n">path</span><span class="p">(</span><span class="s">'discuss/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">discuss</span><span class="p">),</span>
+        <span class="n">path</span><span class="p">(</span><span class="s">'permissions/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">permissions</span><span class="p">),</span>
+    <span class="p">])),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<h1 id="path-converters">Path converters</h1>
+
+<p>&lt;컨버터: 전달할키워드인자명&gt;</p>
+
+<ul>
+  <li>컨버터종류 : str, int, slug, uuid, path
+    <ul>
+      <li>str : regex = ‘[^/]+’</li>
+      <li>int : regex = ‘[0-9]+’</li>
+      <li>slug : regex =’[-a-zA-Z0-9_]+’</li>
+      <li>uuid : regex = ‘[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}’</li>
+      <li>path : regex = ‘.+’</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="converter-만들기">converter 만들기</h1>
+
+<p>register_converter() : 경로 변환기</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [converter.py]
+</span>
+<span class="k">class</span> <span class="nc">FourDigitYearConverter</span><span class="p">:</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="s">'[0-9]{4}'</span>      <span class="c1"># 원하는 정규표현식 작성
+</span>
+    <span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'%04d'</span> <span class="o">%</span> <span class="n">value</span>   <span class="c1"># 원하는 리턴값 지정
+</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [urls.py]
+</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">register_converter</span>
+<span class="kn">from</span> <span class="nn">app_name</span> <span class="kn">import</span> <span class="n">converters</span><span class="p">,</span> <span class="n">views</span>
+
+<span class="n">register_converter</span><span class="p">(</span><span class="n">converters</span><span class="p">.</span><span class="n">FourDigitYearConverter</span><span class="p">,</span> <span class="s">'yyyy'</span><span class="p">)</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'articles/2003/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">special_case_2003</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'articles/&lt;yyyy:year&gt;/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">year_archive</span><span class="p">),</span>
+    <span class="p">...</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<h1 id="url-패턴만들기_예제">URL 패턴만들기_예제</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [views.py]
+</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">page</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s">의 </span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s">번째 글이 출력됩니다!"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [urls.py]
+</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">app_name</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'page/&lt;str:username&gt;/&lt;int:num&gt;'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">page</span><span class="p">),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="url--http1270018000pageminho7">url : <code class="language-plaintext highlighter-rouge">http://127.0.0.1:8000/page/minho/7</code>
+</h3>
+
+<h3 id="그러면-브라우져에-다음과-같이-표시된다">그러면, 브라우져에 다음과 같이 표시된다.</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">minho의</span> <span class="mi">7</span><span class="n">번째</span> <span class="n">글이</span> <span class="n">출력됩니다</span><span class="err">!</span>
+
+
+
+</code></pre></div></div>
+
+<h1 id="db값으로-url만들기templates">DB값으로 URL만들기(+templates)</h1>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// book_detail.html
+
+
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+
+<span class="nt">&lt;h1&gt;</span>{{ object.title }}<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>{{ object.content }}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Publisher: {{ object.publisher.name }}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>publication_date: {{ object.publication_date }}<span class="nt">&lt;/p&gt;</span>
+
+
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [views.py]
+</span><span class="k">class</span> <span class="nc">BookDetailView</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [urls.py]
+</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'book/&lt;int:pk&gt;'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">BookDetailView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="url--http1270018000book3">url : <code class="language-plaintext highlighter-rouge">http://127.0.0.1:8000/book/3</code>
+</h3>
+
+<h3 id="그러면-브라우져에-다음과-같이-표시된다-1">그러면, 브라우져에 다음과 같이 표시된다.</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># pk값이 3인 DB값을 보여줌
+</span><span class="n">The</span> <span class="n">Client</span> <span class="n">by</span> <span class="n">John</span> <span class="n">Grisham</span>
+<span class="n">ABCDEFGThe</span> <span class="n">Client</span> <span class="n">by</span> <span class="n">John</span> <span class="n">Grisham</span>
+
+<span class="n">Publisher</span><span class="p">:</span> <span class="n">A</span>
+
+<span class="n">publication_date</span><span class="p">:</span> <span class="n">April</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2019</span>
+
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/til/2019/04/29/TIL_16.html" title="TIL_ 20190429">TIL_ 20190429</a><a class="next" href="/til/2019/04/30/TIL_17.html" title="TIL_ 20190430">TIL_ 20190430</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/til/2019/04/13/TIL_11.html" title="TIL_ 20190430">TIL_ 20190413 </a></li>
+<li><a class="post-link" href="/til/2019/05/04/TIL_18.html" title="TIL_ 20190430">TIL_ 20190504</a></li>
+<li><a class="post-link" href="/node/2019/08/05/node-basic-01.html" title="TIL_ 20190430">Node.js basic</a></li>
+<li><a class="post-link" href="/react/2019/09/17/react_-03_%EC%A1%B0%EA%B1%B4%EB%B6%80-%EB%A0%8C%EB%8D%94%EB%A7%81,-useState.html" title="TIL_ 20190430">React_ 조건부 렌더링</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>Copyright © 2019 @Darae</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="http://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

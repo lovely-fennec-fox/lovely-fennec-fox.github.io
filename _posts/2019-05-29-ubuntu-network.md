@@ -4,7 +4,7 @@ title:  "Ubuntu_ network 명령어"
 author: fennec-fox
 tags: ubuntu
 subtitle: "nm-connection-editor, systemctl, ifconfig, nslookup, ping"
-category:  blog
+category:  ubuntu
 
 
 ---

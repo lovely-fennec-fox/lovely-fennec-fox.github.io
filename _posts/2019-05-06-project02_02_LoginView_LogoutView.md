@@ -4,7 +4,7 @@ title:  "project2_ Customizing User Model 02.LoginView, LogoutView 이용하기"
 author: fennec-fox
 tags: Projects
 subtitle: "Django / LoginView, LogoutView 구현하기 "
-category:  blog
+category:  project
 
 ---
 

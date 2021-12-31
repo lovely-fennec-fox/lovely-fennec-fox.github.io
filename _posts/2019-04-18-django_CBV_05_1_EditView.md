@@ -5,7 +5,7 @@ title:  "CBV_ CreateView"
 author: fennec-fox
 tags: Django
 subtitle: "Django / CBV_ CreateView"
-category:  blog
+category:  django
 
 ---
 

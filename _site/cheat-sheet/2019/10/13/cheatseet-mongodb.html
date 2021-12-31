@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>CheatSeet_ MongoDB | 2019 집순이네</title>
+<meta name="generator" content="Jekyll v4.2.1">
+<meta property="og:title" content="CheatSeet_ MongoDB">
+<meta name="author" content="fennec-fox">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="CheatSeet_ MongoDB">
+<meta property="og:description" content="CheatSeet_ MongoDB">
+<link rel="canonical" href="http://localhost:4000/cheat-sheet/2019/10/13/cheatseet-mongodb.html">
+<meta property="og:url" content="http://localhost:4000/cheat-sheet/2019/10/13/cheatseet-mongodb.html">
+<meta property="og:site_name" content="2019 집순이네">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-10-13T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="CheatSeet_ MongoDB">
+<script type="application/ld+json">
+{"url":"http://localhost:4000/cheat-sheet/2019/10/13/cheatseet-mongodb.html","author":{"@type":"Person","name":"fennec-fox"},"headline":"CheatSeet_ MongoDB","dateModified":"2019-10-13T00:00:00+09:00","datePublished":"2019-10-13T00:00:00+09:00","description":"CheatSeet_ MongoDB","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/cheat-sheet/2019/10/13/cheatseet-mongodb.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="2019 집순이네">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="2019 집순이네" src="" onerror="this.style.display='none'">
+  2019 집순이네
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/about.html">ABOUT</a>
+
+
+
+
+<span class="page-link">
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: '',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  (function() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">CheatSeet_ MongoDB</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2019-10-13T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Oct 13, 2019
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 34 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/tags.html#CheatSeet">#CheatSeet</a><a class="post-tag" href="/tags.html#MongoDB">#MongoDB</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><br></p>
+
+<h4 id="1-mongodb-서버-상태-확인">1) MongoDB 서버 상태 확인</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>mongostat
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h1 id="1-mongoose">1. Mongoose</h1>
+
+<p><br></p>
+
+<h2 id="1---connect">1 ]  connect</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="dl">'</span><span class="s1">mongodb://localhost:27017/test</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">useNewUrlParser</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}).</span>
+<span class="k">try</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="dl">'</span><span class="s1">mongodb://localhost:27017/test</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">useNewUrlParser</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">handleError</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 다음과 같이 옵션을 더 줄 수도 있다.</span>
+<span class="c1">// mongoose.connect('mongodb://username:password@host:port/database?options...', {useNewUrlParser: true});</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h2 id="2--schema">2 ] schema</h2>
+
+<h4 id="1-schema-생성">1) schema 생성</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">mongoose</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">imageSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+  <span class="na">width</span><span class="p">:</span> <span class="nb">Number</span><span class="p">,</span>
+  <span class="na">height</span><span class="p">:</span> <span class="nb">Number</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">userSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+  <span class="na">email</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="na">required</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">lowercase</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+  <span class="c1">// 이메일은 문자열이고, 필수이고, 유일해야 하고, 소문자여야 한다.</span>
+  <span class="na">password</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="na">required</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">trim</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+  <span class="c1">// password는 문자열이고, 필수이고, 공백을 제거한다.</span>
+  <span class="na">nickname</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+  <span class="na">birth</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nb">Date</span><span class="p">,</span> <span class="na">default</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span> <span class="p">},</span>
+  <span class="c1">// 생일은 기본 값으로 현재 시간이 들어간다.</span>
+  <span class="na">point</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nb">Number</span><span class="p">,</span> <span class="na">default</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">max</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="na">index</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+  <span class="c1">// point 필드는 숫자이고, 기본 값은 0이고, 최댓값은 50, 빠르게 찾을 수 있도록 인덱스를 넣어준다.</span>
+  <span class="na">image</span><span class="p">:</span> <span class="nx">imageSchema</span><span class="p">,</span>
+  <span class="c1">// image필드에는 객체가 들어가는데 스키마 안에 스키마가 들어가는 것이 가능하다.</span>
+  <span class="na">likes</span><span class="p">:</span> <span class="p">[</span><span class="nb">String</span><span class="p">],</span>
+  <span class="c1">// like 필드는 문자열의 배열이다.</span>
+  <span class="na">any</span><span class="p">:</span> <span class="p">[</span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">.</span><span class="nx">Types</span><span class="p">.</span><span class="nx">Mixed</span> <span class="p">],</span>
+  <span class="c1">// 아무거나 넣어도 되는 필드이다.</span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">.</span><span class="nx">Types</span><span class="p">.</span><span class="nx">ObjectId</span><span class="p">,</span>
+  <span class="c1">// ObjectId를 넣을 수 있는 필드이다.</span>
+<span class="p">});</span>
+<span class="nx">userSchema</span><span class="p">.</span><span class="nx">index</span><span class="p">({</span> <span class="na">email</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">nickname</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span>
+<span class="c1">// 복합인덱스가 가능하다.</span>
+
+
+<span class="c1">// Create Model &amp; Export</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">User</span><span class="dl">'</span><span class="p">,</span> <span class="nx">userSchema</span><span class="p">);</span>
+<span class="c1">// 첫번째 인자가 User이면 소문자화 후 복수형으로 바꿔서 users 컬렉션이 됩니다</span>
+
+</code></pre></div></div>
+<p><br></p>
+
+<h4 id="2-스키마-적용하기">2) 스키마 적용하기</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./경로/userSchema</span><span class="dl">'</span><span class="p">);</span> 
+
+</code></pre></div></div>
+<p><br></p>
+
+<h4 id="3-스키마--virtual">3) 스키마 + virtual</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// define a schema</span>
+<span class="kd">var</span> <span class="nx">personSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+  <span class="na">name</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">first</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="na">last</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// compile our model</span>
+<span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">Person</span><span class="dl">'</span><span class="p">,</span> <span class="nx">personSchema</span><span class="p">);</span>
+
+<span class="c1">// create a document</span>
+<span class="kd">var</span> <span class="nx">axl</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span>
+  <span class="na">name</span><span class="p">:</span> <span class="p">{</span> <span class="na">first</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Axl</span><span class="dl">'</span><span class="p">,</span> <span class="na">last</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Rose</span><span class="dl">'</span> <span class="p">}</span>
+<span class="p">});</span>
+
+
+<span class="c1">// virtual</span>
+<span class="nx">personSchema</span><span class="p">.</span><span class="nx">virtual</span><span class="p">(</span><span class="dl">'</span><span class="s1">fullName</span><span class="dl">'</span><span class="p">).</span><span class="kd">get</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">axl</span><span class="p">.</span><span class="nx">fullName</span><span class="p">);</span> <span class="c1">// Axl Rose</span>
+
+
+</code></pre></div></div>
+<p><br></p>
+
+<h4 id="4-스키마--인스턴스-메소드">4) 스키마 + 인스턴스 메소드</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="c1">// define a schema</span>
+  <span class="kd">var</span> <span class="nx">animalSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="na">type</span><span class="p">:</span> <span class="nb">String</span> <span class="p">});</span>
+
+  <span class="c1">// assign a function to the "methods" object of our animalSchema</span>
+  <span class="c1">// 화살표 함수는 작동하지 않을 수 있으니, function 명령어를 사용하자.</span>
+  <span class="nx">animalSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">findSimilarTypes</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">Animal</span><span class="dl">'</span><span class="p">).</span><span class="nx">find</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="p">},</span> <span class="nx">cb</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="kd">var</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">Animal</span><span class="dl">'</span><span class="p">,</span> <span class="nx">animalSchema</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animal</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">dog</span><span class="dl">'</span> <span class="p">});</span>
+
+
+
+  <span class="nx">dog</span><span class="p">.</span><span class="nx">findSimilarTypes</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">dogs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dogs</span><span class="p">);</span> <span class="c1">// woof</span>
+  <span class="p">});</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h4 id="5-스키마--static-메소드">5) 스키마 + static 메소드</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="c1">// Assign a function to the "statics" object of our animalSchema</span>
+  <span class="nx">animalSchema</span><span class="p">.</span><span class="nx">statics</span><span class="p">.</span><span class="nx">findByName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="dl">'</span><span class="s1">i</span><span class="dl">'</span><span class="p">)</span> <span class="p">});</span>
+  <span class="p">};</span>
+  <span class="c1">// Or, equivalently, you can call `animalSchema.static()`.</span>
+  <span class="nx">animalSchema</span><span class="p">.</span><span class="kd">static</span><span class="p">(</span><span class="dl">'</span><span class="s1">findByBreed</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">breed</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="nx">breed</span> <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="kd">const</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">Animal</span><span class="dl">'</span><span class="p">,</span> <span class="nx">animalSchema</span><span class="p">);</span>
+  <span class="kd">let</span> <span class="nx">animals</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">findByName</span><span class="p">(</span><span class="dl">'</span><span class="s1">fido</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">animls</span> <span class="o">=</span> <span class="nx">animals</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="k">await</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">findByBreed</span><span class="p">(</span><span class="dl">'</span><span class="s1">Poodle</span><span class="dl">'</span><span class="p">));</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h4 id="6-스키마--query">6) 스키마 + query</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="nx">animalSchema</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">byName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">where</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="dl">'</span><span class="s1">i</span><span class="dl">'</span><span class="p">)</span> <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="kd">var</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">Animal</span><span class="dl">'</span><span class="p">,</span> <span class="nx">animalSchema</span><span class="p">);</span>
+
+  <span class="nx">Animal</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">byName</span><span class="p">(</span><span class="dl">'</span><span class="s1">fido</span><span class="dl">'</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">animals</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">animals</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">Animal</span><span class="p">.</span><span class="nx">findOne</span><span class="p">().</span><span class="nx">byName</span><span class="p">(</span><span class="dl">'</span><span class="s1">fido</span><span class="dl">'</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">animal</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">animal</span><span class="p">);</span>
+  <span class="p">});</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>statics은 모델에서 바로 쓸 수 있는 메소드이고, query는 한 번 쿼리 후에 이어서 쓰는 메소드입니다.</li>
+</ul>
+
+<p><br></p>
+
+<h4 id="7-스키마--pre--post">7) 스키마 + pre / post</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// 특정 동작 이전, 이후에 어떤 행동을 취할 지를 정의할 수 있습니다. </span>
+
+<span class="nx">userSchema</span><span class="p">.</span><span class="nx">pre</span><span class="p">(</span><span class="dl">'</span><span class="s1">save</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">email</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// email 필드가 없으면 에러 표시 후 저장 취소</span>
+    <span class="k">throw</span> <span class="dl">'</span><span class="s1">이메일이 없습니다</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">createdAt</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// createdAt 필드가 없으면 추가</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">createdAt</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+
+<span class="c1">// mongoose 5.x 에서는 next() 대신 async/await를 사용한다.</span>
+<span class="c1">// in Node.js &gt;= 7.6.0:</span>
+<span class="nx">schema</span><span class="p">.</span><span class="nx">pre</span><span class="p">(</span><span class="dl">'</span><span class="s1">save</span><span class="dl">'</span><span class="p">,</span> <span class="k">async</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nx">doStuff</span><span class="p">();</span>
+  <span class="k">await</span> <span class="nx">doMoreStuff</span><span class="p">();</span>
+<span class="p">});</span>
+
+
+
+<span class="nx">userSchema</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">find</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">저장 완료</span><span class="dl">'</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h2 id="3--model">3 ] Model</h2>
+
+<h4 id="1--model--document-생성-저장">1 ) Model / document 생성, 저장</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// Model 생성</span>
+<span class="kd">const</span> <span class="nx">Todo</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">Todo</span><span class="dl">'</span><span class="p">,</span> <span class="nx">todoSchema</span><span class="p">);</span>
+
+
+<span class="c1">// document 생성</span>
+<span class="kd">const</span> <span class="nx">todo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Todo</span><span class="p">({</span>
+  <span class="na">todoid</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">content</span><span class="p">:</span> <span class="dl">'</span><span class="s1">MongoDB</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">completed</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+
+<span class="c1">// or</span>
+
+<span class="kd">const</span> <span class="nx">todo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Todo</span><span class="p">();</span>
+<span class="nx">todo</span><span class="p">.</span><span class="nx">todoid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">todo</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">MongoDB</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">todo</span><span class="p">.</span><span class="nx">completed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">...</span>
+
+
+<span class="c1">// 저장</span>
+<span class="nx">todo</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h2 id="4--restful-api">4 ] RESTful API</h2>
+
+<ul>
+  <li>예제</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// [ models/todo.js ] </span>
+
+
+<span class="kd">const</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">mongoose</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// Define Schemes</span>
+<span class="kd">const</span> <span class="nx">todoSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+  <span class="na">todoid</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nb">Number</span><span class="p">,</span> <span class="na">required</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">unique</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+  <span class="na">content</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="na">required</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+  <span class="na">completed</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="na">default</span><span class="p">:</span> <span class="kc">false</span> <span class="p">}</span>
+<span class="p">},</span>
+<span class="p">{</span>
+  <span class="na">timestamps</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+
+<span class="c1">// Create new todo document</span>
+<span class="nx">todoSchema</span><span class="p">.</span><span class="nx">statics</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this === Model</span>
+  <span class="kd">const</span> <span class="nx">todo</span> <span class="o">=</span> <span class="k">new</span> <span class="k">this</span><span class="p">(</span><span class="nx">payload</span><span class="p">);</span>
+  <span class="c1">// return Promise</span>
+  <span class="k">return</span> <span class="nx">todo</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// Find All</span>
+<span class="nx">todoSchema</span><span class="p">.</span><span class="nx">statics</span><span class="p">.</span><span class="nx">findAll</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// return promise</span>
+  <span class="c1">// V4부터 exec() 필요없음</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">({});</span>
+<span class="p">};</span>
+
+<span class="c1">// Find One by todoid</span>
+<span class="nx">todoSchema</span><span class="p">.</span><span class="nx">statics</span><span class="p">.</span><span class="nx">findOneByTodoid</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">todoid</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span> <span class="nx">todoid</span> <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">// Update by todoid</span>
+<span class="nx">todoSchema</span><span class="p">.</span><span class="nx">statics</span><span class="p">.</span><span class="nx">updateByTodoid</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">todoid</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// { new: true }: return the modified document rather than the original. defaults to false</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">findOneAndUpdate</span><span class="p">({</span> <span class="nx">todoid</span> <span class="p">},</span> <span class="nx">payload</span><span class="p">,</span> <span class="p">{</span> <span class="na">new</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">// Delete by todoid</span>
+<span class="nx">todoSchema</span><span class="p">.</span><span class="nx">statics</span><span class="p">.</span><span class="nx">deleteByTodoid</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">todoid</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span> <span class="nx">todoid</span> <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">// Create Model &amp; Export</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">Todo</span><span class="dl">'</span><span class="p">,</span> <span class="nx">todoSchema</span><span class="p">);</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// [ routes/todos.js ] </span>
+
+
+<span class="kd">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">).</span><span class="nx">Router</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">Todo</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../models/todo</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// Find All</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">Todo</span><span class="p">.</span><span class="nx">findAll</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">todos</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">todos</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">404</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span> <span class="na">err</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Todo not found</span><span class="dl">'</span> <span class="p">});</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">`find successfully: </span><span class="p">${</span><span class="nx">todos</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="c1">// Find One by todoid</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/todoid/:todoid</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">Todo</span><span class="p">.</span><span class="nx">findOneByTodoid</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">todoid</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">todo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">todo</span><span class="p">)</span> <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">404</span><span class="p">).</span><span class="nx">send</span><span class="p">({</span> <span class="na">err</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Todo not found</span><span class="dl">'</span> <span class="p">});</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">`findOne successfully: </span><span class="p">${</span><span class="nx">todo</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="c1">// Create new todo document</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">Todo</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">todo</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">todo</span><span class="p">))</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="c1">// Update by todoid</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="dl">'</span><span class="s1">/todoid/:todoid</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">Todo</span><span class="p">.</span><span class="nx">updateByTodoid</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">todoid</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">todo</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">todo</span><span class="p">))</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="c1">// Delete by todoid</span>
+<span class="nx">router</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="dl">'</span><span class="s1">/todoid/:todoid</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">Todo</span><span class="p">.</span><span class="nx">deleteByTodoid</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">todoid</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">router</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h2 id="5--appjs-예제">5 ] app.js 예제</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// ENV</span>
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">dotenv</span><span class="dl">'</span><span class="p">).</span><span class="nx">config</span><span class="p">();</span>
+<span class="c1">// DEPENDENCIES</span>
+<span class="kd">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">mongoose</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">body-parser</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">4500</span><span class="p">;</span>
+
+<span class="c1">// Static File Service</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kd">static</span><span class="p">(</span><span class="dl">'</span><span class="s1">public</span><span class="dl">'</span><span class="p">));</span>
+<span class="c1">// Body-parser</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="na">extended</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+
+<span class="c1">// Node의 native Promise 사용</span>
+<span class="nx">mongoose</span><span class="p">.</span><span class="nb">Promise</span> <span class="o">=</span> <span class="nb">global</span><span class="p">.</span><span class="nb">Promise</span><span class="p">;</span>
+
+<span class="c1">// Connect to MongoDB</span>
+<span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MONGO_URI</span><span class="p">,</span> <span class="p">{</span> <span class="na">useMongoClient</span><span class="p">:</span> <span class="kc">true</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Successfully connected to mongodb</span><span class="dl">'</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">e</span><span class="p">));</span>
+
+<span class="c1">// ROUTERS</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="dl">'</span><span class="s1">/todos</span><span class="dl">'</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./routes/todos</span><span class="dl">'</span><span class="p">));</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Server listening on port </span><span class="p">${</span><span class="nx">port</span><span class="p">}</span><span class="s2">`</span><span class="p">));</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h2 id="6--query">6 ] Query</h2>
+
+<ul>
+  <li>예제</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">User</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">birth</span><span class="dl">'</span><span class="p">).</span><span class="nx">gt</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">role</span><span class="dl">'</span><span class="p">).</span><span class="k">in</span><span class="p">([</span><span class="dl">'</span><span class="s1">owner</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="dl">'</span><span class="s1">-medals</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="dl">'</span><span class="s1">name birth medals</span><span class="dl">'</span><span class="p">)</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="where">where</h3>
+
+<p>어떤 필드를 조작할지 정하는 쿼리입니다. 뒤에 equals, ne, exists, gt, … 등의 쿼리를 사용하면 됩니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="equals-ne">equals, ne</h3>
+
+<p>equals는 일치하는 것, ne는 일치하지 않는 것입니다. exists와 ne를 포함한 쿼리들은 앞에 where이 있으면 where에서 지정한 필드를 업데이트합니다. where이 없다면 쿼리에서 직접 필드를 지정할 수도 있습니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">equals</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 위와 동일한 쿼리</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">ne</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="exists">exists</h3>
+
+<p>필드 존재 여부를 쿼리합니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">).</span><span class="nx">exists</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">exists</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span> <span class="c1">// 위와 동일한 쿼리</span>
+</code></pre></div></div>
+
+<h3 id="gt-lt-gte-lte">gt, lt, gte, lte</h3>
+
+<p>각각 초과(gt), 미만(lt), 이상(gte), 이하(lte)입니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">).</span><span class="nx">gt</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">gt</span><span class="p">(</span><span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="in-nin-all">in, nin, all</h3>
+
+<p>in은 배열 안의 값 중 하나라도 일치하는지, nin은 하나도 일치 안 하는지, all은 모두 다 일치하는 지를 쿼리합니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">role</span><span class="dl">'</span><span class="p">).</span><span class="k">in</span><span class="p">([</span><span class="dl">'</span><span class="s1">owner</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span><span class="p">])</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="k">in</span><span class="p">(</span><span class="dl">'</span><span class="s1">role</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">owner</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h3 id="and-or-nor">and, or, nor</h3>
+
+<p>얘네들은 where를 사용하지 않습니다! 이점 주의하세요. and는 모든 조건을 만족하는지, or는 일부 조건을 만족하는지, nor는 모두 다 만족하지 않는지를 쿼리합니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">all</span><span class="p">([{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span> <span class="p">},</span> <span class="p">{</span> <span class="na">age</span><span class="p">:</span> <span class="mi">24</span> <span class="p">}]);</span> <span class="c1">// 이름이 zerocho고 나이가 24면</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">or</span><span class="p">([{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span> <span class="p">},</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">babo</span><span class="dl">'</span> <span class="p">}]);</span> <span class="c1">// 이름이 zerocho거나 babo면</span>
+</code></pre></div></div>
+
+<h3 id="size-mod-slice">size, mod, slice</h3>
+
+<p>얘네들은 조금 특수한 쿼리들입니다. size는 배열 안의 요소 개수가 일치하는지, mod는 나머지가 일치하는지를 쿼리합니다. slice는 쿼리의 특정 부분만 가져옵니다. skip limit과 비슷합니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">items</span><span class="dl">'</span><span class="p">).</span><span class="nx">size</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">// items 필드의 배열 요소 개수가 2인지</span>
+</code></pre></div></div>
+
+<h3 id="within-box-circle-geometry-near-intersects-maxdistance">within, box, circle, geometry, near, intersects, maxDistance</h3>
+
+<p>몽고DB는 위치 정보 쿼리 기능이 강력한 것으로 유명하죠. where로 위치 인덱스가 설정된 필드를 지정하고, box, circle 등의 쿼리를 사용합니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">loc</span><span class="dl">'</span><span class="p">).</span><span class="nx">within</span><span class="p">().</span><span class="nx">box</span><span class="p">()</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">loc</span><span class="dl">'</span><span class="p">).</span><span class="nx">within</span><span class="p">({</span> <span class="na">box</span><span class="p">:</span> <span class="p">[[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]]</span> <span class="p">})</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">loc</span><span class="dl">'</span><span class="p">).</span><span class="nx">near</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]).</span><span class="nx">maxDistance</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="distinct">distinct</h3>
+
+<p>이 기능은 알아두시면 좋습니다. 지정한 필드의 값들에서 중복을 제거한 후 가져옵니다. 예를 들어 10명의 사람의 역할이 각각 user, user, admin, owner, admin, user, user, user, user, user… (헥헥) 이라면 중복을 제거하여 [‘user’, ‘owner’, ‘admin’]이 됩니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">distinct</span><span class="p">(</span><span class="dl">'</span><span class="s1">role</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// ['user', 'owner', 'admin']</span>
+</code></pre></div></div>
+
+<h3 id="regex">regex</h3>
+
+<p>정규표현식에 일치하는 것을 가져오기 위한 메소드입니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">).</span><span class="nx">regex</span><span class="p">(</span><span class="sr">/zerocho/</span><span class="p">)</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">regex</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="sr">/zerocho/</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>프로젝션(특정 필드만 가져오는 기능)을 위한 메소드입니다. 예를 들어 name과 age만 선택하면 <code class="language-plaintext highlighter-rouge">{ _id: ..., name: ..., age: ... }</code> 이렇게 결과가 출력됩니다. _id는 빼지 않는 이상 기본 출력됩니다. 특정 필드를 빼고싶다면 앞에 -(빼기)를 붙이면 됩니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">findOne</span><span class="p">().</span><span class="nx">select</span><span class="p">(</span><span class="dl">'</span><span class="s1">name age</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// { _id: ..., name: ..., age: ... }</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">findOne</span><span class="p">().</span><span class="nx">select</span><span class="p">(</span><span class="dl">'</span><span class="s1">-_id name age</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// { name: ..., age: ... }</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">findOne</span><span class="p">().</span><span class="nx">select</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">_id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span> <span class="c1">// 이렇게 객체 형식으로 해도 됩니다.</span>
+</code></pre></div></div>
+
+<h3 id="skip-limit">skip, limit</h3>
+
+<p>이것은 자주 보셨을 겁니다. skip은 건너뛰기, limit은 개수 제한을 나타냅니다. limit은 0이면 0개를 가져오는 게 아니라 다 가져옵니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">skip</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nx">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// 11~15번째 사람 쿼리</span>
+</code></pre></div></div>
+
+<h3 id="sort">sort</h3>
+
+<p>역시 자주 보셨을 겁니다. 정렬이죠.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">(</span><span class="dl">'</span><span class="s1">age -medals</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 나이 오름차순 정렬, 메달 내림차순 정렬</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span> <span class="na">age</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">medals</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="p">});</span> <span class="c1">// 이렇게도 가능합니다.</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span> <span class="na">age</span><span class="p">:</span> <span class="dl">'</span><span class="s1">asc</span><span class="dl">'</span><span class="p">,</span> <span class="na">medals</span><span class="p">:</span> <span class="dl">'</span><span class="s1">desc</span><span class="dl">'</span> <span class="p">});</span> <span class="c1">// 이렇게도...</span>
+<span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span> <span class="na">age</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ascending</span><span class="dl">'</span><span class="p">,</span> <span class="na">medals</span><span class="p">:</span> <span class="dl">'</span><span class="s1">descending</span><span class="dl">'</span> <span class="p">});</span> <span class="c1">// 이렇게도...</span>
+</code></pre></div></div>
+
+<h3 id="find-findone-findoneandremove-findoneandupdate">find, findOne, findOneAndRemove, findOneAndUpdate</h3>
+
+<p>얘네는 왜 쿼리에 있을까요? 모델의 메소드라고 생각하실 수도 있겠습니다만, 쿼리에서도 사용 가능합니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span> <span class="p">}).</span><span class="nx">find</span><span class="p">({</span> <span class="na">age</span><span class="p">:</span> <span class="mi">24</span> <span class="p">})</span>
+</code></pre></div></div>
+
+<p>이렇게요. 첫 번째 find는 모델의 메소드이고 두 번째 find는 쿼리의 메소드입니다.</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Users</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="dl">'</span><span class="s1">zerocho</span><span class="dl">'</span><span class="p">).</span><span class="nx">findOne</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>이런 요상한 것도 가능합니다. 이렇게는 자주 안 쓰지만요.</p>
+
+<p><br></p>
+
+<p><br></p>
+
+<h2 id="7--populate">7 ] populate</h2>
+
+<h4 id="1-스키마-구성">1) 스키마 구성</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// ref에 해당 ObjectId가 속해있는 모델을 넣어줍니다. 현재는 자기 자신(User)을 가리키지만 다른 컬렉션 모델이어도 상관없습니다.</span>
+
+<span class="kd">const</span> <span class="nx">userSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+  <span class="na">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+  <span class="na">friends</span><span class="p">:</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">.</span><span class="nx">Types</span><span class="p">.</span><span class="nx">ObjectId</span><span class="p">,</span> <span class="na">ref</span><span class="p">:</span> <span class="dl">'</span><span class="s1">User</span><span class="dl">'</span> <span class="p">}],</span>
+  <span class="na">bestFriend</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">.</span><span class="nx">Types</span><span class="p">.</span><span class="nx">ObjectId</span><span class="p">,</span> <span class="na">ref</span><span class="p">:</span> <span class="dl">'</span><span class="s1">User</span><span class="dl">'</span> <span class="p">}],</span>
+<span class="p">});</span>
+<span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="dl">'</span><span class="s1">User</span><span class="dl">'</span><span class="p">,</span> <span class="nx">userSchema</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h4 id="2-populate">2) populate</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">zero</span><span class="dl">'</span> <span class="p">}).</span><span class="nx">populate</span><span class="p">(</span><span class="dl">'</span><span class="s1">bestFriend</span><span class="dl">'</span><span class="p">).</span><span class="nx">exec</span><span class="p">((</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span> <span class="c1">// 또는 populate({ path: 'bestFriend' })도 가능</span>
+
+
+<span class="c1">//  bestFriend 부분의 ObjectId가 실제 객체로 치환되었습니다</span>
+<span class="p">{</span>
+  <span class="na">_id</span><span class="p">:</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">574e9c0f9f663a1700fbe06e</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">zero</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">friends</span><span class="p">:</span> <span class="p">[{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">59a66f8372262500184b5363</span><span class="dl">'</span> <span class="p">},</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">574e8f46c9100617001c9cb9</span><span class="dl">'</span> <span class="p">}],</span>
+  <span class="na">bestFriend</span><span class="p">:</span> <span class="p">{</span> 
+    <span class="na">_id</span><span class="p">:</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">574e8f46c9100617001c9cb9</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hero</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">friends</span><span class="p">:</span> <span class="p">[{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">59a66f8372262500184b5363</span><span class="dl">'</span> <span class="p">},</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">574e9c0f9f663a1700fbe06e</span><span class="dl">'</span> <span class="p">}],</span>
+    <span class="na">bestFriend</span><span class="p">:</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">59a66f8372262500184b5363</span><span class="dl">'</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">// bestFriend의 name과 bestFriend만 보고 싶다면</span>
+<span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">zero</span><span class="dl">'</span> <span class="p">}).</span><span class="nx">populate</span><span class="p">(</span><span class="dl">'</span><span class="s1">bestFriend</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">name bestFriend</span><span class="dl">'</span><span class="p">).</span><span class="nx">exec</span><span class="p">((</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// 결과</span>
+<span class="p">{</span>
+  <span class="na">_id</span><span class="p">:</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">574e9c0f9f663a1700fbe06e</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">zero</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">friends</span><span class="p">:</span> <span class="p">[{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">59a66f8372262500184b5363</span><span class="dl">'</span> <span class="p">},</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">574e8f46c9100617001c9cb9</span><span class="dl">'</span> <span class="p">}],</span>
+  <span class="na">bestFriend</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">_id</span><span class="p">:</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">574e8f46c9100617001c9cb9</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hero</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">bestFriend</span><span class="p">:</span> <span class="p">{</span> <span class="na">$oid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">59a66f8372262500184b5363</span><span class="dl">'</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h2 id="8--aggregation">8 ] aggregation</h2>
+
+<h4 id="1-기본개념--httpsdocsmongodbcommanualaggregationaggregation-framework">1) 기본개념 : <a href="https://docs.mongodb.com/manual/aggregation/#aggregation-framework">https://docs.mongodb.com/manual/aggregation/#aggregation-framework</a>
+</h4>
+
+<ul>
+  <li>MongoDB의 Aggregation은 Sharding 기반의 데이터를 효율적으로 처리하고 집계하는 프레임워크라고 이해하면 됨</li>
+  <li>documents를 grouping, filtering 등 다양한 연산을 적용하여 계산된 결과를 반환</li>
+</ul>
+
+<p><br></p>
+
+<h4 id="2-사용법">2) 사용법</h4>
+
+<ul>
+  <li>반환되는 문서는 몽구스 문서가 아닌 일반 자바 스크립트 객체입니다.</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">aggregate</span> <span class="o">=</span> <span class="nx">Model</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+  <span class="p">{</span> <span class="na">$project</span><span class="p">:</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">$skip</span><span class="p">:</span> <span class="mi">5</span> <span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="c1">// or</span>
+
+<span class="nx">Model</span><span class="p">.</span>
+  <span class="nx">aggregate</span><span class="p">([{</span> <span class="na">$match</span><span class="p">:</span> <span class="p">{</span> <span class="na">age</span><span class="p">:</span> <span class="p">{</span> <span class="na">$gte</span><span class="p">:</span> <span class="mi">21</span> <span class="p">}}}]).</span>
+  <span class="nx">unwind</span><span class="p">(</span><span class="dl">'</span><span class="s1">tags</span><span class="dl">'</span><span class="p">).</span>
+  <span class="nx">exec</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h4 id="3-명령어--mongodb-sql-">3) 명령어 [ mongoDB (SQL) ]</h4>
+
+<h5 id="group-group-by-match-where-sort-order-by-sum-sum"><code class="language-plaintext highlighter-rouge">$group (GROUP BY), $match (WHERE), $sort (ORDER BY), $sum (SUM)</code></h5>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// SQL: SELECT COUNT(*) AS count FROM zip</span>
+<span class="c1">// mongodb aggreate:</span>
+<span class="c1">// _id 필드는 mandatory, 하지만, 전체 doc에 대한 계산값이 필요할 때는 null 로 넣으면 됨</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">zip</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$group</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">null</span><span class="dl">'</span><span class="p">,</span> 
+            <span class="dl">'</span><span class="s1">count</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$sum</span><span class="dl">'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span> 
+<span class="p">])</span>
+
+
+<span class="c1">// SQL: SELECT state, SUM(pop) FROM zip GROUP BY state</span>
+<span class="c1">// mongodb aggreate:</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">zip</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$group</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$state</span><span class="dl">'</span><span class="p">,</span> 
+            <span class="dl">'</span><span class="s1">total_pop</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$sum</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$pop</span><span class="dl">'</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span> 
+<span class="p">])</span>
+
+
+<span class="c1">// SQL: SELECT state, SUM(pop) FROM zip GROUP BY state ORDER BY SUM(pop)</span>
+<span class="c1">// mongodb aggreate:</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">zip</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$group</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$state</span><span class="dl">'</span><span class="p">,</span> 
+            <span class="dl">'</span><span class="s1">total_pop</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$sum</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$pop</span><span class="dl">'</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span> 
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$sort</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span><span class="dl">'</span><span class="s1">total_pop</span><span class="dl">'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> 
+    <span class="p">},</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$limit</span><span class="dl">'</span> <span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$project</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="mi">0</span> <span class="p">}}</span>
+<span class="p">])</span>
+
+
+<span class="c1">// SQL: SELECT * FROM zip WHERE state = 'MA' </span>
+<span class="c1">// mongodb aggregate:</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">zip</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$match</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">state</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">MA</span><span class="dl">'</span><span class="p">}}</span>
+<span class="p">])</span>
+
+
+<span class="c1">// 내림차순 정렬하기</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">zip</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+             <span class="p">{</span><span class="dl">'</span><span class="s1">$group</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$state</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">total_pop</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$sum</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$pop</span><span class="dl">'</span><span class="p">}}},</span> 
+             <span class="p">{</span><span class="dl">'</span><span class="s1">$match</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">total_pop</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$gte</span><span class="dl">'</span> <span class="p">:</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">}}},</span>
+             <span class="p">{</span><span class="dl">'</span><span class="s1">$sort</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">total_pop</span><span class="dl">'</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}}</span>
+<span class="p">])</span>
+
+
+
+<span class="c1">// SQL: SELECT MAX(pop), MIN(pop) FROM zip GROUP BY state</span>
+<span class="c1">// mongodb aggregate:</span>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">zip</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$group</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$state</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">maximum</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$max</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$pop</span><span class="dl">'</span><span class="p">},</span> <span class="dl">'</span><span class="s1">minimum</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$min</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$pop</span><span class="dl">'</span><span class="p">}</span> <span class="p">}}</span>
+<span class="p">])</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h4 id="4-산술표현식-날짜-표현식-문자열-표현식">4) 산술표현식, 날짜 표현식, 문자열 표현식</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">*</span> <span class="nx">산술표현식</span>
+ <span class="o">-</span> <span class="nx">$add</span>       <span class="p">[</span><span class="nx">a1</span> <span class="p">[,</span> <span class="nx">a2</span><span class="p">,</span> <span class="nx">a3</span> <span class="p">...</span> <span class="nx">an</span><span class="p">]]</span>
+ <span class="o">-</span> <span class="nx">$substract</span> <span class="p">[</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">]</span>
+ <span class="o">-</span> <span class="nx">$multiply</span>  <span class="p">[</span><span class="nx">a1</span> <span class="p">[,</span> <span class="nx">a2</span><span class="p">,</span> <span class="nx">a3</span> <span class="p">...</span> <span class="nx">an</span><span class="p">]]</span>
+ <span class="o">-</span> <span class="nx">$divide</span>    <span class="p">[</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">]</span>
+ <span class="o">-</span> <span class="nx">$mod</span>       <span class="p">[</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">]</span>
+
+<span class="o">*</span> <span class="nx">날짜</span> <span class="nx">표현식</span>
+ <span class="o">-</span> <span class="nx">$year</span><span class="p">,</span> <span class="nx">$month</span><span class="p">,</span> <span class="nx">$week</span><span class="p">,</span> <span class="nx">$dayOfMonth</span><span class="p">,</span> <span class="nx">$dayOfWeek</span><span class="p">,</span> <span class="nx">$dayOfYear</span><span class="p">,</span> <span class="nx">$hour</span><span class="p">,</span> <span class="nx">$minute</span><span class="p">,</span> <span class="nx">$second</span>
+
+<span class="o">*</span> <span class="nx">문자열</span> <span class="nx">표현식</span>
+ <span class="o">-</span> <span class="nx">$substr</span>
+ <span class="o">-</span> <span class="nx">$concat</span>
+
+</code></pre></div></div>
+
+<h5 id="산술표현식"><code class="language-plaintext highlighter-rouge">산술표현식</code></h5>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">zip</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$group</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$state</span><span class="dl">'</span><span class="p">,</span> 
+            <span class="dl">'</span><span class="s1">max</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$max</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$pop</span><span class="dl">'</span><span class="p">},</span> 
+            <span class="dl">'</span><span class="s1">min</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$min</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">$pop</span><span class="dl">'</span><span class="p">}</span> 
+        <span class="p">}</span> 
+    <span class="p">},</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$project</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">maxmin</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span><span class="dl">'</span><span class="s1">$add</span><span class="dl">'</span> <span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$max</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$min</span><span class="dl">'</span><span class="p">]}</span> 
+        <span class="p">}</span> 
+    <span class="p">}</span>
+<span class="p">])</span>
+
+<span class="c1">// 결과</span>
+<span class="c1">// {'_id': 'CA', 'maxmin': 99568}</span>
+<span class="c1">// {'_id': 'MT', 'maxmin': 40128}</span>
+
+</code></pre></div></div>
+
+<h5 id="날짜표현식"><code class="language-plaintext highlighter-rouge">날짜표현식</code></h5>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">test_db</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$project</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">year</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$year</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">$date</span><span class="dl">'</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">month</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$month</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">$date</span><span class="dl">'</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">day</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$dayOfMonth</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">hour</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$hour</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">minutes</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$minute</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">seconds</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$second</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">milliseconds</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$millisecond</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">dayOfYear</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$dayOfYear</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">dayOfWeek</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$dayOfWeek</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">},</span>
+            <span class="dl">'</span><span class="s1">week</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$week</span><span class="dl">'</span><span class="p">:</span> <span class="dl">"</span><span class="s2">$date</span><span class="dl">"</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">])</span>
+
+<span class="c1">// 결과</span>
+<span class="c1">// {</span>
+<span class="c1">//   'day': 20,</span>
+<span class="c1">//   'dayOfWeek': 2,</span>
+<span class="c1">//   'dayOfYear': 324,</span>
+<span class="c1">//   'hour': 11,</span>
+<span class="c1">//   'milliseconds': 971,</span>
+<span class="c1">//   'minutes': 12,</span>
+<span class="c1">//   'month': 11,</span>
+<span class="c1">//   'seconds': 44,</span>
+<span class="c1">//   'week': 47,</span>
+<span class="c1">//   'year': 2017</span>
+<span class="c1">// }</span>
+
+</code></pre></div></div>
+
+<h5 id="문자열-표현식"><code class="language-plaintext highlighter-rouge">문자열 표현식</code></h5>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// $concat operator 활용 예</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">test_db</span><span class="p">.</span><span class="nx">insert_one</span><span class="p">(</span>
+    <span class="p">{</span> <span class="dl">'</span><span class="s1">firstname</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Dave</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">lastname</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">test_db</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$project</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">all_data</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$concat</span><span class="dl">'</span> <span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">Full Name: </span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$firstname</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$lastname</span><span class="dl">'</span> <span class="p">]}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">])</span>
+
+<span class="c1">// 결과</span>
+<span class="c1">// {'all_data': 'Full Name: Dave Lee'}</span>
+
+
+
+<span class="c1">// $substr operator 활용 예</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">test_db</span><span class="p">.</span><span class="nx">insert_one</span><span class="p">(</span>
+    <span class="p">{</span> <span class="dl">'</span><span class="s1">fullname</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Dave Lee</span><span class="dl">'</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="nx">result</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">test_db</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+    <span class="p">{</span><span class="dl">'</span><span class="s1">$project</span><span class="dl">'</span> <span class="p">:</span> 
+        <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">_id</span><span class="dl">'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">first_name</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$substr</span><span class="dl">'</span> <span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$fullname</span><span class="dl">'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span> <span class="p">]},</span>
+            <span class="dl">'</span><span class="s1">last_name</span><span class="dl">'</span> <span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">$substr</span><span class="dl">'</span> <span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$fullname</span><span class="dl">'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span> <span class="p">]}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">])</span>
+
+<span class="c1">// 결과</span>
+<span class="c1">// {'first_name': 'Dave', 'last_name': 'Lee'}</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/cheat-sheet/2019/10/13/cheatseet-docker.html" title="CheatSeet_ docker">CheatSeet_ docker</a><a class="next" href="/cheat-sheet/2019/10/13/cheatseet-system.html" title="CheatSeet_ ubuntu">CheatSeet_ ubuntu</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/react/2019/09/15/react_-01_%EA%B8%B0%EB%B3%B8.html" title="CheatSeet_ ubuntu">React_ 기본</a></li>
+<li><a class="post-link" href="/python/2019/03/25/python_1.html" title="CheatSeet_ ubuntu">Python_ 컴퓨터 내부구조</a></li>
+<li><a class="post-link" href="/til/2019/04/01/TIL_8.html" title="CheatSeet_ ubuntu">TIL_ 20190331 ~ 0401 </a></li>
+<li><a class="post-link" href="/network/2019/05/18/network_08.html" title="CheatSeet_ ubuntu">Network_ Transport layer_06</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>Copyright © 2019 @Darae</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="http://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

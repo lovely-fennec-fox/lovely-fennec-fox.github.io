@@ -3,7 +3,7 @@ layout: post
 title:  "Javascript_ 응용"
 author: fennec-fox
 tags: Javascript
-category:  blog
+category:  javascript
 ---
 
 <br>

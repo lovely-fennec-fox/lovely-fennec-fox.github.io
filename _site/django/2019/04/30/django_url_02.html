@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Django_ reverse, reverse_lazy, resolve에 대해서 | 2019 집순이네</title>
+<meta name="generator" content="Jekyll v4.2.1">
+<meta property="og:title" content="Django_ reverse, reverse_lazy, resolve에 대해서">
+<meta name="author" content="fennec-fox">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Django [Ask django 강의 + django.urls utility 함수] 내용 정리">
+<meta property="og:description" content="Django [Ask django 강의 + django.urls utility 함수] 내용 정리">
+<link rel="canonical" href="http://localhost:4000/django/2019/04/30/django_url_02.html">
+<meta property="og:url" content="http://localhost:4000/django/2019/04/30/django_url_02.html">
+<meta property="og:site_name" content="2019 집순이네">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-04-30T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Django_ reverse, reverse_lazy, resolve에 대해서">
+<script type="application/ld+json">
+{"url":"http://localhost:4000/django/2019/04/30/django_url_02.html","author":{"@type":"Person","name":"fennec-fox"},"headline":"Django_ reverse, reverse_lazy, resolve에 대해서","dateModified":"2019-04-30T00:00:00+09:00","datePublished":"2019-04-30T00:00:00+09:00","description":"Django [Ask django 강의 + django.urls utility 함수] 내용 정리","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/django/2019/04/30/django_url_02.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="2019 집순이네">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="2019 집순이네" src="" onerror="this.style.display='none'">
+  2019 집순이네
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/about.html">ABOUT</a>
+
+
+
+
+<span class="page-link">
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: '',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  (function() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Django_ reverse, reverse_lazy, resolve에 대해서</h1>
+  <h2 class="post-subtitle">Ask django / url utility 함수</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2019-04-30T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Apr 30, 2019
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/tags.html#Django">#Django</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h3 id="django-ask-django-강의--djangourls-utility-함수-내용-정리">Django [Ask django 강의 + django.urls utility 함수] 내용 정리</h3>
+
+<p><br></p>
+
+<h1 id="url-reverse의-장점">URL reverse의 장점</h1>
+
+<ul>
+  <li>
+    <p>URL을 변경 할 때, 일일히 찾아서 변경해주지 않아도 변경된 URL을 추적해서 반환해준다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">사용법_01</code></p>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="c1"># [urls.py]
+</span>  
+<span class="n">path</span><span class="p">(</span><span class="s">'archive/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">archive</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'news-archive'</span><span class="p">)</span>
+  
+</code></pre></div>    </div>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="c1"># [views.py]
+</span>  
+<span class="c1"># 주소를 써주지 않아도 찾아줌
+</span><span class="k">def</span> <span class="nf">url_check</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">'news-archive'</span><span class="p">))</span>
+  
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">사용법_02</code> : app 아래에 사용 할 경우</p>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="c1"># [ my_app/urls.py ]
+</span>  
+<span class="n">path</span><span class="p">(</span><span class="s">'archive/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">archive</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'news-archive'</span><span class="p">)</span>
+  
+</code></pre></div>    </div>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="c1"># [views.py]
+</span>  
+<span class="c1"># 앱의 이름을 작성해주어야 함
+</span><span class="k">def</span> <span class="nf">url_check</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">'my_app:news-archive'</span><span class="p">))</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br></p>
+
+<h1 id="url-reverse-예제-reverse가-arguments를-받을-때">URL reverse 예제: reverse가 arguments를 받을 때</h1>
+
+<ul>
+  <li>
+    <p><a href="https://docs.djangoproject.com/en/2.1/topics/http/urls/#reverse-resolution-of-urls">django.urls utility functions</a></p>
+  </li>
+  <li>
+    <p><a href="https://wayhome25.github.io/django/2017/05/05/django-url-reverse/">초보몽키의 개발공부로그 URL reverse</a></p>
+  </li>
+</ul>
+
+<p>예전에 만들어 놓은 다음의 예제를 수정해보자.</p>
+
+<p><a href="https://lovely-fennec-fox.github.io//blog/2019/04/15/django_CBV_04/">기본예제 : CBV_ detailview</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># book_list.html
+</span>
+
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Book</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">object_list</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{{book.pk}}"</span><span class="o">&gt;</span><span class="p">{{</span><span class="n">book</span><span class="p">.</span><span class="n">title</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+
+
+
+<span class="c1"># book_detail.html
+</span>
+
+
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="p">{{</span><span class="nb">object</span><span class="p">.</span><span class="n">title</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>  <span class="o">&lt;</span><span class="err">!</span><span class="o">--</span><span class="n">context변수</span><span class="o">=</span><span class="nb">object</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{{</span><span class="nb">object</span><span class="p">.</span><span class="n">content</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Publisher</span><span class="p">:</span> <span class="p">{{</span><span class="nb">object</span><span class="p">.</span><span class="n">publisher</span><span class="p">.</span><span class="n">name</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">publication_date</span><span class="p">:</span> <span class="p">{{</span><span class="nb">object</span><span class="p">.</span><span class="n">publication_date</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+
+
+
+
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">위의 코드에 URL reverse를 사용하는 방법</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># urls.py ____ name 을 꼭 기재해주자.
+</span>
+<span class="n">app_name</span> <span class="o">=</span> <span class="s">'polls'</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'book/&lt;int:pk&gt;'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">BookDetailView</span><span class="p">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">'book_detail'</span><span class="p">),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h2 id="1-templates-에서-사용하기">1. Templates 에서 사용하기</h2>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">Templatestag 로 이용</code>하기</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// book_list.html
+
+
+<span class="nt">&lt;h1&gt;</span>Book<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+{% for book in object_list %}
+<span class="c">&lt;!-- {% url 'url name' argment %}--&gt;</span>  
+    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"{% url 'polls:book_detail' book.pk %}"</span><span class="nt">&gt;</span>{{book.title}}<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  
+<span class="c">&lt;!-- polls/book/&lt;book.pk&gt; 의 url을 가짐 --&gt;</span>
+  
+{% endfor %}
+<span class="nt">&lt;/ul&gt;</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">models.py에 get_absolute_url() 정의</code>하기</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// models.py 
+
+class Book(models.Model):
+
+    def get_absolute_url(self):
+      <span class="c">&lt;!-- reverse() 로 반환하게 만들어줌 --&gt;</span>
+      return reverse('polls:book_detail', args=[self.id])
+
+
+
+// book_list.html
+
+
+<span class="nt">&lt;h1&gt;</span>Book<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+{% for book in object_list %}
+    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"{{ book.get_absolute_url }}"</span><span class="nt">&gt;</span>{{book.title}}<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+  
+<span class="c">&lt;!-- polls/book/&lt;book.pk&gt; 의 url을 가짐 --&gt;</span>
+  
+{% endfor %}
+<span class="nt">&lt;/ul&gt;</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h2 id="2-viewspy-에서-사용하기">2. views.py 에서 사용하기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">def</span> <span class="nf">use_reverse</span><span class="p">():</span>
+  <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">'polls:book_detail'</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">]))</span> 
+<span class="c1"># '/polls/book/10/' args 인자로 리스트 지정 필요
+</span>
+
+<span class="k">def</span> <span class="nf">use_resolve_url</span><span class="p">():</span>
+  <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">resolve_url</span><span class="p">(</span><span class="s">'polls:book_detail'</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> 
+<span class="c1"># '/polls/book/10/'
+</span>
+<span class="k">def</span> <span class="nf">use_redirect</span><span class="p">():</span>
+  <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">'polls:book_detail'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> 
+<span class="c1"># &lt;HttpResponseRedirect status_code=302, "text/html; charset=utf-8", url="/polls/book/10/"&gt;
+</span>
+</code></pre></div></div>
+
+<p><br></p>
+
+<h1 id="reverse_lazy">reverse_lazy()</h1>
+
+<p>A lazily evaluated version of reverse().</p>
+
+<p>사용하는 방법은 같음</p>
+
+<p><br></p>
+
+<h1 id="resolve--path의-정보를-보여줌">resolve() : path의 정보를 보여줌</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># [urls.py]
+</span>
+<span class="n">app_name</span> <span class="o">=</span> <span class="s">'polls'</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'book'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">BookListView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'book/&lt;int:pk&gt;'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">BookDetailView</span><span class="p">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s">'book_detail'</span><span class="p">),</span>
+<span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>위와 같이 경로를 설정해 두었다면, 다음과 같은 정보를 보여줌</p>
+
+<p>각각을 속성으로 접근하여 값을 얻을 수 있음.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">match_listview</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="s">'/polls/book'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">match_listview</span><span class="p">)</span>
+
+<span class="n">ResolverMatch</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">polls</span><span class="p">.</span><span class="n">views</span><span class="p">.</span><span class="n">BookListView</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">url_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">app_names</span><span class="o">=</span><span class="p">[</span><span class="s">'polls'</span><span class="p">],</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">[</span><span class="s">'polls'</span><span class="p">])</span>
+
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">match_detailview</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="s">'/polls/book/1'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">match_detailview</span><span class="p">)</span>
+
+<span class="n">ResolverMatch</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">polls</span><span class="p">.</span><span class="n">views</span><span class="p">.</span><span class="n">BookDetailView</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">'pk'</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">url_name</span><span class="o">=</span><span class="n">book_detail</span><span class="p">,</span> <span class="n">app_names</span><span class="o">=</span><span class="p">[</span><span class="s">'polls'</span><span class="p">],</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">[</span><span class="s">'polls'</span><span class="p">])</span>
+
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/til/2019/04/30/TIL_17.html" title="TIL_ 20190430">TIL_ 20190430</a><a class="next" href="/til/2019/05/04/TIL_18.html" title="TIL_ 20190504">TIL_ 20190504</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/til/2019/03/29/TIL_6.html" title="TIL_ 20190504">TIL_ 20190329</a></li>
+<li><a class="post-link" href="/til/2019/03/28/TIL_5.html" title="TIL_ 20190504">TIL_ 20190328</a></li>
+<li><a class="post-link" href="/react/2019/09/20/react_-06_useEffect,-useMemo,userCallback.html" title="TIL_ 20190504">React_ useEffect Hook</a></li>
+<li><a class="post-link" href="/javascript/2019/09/12/Javascript_-%EC%9D%91%EC%9A%A9.html" title="TIL_ 20190504">Javascript_ 응용</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>Copyright © 2019 @Darae</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="http://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -5,6 +5,7 @@ description: CheatSeet_ ubuntu
 img: post-8.jpg
 tags: [CheatSeet, Ubuntu]
 author: fennec-fox
+category:  cheat-sheet
 ---
 
 <br>

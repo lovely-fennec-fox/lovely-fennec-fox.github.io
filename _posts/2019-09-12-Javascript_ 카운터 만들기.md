@@ -3,7 +3,7 @@ layout: post
 title:  "Javascript_ 카운터 만들기"
 author: fennec-fox
 tags: Javascript
-category:  blog
+category: javascript
 ---
 
 <br>

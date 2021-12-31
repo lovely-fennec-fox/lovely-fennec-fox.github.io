@@ -4,7 +4,7 @@ title:  "project2_ Customizing User Model 01.user model custom"
 author: fennec-fox
 tags: Projects
 subtitle: "Django / user 모델만들기, 활용하기"
-category:  blog
+category:  django
 ---
 
 ### Django_Projects2 [ User model custom ] 과정 내용 정리

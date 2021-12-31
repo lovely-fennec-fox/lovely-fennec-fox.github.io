@@ -4,7 +4,7 @@ title:  "security_ Secure coding"
 author: fennec-fox
 tags: Security
 subtitle: "   "
-category:  blog
+category:  security
 
 
 ---

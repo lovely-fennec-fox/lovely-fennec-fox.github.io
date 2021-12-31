@@ -5,7 +5,7 @@ title:  "Django_ 모델, 모델필드, 필드옵션"
 author: fennec-fox
 tags: Django
 subtitle: "Django / model, field, option"
-category:  blog
+category:  django
 
 ---
 

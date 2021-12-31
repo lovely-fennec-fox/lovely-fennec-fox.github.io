@@ -3,7 +3,7 @@ layout: post
 title:  "Javascript_ 기본문법"
 author: fennec-fox
 tags: Javascript
-category:  blog
+category:  javascript
 ---
 
 <br>

@@ -5,6 +5,7 @@ description: Error_code
 img: post-8.jpg
 tags: [ErrorCode, error]
 author: fennec-fox
+category:  error
 ---
 
 <br>

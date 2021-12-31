@@ -4,7 +4,7 @@ title:  "Django_ Messages_Framework"
 author: fennec-fox
 tags: Django
 subtitle: "Ask django / Messages_Framework"
-category:  blog
+category:  django
 
 
 

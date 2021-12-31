@@ -4,7 +4,7 @@ title:  "React_ Context API를 사용한 전역 값 관리"
 author: fennec-fox
 tags: React
 img: post-8.jpg
-category:  blog
+category:  react
 ---
 
 <br>

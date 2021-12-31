@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Docker_ 기본명령어, 활용법 | 2019 집순이네</title>
+<meta name="generator" content="Jekyll v4.2.1">
+<meta property="og:title" content="Docker_ 기본명령어, 활용법">
+<meta name="author" content="fennec-fox">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="http://localhost:4000/docker/2019/06/03/docker.html">
+<meta property="og:url" content="http://localhost:4000/docker/2019/06/03/docker.html">
+<meta property="og:site_name" content="2019 집순이네">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-06-03T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Docker_ 기본명령어, 활용법">
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docker/2019/06/03/docker.html","author":{"@type":"Person","name":"fennec-fox"},"headline":"Docker_ 기본명령어, 활용법","dateModified":"2019-06-03T00:00:00+09:00","datePublished":"2019-06-03T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/docker/2019/06/03/docker.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="2019 집순이네">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="2019 집순이네" src="" onerror="this.style.display='none'">
+  2019 집순이네
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/about.html">ABOUT</a>
+
+
+
+
+<span class="page-link">
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: '',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  (function() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Docker_ 기본명령어, 활용법</h1>
+  <h2 class="post-subtitle">image, container 생성 및 활용</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2019-06-03T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jun 03, 2019
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/tags.html#Docker">#Docker</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><br></p>
+
+<h1 id="ubuntu-1604에-doker-설치하기">Ubuntu 16.04에 Doker 설치하기</h1>
+
+<h3 id="1-doker-레파지토리를-추가한다">1. Doker 레파지토리를 추가한다.</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>vi /etc/apt/sources.list
+
+<span class="c"># 아래의 레파지토리를 추가한다.</span>
+deb https://apt.dockerproject.org/repo ubuntu-xenial main
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="2-https-통신에-사용되는-패키지와-공개키를-설치">2. HTTPS 통신에 사용되는 패키지와 공개키를 설치</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 패키지 설치</span>
+
+<span class="nv">$ </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 공개키 설치</span>
+
+<span class="nv">$ </span>apt-key adv <span class="nt">--keyserver</span> hkp://p80.pool.sks-keyservers.net:80 <span class="nt">--recv-keys</span> 58118E89F3A912897C070ADBF76221572C52609D
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="3-linux-image-extra와-docker-engine-패키지-설치">3. Linux-image-extra와 docker-engine 패키지 설치</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>apt-get update
+
+<span class="nv">$ </span>apt-get <span class="nb">install </span>linux-image-extra-<span class="si">$(</span><span class="nb">uname</span> <span class="nt">-r</span><span class="si">)</span>
+<span class="nv">$ </span>apt-get <span class="nb">install </span>docker-engine
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="4-docker-version-확인하기">4. Docker version 확인하기</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker version
+
+
+Client:
+ Version:      17.05.0-ce
+ API version:  1.29
+ Go version:   go1.7.5
+ Git commit:   89658be
+ Built:        Thu May  4 22:10:54 2017
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      17.05.0-ce
+ API version:  1.29 <span class="o">(</span>minimum version 1.12<span class="o">)</span>
+ Go version:   go1.7.5
+ Git commit:   89658be
+ Built:        Thu May  4 22:10:54 2017
+ OS/Arch:      linux/amd64
+ Experimental: <span class="nb">false</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h1 id="doker-image-생성-조회-삭제">Doker Image 생성, 조회, 삭제</h1>
+
+<p>이미지를 만들기 위해 <code class="language-plaintext highlighter-rouge">Dockerfile</code>이라는 이미지 빌드용 DSLDomain Specific Language 파일을 사용합니다. 단순 텍스트 파일로 일반적으로 소스와 함께 관리합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># [Dockerfile]를 예시로 만들어봅시다.</span>
+
+FROM golang:1.9
+
+RUN <span class="nb">mkdir</span> /echo
+
+COPY main.go /echo
+
+CMD <span class="o">[</span> <span class="s2">"go"</span>, <span class="s2">"run"</span>, <span class="s2">"/echo/main.go"</span> <span class="o">]</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>이미지를 만들 파일 작성합니다. ( 기존에 있는 설치파일어도 됨)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># [main.go]라는 파일을 예제로 만들어봅시다.</span>
+
+package main
+
+import <span class="o">(</span> 
+	<span class="s2">"fmt"</span> 
+	<span class="s2">"log"</span>
+	<span class="s2">"net/http"</span>
+<span class="o">)</span>
+
+func main<span class="o">()</span> <span class="o">{</span>
+    	http.HandleFunc<span class="o">(</span><span class="s2">"/"</span>, func<span class="o">(</span>w http.ResponseWriter, r <span class="k">*</span>http.Request<span class="o">)</span> <span class="o">{</span>
+		log.Println<span class="o">(</span><span class="s2">"received request"</span><span class="o">)</span>
+		fmt.Fprintf<span class="o">(</span>w, <span class="s2">"Hello Docker !!!"</span><span class="o">)</span>
+    	<span class="o">})</span>
+	log.Println<span class="o">(</span><span class="s2">"start server"</span><span class="o">)</span>
+
+	server :<span class="o">=</span> &amp;http.Server<span class="o">{</span>Addr: <span class="s2">":8080"</span><span class="o">}</span>
+	<span class="k">if </span>err :<span class="o">=</span> server.ListenAndServe<span class="o">()</span><span class="p">;</span> err <span class="o">!=</span> nil <span class="o">{</span>
+		log.Println<span class="o">(</span>err<span class="o">)</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="1-image-생성하기">1. Image 생성하기</h3>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">build</code> : Image 생성</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-t</code> : 작업이 진행되는 것을 보여줌</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># example/ : 여러사람이 image를 사용할 수 있도록 내 아이디를 지정하지 않고, example로 지정해줌</span>
+<span class="c"># tag : defaul 값 = latest</span>
+
+<span class="nv">$ </span>docker image build <span class="nt">-t</span> example/[Image Name]:[tag]
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>Dockfile에 작성한 순서대로 Image가 생성된다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sending build context to Docker daemon  3.072kB
+<span class="sb">`</span>Step 1/4 : FROM golang:1.9<span class="sb">`</span>
+1.9: Pulling from library/golang
+55cbf04beb70: Pull <span class="nb">complete 
+</span>1607093a898c: Pull <span class="nb">complete 
+</span>9a8ea045c926: Pull <span class="nb">complete 
+</span>d4eee24d4dac: Pull <span class="nb">complete 
+</span>9c35c9787a2f: Pull <span class="nb">complete 
+</span>8b376bbb244f: Pull <span class="nb">complete 
+</span>0d4eafcc732a: Pull <span class="nb">complete 
+</span>186b06a99029: Pull <span class="nb">complete 
+</span>Digest: sha256:8b5968585131604a92af02f5690713efadf029cc8dad53f79280b87a80eb1354
+Status: Downloaded newer image <span class="k">for </span>golang:1.9
+ <span class="nt">---</span><span class="o">&gt;</span> ef89ef5c42a9
+<span class="sb">`</span>Step 2/4 : RUN <span class="nb">mkdir</span> /echo<span class="sb">`</span>
+ <span class="nt">---</span><span class="o">&gt;</span> Running <span class="k">in </span>28fc48e76b1a
+ <span class="nt">---</span><span class="o">&gt;</span> 024d93e00764
+Removing intermediate container 28fc48e76b1a
+<span class="sb">`</span>Step 3/4 : COPY main.go /echo<span class="sb">`</span>
+ <span class="nt">---</span><span class="o">&gt;</span> 9536233ba248
+Removing intermediate container d660cc064687
+<span class="sb">`</span>Step 4/4 : CMD go run /echo/main.go<span class="sb">`</span>
+ <span class="nt">---</span><span class="o">&gt;</span> Running <span class="k">in </span>e58fc269864c
+ <span class="nt">---</span><span class="o">&gt;</span> 6775e8903765
+Removing intermediate container e58fc269864c
+Successfully built 6775e8903765
+Successfully tagged example/echo:latest
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="2-설치된-image-확인하기">2. 설치된 Image 확인하기</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>docker images
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="3-image-삭제하기">3. Image 삭제하기</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 특정 Image 삭제</span>
+<span class="nv">$ </span>docker rmi <span class="o">[</span>Image NAME]
+
+<span class="c"># 모든 Image </span>
+<span class="nv">$ </span>docker rmi <span class="si">$(</span>docker image <span class="nb">ls</span> <span class="nt">-aq</span><span class="si">)</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="4-만들어진-container를-customizing-후-다시-image로-생성하기">4. 만들어진 container를 customizing 후 다시 Image로 생성하기</h3>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">commit</code> 사용하기</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker commit <span class="o">[</span>container_name] example/[Image_name]:[tag]
+
+
+</code></pre></div></div>
+
+<p>container를 생성해 놓은 후, 내가 설치하고 싶은 프로그램을 설치한 후 다시 Image로 만들어 놓을 때 사용한다.</p>
+
+<p><br></p>
+
+<h1 id="container-생성-조회-삭제">Container 생성, 조회, 삭제</h1>
+
+<h3 id="1-컨테이너-생성">1. 컨테이너 생성</h3>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">--name</code> : container 이름 지정</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># run : container 생성</span>
+
+<span class="nv">$ </span>docker container run <span class="nt">--name</span> <span class="o">[</span>NAME] <span class="o">[</span>IMAGE_NAME]
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">-d</code> : 실행할 때 background에서 실행하도록 지정</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-i</code> : 호스트와 container가 상호 입출력하도록 지정</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-t</code> : tty를 활성화하여 bash쉘을 사용함</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-p</code> : port 매핑</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker container run <span class="nt">-p</span> <span class="o">[</span>원하는 포트번호]:8080 <span class="nt">-d</span> <span class="o">[</span>IMAGE_NAME]
+
+
+</code></pre></div></div>
+
+<h3 id="2--container-조회">2.  container 조회</h3>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">ps</code> : container 조회</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">ls -a</code> : container조회</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">--filter="name=[container이름]"</code> : 특정 이름을 지정 할 수 있음</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker container <span class="nb">ls</span> <span class="nt">-a</span> <span class="nt">--filter</span><span class="o">=</span><span class="s2">"name=[container이름]"</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="3-특정-이름의-container-삭제">3. 특정 이름의 container 삭제</h3>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">-q</code> :</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># rm -f container 강제 삭제</span>
+<span class="c"># $( 삭제하고 싶은 container ) </span>
+
+<span class="nv">$ </span>docker container <span class="nb">rm</span> <span class="nt">-f</span> <span class="si">$(</span>docker container <span class="nb">ls</span> <span class="nt">-aq</span> <span class="nt">--filter</span><span class="o">=</span><span class="s2">"name=ooo"</span><span class="si">)</span>
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h1 id="container-활용">container 활용</h1>
+
+<h3 id="1-container--중지-및-재실행">1. container  중지 및 재실행</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># 중지</span>
+<span class="nv">$ </span>docker container stop <span class="o">[</span>CONTAINER_NAME]
+
+<span class="c"># 실행</span>
+<span class="nv">$ </span>docker container start <span class="o">[</span>CONTAINER_NAME]
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="2-container-사용현황-확인">2. container 사용현황 확인</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>docker container stats
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="3-container와-호스트사이에-파일-복사하기">3. container와 호스트사이에 파일 복사하기</h3>
+
+<ul>
+  <li>container 에서 호스트로 복사(<code class="language-plaintext highlighter-rouge">cp</code> 명령어 사용)</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>docker container <span class="nb">cp</span> <span class="o">[</span>Container ID]:[path] <span class="o">[</span>host_path]  
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<ul>
+  <li>호스트에서 container로 복사</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>docker container <span class="nb">cp</span> <span class="o">[</span>host_path] <span class="o">[</span>container ID]:[path]
+
+</code></pre></div></div>
+
+<p>컨테이너를 중지하고 재실행해야 적용됩니다-</p>
+
+<p><br></p>
+
+<h3 id="4-container-안으로-들어가기">4. container 안으로 들어가기</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="o">[</span>container ID] /bin/bash
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h1 id="dock-hub에-생성한-이미지를-올려봅시다">Dock Hub에 생성한 이미지를 올려봅시다.</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># 본인의 아이디와 비번으로 로그인 한 후</span>
+<span class="nv">$ </span>docker login
+
+<span class="c"># Image를 push해줌</span>
+<span class="nv">$ </span>docker push <span class="o">[</span>나의 hub ID]/[Image Name]
+
+</code></pre></div></div>
+
+<p><br></p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/ubuntu/2019/05/30/ubuntu-HDD_shell.html" title="Ubuntu_ HDD 추가, RAID, Shell script">Ubuntu_ HDD 추가, RAID, Shell script...</a><a class="next" href="/git/2019/07/27/git.html" title="Git 기본명령어, branch사용법">Git 기본명령어, branch사용법</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/security/2019/08/09/secu-03.html" title="Git 기본명령어, branch사용법">security_ 취약점 DB_03</a></li>
+<li><a class="post-link" href="/til/2019/04/01/TIL_8.html" title="Git 기본명령어, branch사용법">TIL_ 20190331 ~ 0401 </a></li>
+<li><a class="post-link" href="/python/2019/04/03/python_17.html" title="Git 기본명령어, branch사용법">Python_ 마크업 언어</a></li>
+<li><a class="post-link" href="/python/2019/04/04/python_18.html" title="Git 기본명령어, branch사용법">Python_ JSON</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>Copyright © 2019 @Darae</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="http://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

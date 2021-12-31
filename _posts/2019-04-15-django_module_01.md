@@ -3,9 +3,9 @@
 layout: post
 title:  "Django_Module_Paginator"
 author: fennec-fox
-tags: Django_Module
+tags: Django
 subtitle: "Django / Module_Paginator"
-category:  blog
+category:  django
 
 ---
 

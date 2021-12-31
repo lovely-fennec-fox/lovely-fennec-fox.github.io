@@ -4,10 +4,8 @@ title:  "python_ decorator"
 author: fennec-fox
 tags: python
 subtitle: "함수형 decorator/ 클래스형 decorator"
-category:  blog
+category:  python
 comments: true
-
-
 ---
 
 ### Python [Decorator] 내용 정리

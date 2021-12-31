@@ -4,7 +4,7 @@ title:  "Django_ DB관리 프로그램"
 author: fennec-fox
 tags: Django
 subtitle: "Ask django / 장고 Admin, masql workbench"
-category:  blog
+category:  django
 
 
 ---

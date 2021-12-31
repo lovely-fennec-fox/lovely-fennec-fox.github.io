@@ -4,7 +4,7 @@ title:  "Ubuntu_ HDD 추가, RAID, Shell script"
 author: fennec-fox
 tags: ubuntu
 subtitle: "HDD 추가, RAID, shell script 작성과 실행"
-category:  blog
+category:  ubuntu
 
 
 

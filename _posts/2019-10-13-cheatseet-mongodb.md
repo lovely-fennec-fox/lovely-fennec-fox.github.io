@@ -5,6 +5,7 @@ description: CheatSeet_ MongoDB
 img: post-8.jpg
 tags: [CheatSeet, MongoDB]
 author: fennec-fox
+category:  cheat-sheet
 ---
 
 <br>

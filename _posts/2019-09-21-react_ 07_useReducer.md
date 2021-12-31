@@ -4,7 +4,7 @@ title:  "React_ useReducer Hook"
 author: fennec-fox
 tags: React
 img: post-8.jpg
-category:  blog
+category:  react
 ---
 
 <br>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>비트코인 코어실습 | 2019 집순이네</title>
+<meta name="generator" content="Jekyll v4.2.1">
+<meta property="og:title" content="비트코인 코어실습">
+<meta name="author" content="fennec-fox">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="http://localhost:4000/blockchain/2019/09/05/bitcoin_%EC%8B%A4%EC%8A%B5.html">
+<meta property="og:url" content="http://localhost:4000/blockchain/2019/09/05/bitcoin_%EC%8B%A4%EC%8A%B5.html">
+<meta property="og:site_name" content="2019 집순이네">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-09-05T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="비트코인 코어실습">
+<script type="application/ld+json">
+{"url":"http://localhost:4000/blockchain/2019/09/05/bitcoin_%EC%8B%A4%EC%8A%B5.html","author":{"@type":"Person","name":"fennec-fox"},"headline":"비트코인 코어실습","dateModified":"2019-09-05T00:00:00+09:00","datePublished":"2019-09-05T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blockchain/2019/09/05/bitcoin_%EC%8B%A4%EC%8A%B5.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="2019 집순이네">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="2019 집순이네" src="" onerror="this.style.display='none'">
+  2019 집순이네
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/about.html">ABOUT</a>
+
+
+
+
+<span class="page-link">
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: '',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  (function() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">비트코인 코어실습</h1>
+  <h2 class="post-subtitle">bitcoind, bitcoin-cil</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2019-09-05T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Sep 05, 2019
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 8 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/tags.html#blockchain">#blockchain</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><br></p>
+
+<h1 id="비트코인-코어실습">비트코인 코어실습</h1>
+
+<h3 id="1-docker를-사용하여-블록체인-클라이언트-프로그램-다운">1. docker를 사용하여 블록체인 클라이언트 프로그램 다운</h3>
+
+<p><br></p>
+
+<p>1) docker 이미지 받기</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span><span class="nb">sudo </span>docker pull bitcoin/bitcoin:0.17.01 
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>2) 컨테이너 가동/ 접속</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span><span class="nb">sudo </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> jes_bit <span class="nt">-p</span> 3000:3000  <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/bitcoin bitcoin/bitcoin:0.17.01 bash 
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h3 id="2-설치된-내용-확인">2. 설치된 내용 확인</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="mi">1</span><span class="o">.</span> <span class="n">bitcoind</span> <span class="o">(</span><span class="no">CLI</span><span class="o">)</span> <span class="o">:</span> <span class="n">일반</span> <span class="n">사용자</span> <span class="n">보다는</span> <span class="n">개발자에</span> <span class="n">더</span> <span class="n">유용한</span> <span class="n">프로그램</span><span class="o">,</span> <span class="nc">RPC를</span> <span class="n">통해</span> <span class="n">원격</span> <span class="n">제어할</span> <span class="n">수</span> <span class="n">있는</span> <span class="n">full</span><span class="o">-</span><span class="n">node기능</span>
+
+<span class="mi">2</span><span class="o">.</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">(</span><span class="no">CLI</span><span class="o">)</span> <span class="o">:</span> <span class="n">실행</span> <span class="n">중인</span> <span class="n">bitcoind로</span> <span class="nc">RPC명령어를</span> <span class="n">보낼</span> <span class="n">수</span> <span class="n">있는</span> <span class="n">프로그램</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>1) 비트코인 코어</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nc">Main</span> <span class="nc">Network</span> <span class="nf">Mode</span> <span class="o">(</span><span class="n">메인넷</span><span class="o">)</span> <span class="n">본</span> <span class="n">네트워크로</span> <span class="n">실제</span> <span class="n">비트코인</span> <span class="n">사용에</span> <span class="n">활용되는</span> <span class="n">네트워크</span>
+
+<span class="nc">Test</span> <span class="nc">Network</span> <span class="nf">Mode</span> <span class="o">(</span><span class="n">테스트넷</span><span class="o">)</span> <span class="n">테스트를</span> <span class="n">위한</span> <span class="n">네트워크로</span> <span class="n">메인넷과</span> <span class="n">유사하게</span> <span class="n">작동하나</span> <span class="n">비트코인에</span> <span class="n">화폐적</span> <span class="n">가치가</span> <span class="n">없음</span>
+
+<span class="nc">Regression</span> <span class="nc">Test</span> <span class="nc">Network</span> <span class="nf">Mode</span> <span class="o">(</span><span class="n">regtest</span><span class="o">)</span>
+ <span class="n">테스트용</span> <span class="n">사설</span> <span class="n">네트워크로</span> <span class="n">네트워크에</span> <span class="n">대한</span> <span class="n">모든</span> <span class="n">권한을</span> <span class="n">가질</span> <span class="n">수</span> <span class="n">있다</span>
+<span class="n">블록</span> <span class="n">생성</span> <span class="n">등의</span> <span class="n">행위를</span> <span class="n">임의로</span> <span class="n">실행</span> <span class="n">가능합니다</span><span class="o">.</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>2) regtest 모드의 특징</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="mi">1</span><span class="o">.</span> <span class="n">채굴</span> <span class="n">난이도를</span> <span class="mi">0</span><span class="n">으로</span> <span class="n">채굴이</span> <span class="n">가능합니다</span><span class="o">.</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">다른</span> <span class="n">네트워크</span><span class="o">(</span><span class="n">메인넷</span><span class="o">,</span> <span class="n">테스트넷</span> <span class="n">등</span><span class="o">)</span><span class="n">에</span> <span class="n">영향이</span> <span class="n">없습니다</span><span class="o">.</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">고유의</span> <span class="nc">Genesis</span> <span class="n">block을</span> <span class="n">가져</span> <span class="n">첫</span> <span class="n">블록부터</span> <span class="n">시작</span> <span class="n">가능합니다</span><span class="o">.</span>
+<span class="mi">4</span><span class="o">.</span> <span class="n">노드</span> <span class="n">생성</span> <span class="n">시</span><span class="o">,</span> <span class="n">다른</span> <span class="n">이용자와</span> <span class="n">연결할</span> <span class="n">필요가</span> <span class="n">없습니다</span><span class="o">.</span>
+<span class="mi">5</span><span class="o">.</span> <span class="n">원하는</span> <span class="n">때에</span> <span class="n">원하는</span> <span class="n">만큼</span> <span class="n">블록생성이</span> <span class="n">가능합니다</span><span class="o">.</span>
+<span class="mi">6</span><span class="o">.</span> <span class="n">많은</span> <span class="n">디스크</span> <span class="n">용량이</span> <span class="n">필요</span> <span class="n">없습니다</span><span class="o">.</span>
+<span class="mi">7</span><span class="o">.</span> <span class="n">메인넷의</span> <span class="n">경우</span> <span class="n">최소</span> <span class="mi">200</span><span class="nc">GB용량이</span> <span class="n">필요하지만</span><span class="o">,</span> <span class="mi">8</span><span class="o">.</span> <span class="n">regtest네트워크의</span> <span class="n">경우</span> <span class="nc">Bitcoin</span> <span class="nc">Core를</span> <span class="n">설치하기</span> <span class="n">위한</span> <span class="mi">17</span><span class="no">MB</span> <span class="o">+</span> <span class="mi">100</span><span class="n">블록당</span> <span class="mi">2</span><span class="no">MB</span> <span class="n">만</span> <span class="n">필요합니다</span><span class="o">.</span>
+<span class="mi">9</span><span class="o">.</span> <span class="n">많은</span> <span class="no">CPU</span> <span class="n">계산</span> <span class="n">능력이</span> <span class="n">필요</span> <span class="n">없습니다</span><span class="o">.</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p><br></p>
+
+<h3 id="3-regtest-모드로-실행">3. regtest 모드로 실행</h3>
+
+<p>1) bitcoind 실행</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">$</span> <span class="n">bitcoind</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">server</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span> <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="o">-</span><span class="n">deprecatedrpc</span><span class="o">=</span><span class="n">accounts</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">bitcoind의 실행의 의미</code> : 하나의 full-node로 구성된 새로운 private blockchain network가 새롭게 시작되었다는 뜻</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-rpcuwer</code>: user name</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-rpcpassword</code>: user rpc password</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-datadir</code> : 실행한 사설 테스트 네트워크의 정보를 저장할 경로를 지정하며, 블록, 피어, 지갑 등의 정보가 저장된다.
+    <ul>
+      <li>실행한 네트워크의 모든 정보는 지정한 공간에 저장되고, 첫 실행 후 다시 실행시킬 때 기존 경로가 아닌 새로운 경로로 지정하면 새로운 네트워크가 생성됩니다.</li>
+    </ul>
+  </li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-deprecatedrpc</code> :</li>
+</ul>
+
+<p><br></p>
+
+<p><br></p>
+
+<p>2) bitcoin-cli 실행</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">$</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span> <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getnewaddress</span> <span class="n">acc1</span> 
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">rpcconnect</code>  / <code class="language-plaintext highlighter-rouge">rpcport</code>: bitcoind로 연결</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">getnewaddress</code>: 새로운 지갑생성</p>
+  </li>
+</ul>
+
+<p><br></p>
+
+<p>3) 옵션</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">listaccounts</code> : 지갑 확인</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">getblockcount</code>: 생성된 블록확인</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">generate</code>: 해당 네트워크의 블록을 하나 채굴하게 하는 RPC 명령을 전달한다.
+    <ul>
+      <li>100번째 블록까지는 막아놓다가 101번째 블록부터 50코인씩 채굴자에게 보상한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br></p>
+
+<p><br></p>
+
+<h3 id="4-비트코인-송금-실습">4. 비트코인 송금 실습</h3>
+
+<p>1) 두 개의 지갑 생성</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="mi">1060</span><span class="nl">e4b3d645:</span><span class="o">~</span><span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span> <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getnewaddress</span> <span class="n">acc1</span> 
+
+
+<span class="n">root</span><span class="err">@</span><span class="mi">1060</span><span class="nl">e4b3d645:</span><span class="o">~</span><span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getnewaddress</span> <span class="n">acc2</span> 
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>확인</p>
+
+    <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>   <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">0.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br></p>
+
+<p>2) 채굴자가 100개의 블록을 채굴함(막아놓음??)</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>   <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">generate</span> <span class="mi">100</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>3) 마스터가 50코인을 갖을 수 있도록 101번째 채굴</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>   <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">generate</span> <span class="mi">1</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>확인</p>
+
+    <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">""</span><span class="o">:</span> <span class="mf">50.00000000</span><span class="o">,</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">0.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br></p>
+
+<p>3) acc1의 지갑 주소 찾기</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">getaccountaddress</span> <span class="n">acc1</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>4) acc1에게 10BTC보내기</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span> <span class="n">sendtoaddress</span> <span class="mi">2</span><span class="nc">MuhxtdmKb19H6tJ4C2W38gNkxtgFujzYuw</span> <span class="mi">10</span>
+   
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>확인 _ acc1에게 아직 10코인이 도착하지 않았음을 볼 수 있다. (10코인과 수수료는 UTXO공장에서 가지고 있다고 생각하면 된다.)</p>
+
+    <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">""</span><span class="o">:</span> <span class="mf">39.99996260</span><span class="o">,</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">0.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br></p>
+
+<p>5) 마스트가 1블록을 채굴한 후, 지갑을 확인한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">generate</span>  <span class="mi">1</span>
+    
+</code></pre></div></div>
+
+<p><br></p>
+
+<ul>
+  <li>
+    <p>확인_ acc1에게 10코인이 전송되었고, 마스터는 또 하나의 블록을 채굴하였으므로 50코인을 더 받았음을 볼 수 있다.</p>
+
+    <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  
+<span class="err">#</span> <span class="n">bitcoin</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">regtest</span> <span class="o">-</span><span class="n">rpcuser</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcpassword</span><span class="o">=</span><span class="n">test</span> <span class="o">-</span><span class="n">rpcconnect</span><span class="o">=</span><span class="s">"127.0.0.1"</span> <span class="o">-</span><span class="n">rpcport</span><span class="o">=</span><span class="mi">12345</span>  <span class="o">-</span><span class="n">datadir</span><span class="o">=</span><span class="s">"$PWD/node1"</span>  <span class="n">listaccounts</span>
+<span class="o">{</span>
+  <span class="s">""</span><span class="o">:</span> <span class="mf">89.99996260</span><span class="o">,</span>
+  <span class="s">"acc1"</span><span class="o">:</span> <span class="mf">10.00000000</span><span class="o">,</span>
+  <span class="s">"acc2"</span><span class="o">:</span> <span class="mf">0.00000000</span>
+<span class="o">}</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br></p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/java/2019/08/20/java-04.html" title="Java 객체지향 핵심원리">Java 객체지향 핵심원리</a><a class="next" href="/javascript/2019/09/12/Javascript_-%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95.html" title="Javascript_ 기본문법">Javascript_ 기본문법</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/til/2019/04/09/TIL_9.html" title="Javascript_ 기본문법">TIL_ 20190402 ~ 0409 </a></li>
+<li><a class="post-link" href="/python/2019/03/28/python_4.html" title="Javascript_ 기본문법">Python_ functions</a></li>
+<li><a class="post-link" href="/security/2019/08/09/security_-Secure-coding-%EB%B3%B5%EC%82%AC%EB%B3%B8.html" title="Javascript_ 기본문법">security_ Secure coding</a></li>
+<li><a class="post-link" href="/react/2019/09/20/react_-06_useEffect,-useMemo,userCallback.html" title="Javascript_ 기본문법">React_ useEffect Hook</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>Copyright © 2019 @Darae</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="http://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

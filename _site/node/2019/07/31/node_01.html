@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Node.js 환경설정 | 2019 집순이네</title>
+<meta name="generator" content="Jekyll v4.2.1">
+<meta property="og:title" content="Node.js 환경설정">
+<meta name="author" content="fennec-fox">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="http://localhost:4000/node/2019/07/31/node_01.html">
+<meta property="og:url" content="http://localhost:4000/node/2019/07/31/node_01.html">
+<meta property="og:site_name" content="2019 집순이네">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2019-07-31T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Node.js 환경설정">
+<script type="application/ld+json">
+{"url":"http://localhost:4000/node/2019/07/31/node_01.html","author":{"@type":"Person","name":"fennec-fox"},"headline":"Node.js 환경설정","dateModified":"2019-07-31T00:00:00+09:00","datePublished":"2019-07-31T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/node/2019/07/31/node_01.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="2019 집순이네">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="2019 집순이네" src="" onerror="this.style.display='none'">
+  2019 집순이네
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/about.html">ABOUT</a>
+
+
+
+
+<span class="page-link">
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: '',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  (function() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Node.js 환경설정</h1>
+  <h2 class="post-subtitle"> </h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2019-07-31T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jul 31, 2019
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 11 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/tags.html#Node.js">#Node.js</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><br></p>
+
+<h1 id="nodejs">Node.js</h1>
+
+<p><a href="https://nodejs.org/en/">Node.js</a>는 <a href="https://developers.google.com/v8/">V8</a>이라는 구글에서 개발한 고성능 자바스크립트 엔진으로 빌드된 <strong>서버 사이드 개발용 소프트웨어 플랫폼</strong>입니다.</p>
+
+<p><br></p>
+
+<h3 id="설치">설치</h3>
+
+<p>다양한 경우에 의해 버전의 변경이 자주 발생하므로 Node.js를 설치할 때부터 버전 관리가 가능한 형태로 설치하는 것이 좋습니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>brew <span class="nb">install </span>nvm
+
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">export </span><span class="nv">NVM_DIR</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.nvm"</span>
+<span class="o">[</span> <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="se">\.</span> <span class="s2">"</span><span class="nv">$NVM_DIR</span><span class="s2">/nvm.sh"</span> <span class="c"># This loads nvm</span>
+
+</code></pre></div></div>
+
+<p>Node.js 설치</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># Node 버전 설치  </span>
+<span class="nv">$ </span>nvm <span class="nb">install</span> &lt;version&gt;  <span class="c"># ex&gt; nvm install 8.9.4</span>
+
+<span class="c"># 설치된 Node 버전 목록 확인</span>
+<span class="nv">$ </span>nvm <span class="nb">ls</span>  
+
+<span class="c"># 사용할 Node 설정  </span>
+<span class="nv">$ </span>nvm use &lt;version&gt;  <span class="c"># ex&gt; nvm use 8.9.4  </span>
+<span class="nv">$ </span>nvm use &lt;<span class="nb">alias</span><span class="o">&gt;</span>  <span class="c"># ex&gt; nvm use default</span>
+
+<span class="c"># 사용할 alias 설정</span>
+<span class="nv">$ </span>nvm <span class="nb">alias</span> &lt;<span class="nb">alias</span><span class="o">&gt;</span> &lt;version&gt;  <span class="c"># ex&gt; nvm alias test-v 8.9.4</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h1 id="nodejs-기본모듈">Node.js 기본모듈</h1>
+
+<h3 id="1-expressjs">1. Express.js</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install </span>express <span class="nt">-g</span>
+
+<span class="nv">$ </span>express <span class="nt">--ejs</span> <span class="o">[</span>파일이름]
+
+</code></pre></div></div>
+
+<ul>
+  <li>생성되는 구조</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+/myapp
+  ⌊ /bin
+      ⌊ www
+  ⌊ /public
+      ⌊ /images
+      ⌊ /javascripts
+      ⌊ /stylesheets
+  ⌊ /routes
+      ⌊ index.js
+      ⌊ users.js
+  ⌊ /views
+      ⌊ index.jade
+  ⌊ app.js
+  ⌊ package.json
+  
+</code></pre></div></div>
+
+<ul>
+  <li>구동</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install</span>
+<span class="nv">$ </span>npm start
+
+<span class="c"># default: http://localhost:3000</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="2-cors">2. cors</h3>
+
+<p>CORS란 Cross Origin Resource Sharing의 약자로, <strong>현재 도메인과 다른 도메인으로 리소스가 요청될 경우를 말한다.</strong> 예를 들어, 도메인 <strong>http://A.com</strong> 에서 읽어온 HTML페이지에서 다른 도메인 <strong>http://B.com/image.jpg</strong>를 요청하는 경우를 말한다. 이런 경우에 해당 리소스는 cross-origin HTTP 요청에 의해 요청된다. <strong>보안 상의 이유로, 브라우저는 CORS를 제한하고 있다.</strong></p>
+
+<p>하지만 SPA(Single Page Application)의 경우에는, RESTful API를 기반으로 비동기 네트워크 통신을 하기 때문에 API 서버와 웹 페이지 서버가 다를 수 있다. 이런 경우에 API 서버로 요청을 할 시에 CORS 제한이 걸리게 된다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install </span>cors
+
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">cors</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cors</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="c1">// CORS 설정</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">cors</span><span class="p">());</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/products/:id</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="na">msg</span><span class="p">:</span> <span class="dl">'</span><span class="s1">This is CORS-enabled for all origins!</span><span class="dl">'</span><span class="p">})</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">CORS-enabled web server listening on port 80</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="3-hash">3. hash</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install </span>pbkdf2-password
+
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">hasher</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">pbkdf2-password</span><span class="dl">'</span><span class="p">)();</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="4-mysql">4. Mysql</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install </span>mysql
+
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">mysql</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">mysql</span><span class="dl">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="nx">DB연결</span>
+<span class="kd">const</span> <span class="nx">connection</span> <span class="o">=</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">createPool</span><span class="p">({</span>
+<span class="na">host</span><span class="p">:</span> <span class="p">[</span><span class="nx">host_name</span><span class="p">],</span>
+<span class="na">port</span><span class="p">:</span> <span class="p">[</span><span class="nx">port_num</span><span class="p">(</span><span class="na">default</span><span class="p">:</span><span class="mi">3306</span><span class="p">)],</span>
+<span class="na">user</span><span class="p">:</span> <span class="p">[</span><span class="nx">user_name</span><span class="p">],</span>
+<span class="na">password</span><span class="p">:</span> <span class="p">[</span><span class="nx">user_password</span><span class="p">],</span>
+<span class="na">database</span><span class="p">:</span> <span class="p">[</span><span class="nx">select_database</span><span class="p">]</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<p>###<code class="language-plaintext highlighter-rouge">error 발생시</code></p>
+
+<ul>
+  <li>Error message : MySQL 8.0 - Client does not support authentication protocol requested by server; consider upgrading MySQL client</li>
+</ul>
+
+<p>Node의 mysqljs(npm i mysql과 함께 설치하여 Node 코드에 사용하는 패키지)가 아직 MySQL 8의 새로운 기본 인증 방법을 지원하지 않는다</p>
+
+<p><br></p>
+
+<p>해결방법: <a href="https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server/52175673"> Stackoverflow </a></p>
+
+<pre><code class="language-mysql">
+mysql&gt; ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_new_password';
+mysql&gt; FLUSH PRIVILEGES;
+mysql&gt; quit
+
+</code></pre>
+
+<p><br></p>
+
+<h3 id="5-alert">5. alert</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm i <span class="nt">-S</span> alert-node 
+
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">alert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">alert-node</span><span class="dl">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="6-이메일-보내기">6. 이메일 보내기</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install </span>nodemailer
+
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">nodemailer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">nodemailer</span><span class="dl">'</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="nx">설정방법</span>
+
+<span class="kd">let</span> <span class="nx">transporter</span> <span class="o">=</span> <span class="nx">nodemailer</span><span class="p">.</span><span class="nx">createTransport</span><span class="p">({</span>
+    <span class="na">host</span><span class="p">:</span> <span class="dl">'</span><span class="s1">smtp.gmail.com</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">port</span><span class="p">:</span> <span class="mi">587</span><span class="p">,</span>
+    <span class="na">secure</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="na">requireTLS</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">auth</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">user</span><span class="p">:</span> <span class="dl">'</span><span class="s1">your.gmail.account@gmail.com</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">pass</span><span class="p">:</span> <span class="dl">'</span><span class="s1">your.password</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">let</span> <span class="nx">mailOptions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">from</span><span class="p">:</span> <span class="dl">'</span><span class="s1">your.gmail.account@gmail.com</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">to</span><span class="p">:</span> <span class="dl">'</span><span class="s1">receivers.email@domain.com</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">subject</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Test</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">html</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello World!</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="nx">transporter</span><span class="p">.</span><span class="nx">sendMail</span><span class="p">(</span><span class="nx">mailOptions</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">info</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">success</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="7-암호화">7. 암호화</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">crypto</code></li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">crypto</span><span class="dl">'</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="c1">// 암호화 알고리즘</span>
+    <span class="na">Cipher</span><span class="p">:</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+        <span class="kd">const</span> <span class="nx">cipher</span> <span class="o">=</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">createCipher</span><span class="p">(</span><span class="dl">'</span><span class="s1">aes-256-cbc</span><span class="dl">'</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">cipherText</span> <span class="o">=</span> <span class="nx">cipher</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">base64</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">cipherText</span> <span class="o">+=</span> <span class="nx">cipher</span><span class="p">.</span><span class="nx">final</span><span class="p">(</span><span class="dl">'</span><span class="s1">base64</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cipherText</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">cipherText</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="c1">//복호화 알고리즘</span>
+    <span class="na">DeCipher</span><span class="p">:</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">decipher</span> <span class="o">=</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">createDecipher</span><span class="p">(</span><span class="dl">'</span><span class="s1">aes-256-cbc</span><span class="dl">'</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">DecipherText</span> <span class="o">=</span> <span class="nx">decipher</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="dl">'</span><span class="s1">base64</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">DecipherText</span> <span class="o">+=</span> <span class="nx">decipher</span><span class="p">.</span><span class="nx">final</span><span class="p">(</span><span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">DecipherText</span><span class="p">;</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">hasher</code></li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">hasher</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">pbkdf2-password</span><span class="dl">"</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// 비밀번호 암호화</span>
+
+<span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span><span class="k">async</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+
+  <span class="kd">let</span> <span class="nx">userinfo</span><span class="o">=</span><span class="p">{};</span>              
+  <span class="nx">userinfo</span><span class="p">.</span><span class="nx">email</span><span class="o">=</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">email</span><span class="p">;</span>
+  <span class="nx">userinfo</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+  <span class="nx">userinfo</span><span class="p">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+  <span class="nx">userinfo</span><span class="p">.</span><span class="nx">nexonemail</span><span class="o">=</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">nexonemail</span><span class="p">;</span>
+
+  <span class="nx">hasher</span><span class="p">({</span>
+    <span class="na">password</span> <span class="p">:</span><span class="nx">userinfo</span><span class="p">.</span><span class="nx">password</span>
+  <span class="p">},(</span><span class="nx">err</span><span class="p">,</span><span class="nx">pass</span><span class="p">,</span><span class="nx">salt</span><span class="p">,</span><span class="nx">hash</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">error</span><span class="p">;</span>
+    <span class="k">else</span><span class="p">{</span>
+      <span class="nx">userinfo</span><span class="p">.</span><span class="nx">salt</span> <span class="o">=</span> <span class="nx">salt</span><span class="p">;</span>
+      <span class="nx">userinfo</span><span class="p">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">hash</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">};</span> 
+
+            
+<span class="c1">// 비밀번호 확인 (hash는 복호화가 어려우므로 암호문을 비교해서 확인한다.)</span>
+<span class="kd">function</span> <span class="nx">Auth</span><span class="p">(</span><span class="nx">login_password</span><span class="p">,</span> <span class="nx">user</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">login_password</span><span class="p">,</span> <span class="nx">user</span><span class="p">);</span>
+
+    <span class="nx">hasher</span><span class="p">({</span>
+        <span class="na">password</span><span class="p">:</span> <span class="nx">login_password</span><span class="p">,</span>
+        <span class="na">salt</span><span class="p">:</span> <span class="nx">user</span><span class="p">.</span><span class="nx">salt</span>
+    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">pass</span><span class="p">,</span> <span class="nx">salt</span><span class="p">,</span> <span class="nx">hash</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">hash</span> <span class="o">===</span> <span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">){</span>
+                <span class="kd">let</span> <span class="nx">userInfo</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="nx">userInfo</span><span class="p">[</span><span class="dl">'</span><span class="s1">email_user</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email_user</span><span class="p">;</span>
+                <span class="nx">userInfo</span><span class="p">[</span><span class="dl">'</span><span class="s1">name_user</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name_user</span><span class="p">;</span>
+                <span class="nx">userInfo</span><span class="p">[</span><span class="dl">'</span><span class="s1">money_platform</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">money_platform</span><span class="p">;</span>
+                <span class="nx">userInfo</span><span class="p">[</span><span class="dl">'</span><span class="s1">salt</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">salt</span><span class="p">;</span>
+                <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">userInfo</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="dl">'</span><span class="s1">message</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">비밀번호가 잘못되었습니다.</span><span class="dl">'</span><span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<h3 id="8-mongodb-설치-및-연동--for-mac-">8. MongoDB 설치 및 연동 [ for mac ]</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># mongodb 설치</span>
+<span class="nv">$ </span>brew <span class="nb">install </span>mongodb
+
+
+<span class="c"># db저장 경로 확인</span>
+<span class="nv">$ </span>vi /usr/local/etc/mongod.conf
+
+systemLog:
+  destination: file
+  path: /usr/local/var/log/mongodb/mongo.log
+  logAppend: <span class="nb">true
+
+</span>storage:
+  dbPath: /Users/nopd/dev/data/db
+  
+net:
+  bindIp: 127.0.0.1
+
+
+<span class="c"># mongodb server start </span>
+<span class="nv">$ </span>brew services start mongodb
+
+<span class="c"># server가 돌아가고 있는지 확인</span>
+<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>mongo
+
+<span class="c"># server stop</span>
+<span class="nv">$ </span>brew services stop mongodb
+
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<ul>
+  <li>
+    <p>mongodb GUI로 Robo 3T사용</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">mongoose 설치</code></p>
+  </li>
+</ul>
+
+<p><a href="http://mongoosejs.com/">Mongoose</a>는 Node.js와 MongoDB를 위한 ODM(Object Data Mapping) library이다. Java 기반의 Hibernate. iBatis 등의 ORM(Object Relational Mapping)과 유사한 개념이다.</p>
+
+<p><br></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install </span>mongoose
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">mongoose 사용법</code> :  <a href="https://poiemaweb.com/mongoose">https://poiemaweb.com/mongoose</a>
+</li>
+</ul>
+
+<p><br></p>
+
+<h3 id="9-dotenv">9. dotenv</h3>
+
+<p>node.js 로 개발을 하면서, <strong>포트, DB 관련 정보</strong> 등 전역으로 필요한 여러 정보들이 존재한다. node.js 에서는 <a href="https://www.npmjs.com/package/dotenv"><strong>dotenv 패키지</strong></a>를 통해 환경변수 파일을 외부에 만들고, 관리할 수 있다.  특히, 깃허브 등에 <strong>오픈소스</strong>로 프로젝트를 공개할때, DB 계정 정보를 소스코드 내에 하드코딩하지 않고, <strong>외부 환경변수 파일</strong>에 작성하고, <strong>.gitignore 을 통해 제외</strong>하면 안전하다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">--save</span> dotenv
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="nx">프로젝트</span> <span class="nx">루트경로에</span> <span class="p">.</span><span class="nx">env</span> <span class="nx">파일을</span> <span class="nx">생성하고</span> <span class="nx">다음과</span> <span class="nx">같이</span> <span class="nx">작성한다</span><span class="p">.</span>
+<span class="nx">SERVER_PORT</span><span class="o">=</span><span class="mi">3000</span>
+<span class="nx">DB_HOST</span><span class="o">=</span><span class="nx">localhost</span>
+<span class="nx">DB_USER</span><span class="o">=</span><span class="nx">root</span>
+<span class="nx">DB_PASSWORD</span><span class="o">=</span><span class="nx">password</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="err">#</span> <span class="nx">프로젝트</span> <span class="nx">상단에</span> <span class="nx">아래</span> <span class="nx">코드를</span> <span class="nx">적어</span> <span class="nx">환경</span> <span class="nx">변수를</span> <span class="nx">불러온다</span><span class="p">.</span>
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">dotenv</span><span class="dl">'</span><span class="p">).</span><span class="nx">config</span><span class="p">();</span>
+
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">connect</span><span class="p">({</span>
+  <span class="na">host</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DB_HOST</span><span class="p">,</span>
+  <span class="na">username</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DB_USER</span><span class="p">,</span>
+  <span class="na">password</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DB_PASSWORD</span>
+<span class="p">});</span> <span class="c1">//DB 연결 예제 코드</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SERVER_PORT</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">sample server is listening to port </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SERVER_PORT</span><span class="p">);</span>
+<span class="p">});</span> <span class="c1">//서버 포트 예제 코드</span>
+
+</code></pre></div></div>
+
+<p><br></p>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/node/2019/07/29/node_p_01.html" title="Node.js + React 웹페이지 제작">Node.js + React 웹페이지 제작</a><a class="next" href="/db/2019/08/01/Mongo-DB.html" title="MongoDB_ 기본명령어">MongoDB_ 기본명령어</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/til/2019/05/05/TIL_19.html" title="MongoDB_ 기본명령어">TIL_ 20190505</a></li>
+<li><a class="post-link" href="/project/2019/05/07/project02_03_SignUpForm_and_ChangeUserPassword.html" title="MongoDB_ 기본명령어">project2_ Customizing User Model 03.SignUpForm, ChangeUserPassword</a></li>
+<li><a class="post-link" href="/javascript/2019/09/12/Javascript_-%EB%AA%A8%EB%8B%AC-%EB%A7%8C%EB%93%A4%EA%B8%B0.html" title="MongoDB_ 기본명령어">Javascript_ 모달만들기</a></li>
+<li><a class="post-link" href="/django/2019/04/30/django_url_02.html" title="MongoDB_ 기본명령어">Django_ reverse, reverse_lazy, resolve에 대해서</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+      <div>Copyright © 2019 @Darae</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="http://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

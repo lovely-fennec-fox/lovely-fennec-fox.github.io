@@ -5,6 +5,7 @@ description: CheatSeet_ docker
 img: post-8.jpg
 tags: [CheatSeet, Docker]
 author: fennec-fox
+category:  cheat-sheet
 ---
 
 <br>
